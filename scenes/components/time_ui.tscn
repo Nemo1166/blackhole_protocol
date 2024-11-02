@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://c33tertlfci8r"]
+
+[ext_resource type="Script" path="res://scenes/components/time_ui.gd" id="1_yqhxh"]
+[ext_resource type="LabelSettings" uid="uid://du8flicqbonao" path="res://assets/fonts/style_number.tres" id="2_7xenh"]
+
+[node name="TimeUi" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_yqhxh")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(384, 0)
+layout_mode = 0
+offset_right = 384.0
+offset_bottom = 51.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="TimeShow" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+text = "1098 年 1 月 1 日  6 : 0"
+label_settings = ExtResource("2_7xenh")
+vertical_alignment = 1
+
+[node name="TimeScale" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 1
+text = "(1.0x)"
+label_settings = ExtResource("2_7xenh")
+horizontal_alignment = 2
+vertical_alignment = 1

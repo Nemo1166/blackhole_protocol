@@ -1,0 +1,82 @@
+[gd_scene load_steps=12 format=3 uid="uid://vq3he0hbxr2h"]
+
+[ext_resource type="PackedScene" uid="uid://nsmrbretqidc" path="res://scenes/components/fps_stat.tscn" id="1_7sg7f"]
+[ext_resource type="Script" path="res://scripts/TimeMgr.gd" id="2_wqp3t"]
+[ext_resource type="Texture2D" uid="uid://c667m4m74se4h" path="res://assets/image/terra_hexmap.png" id="3_eq87v"]
+[ext_resource type="PackedScene" uid="uid://c33tertlfci8r" path="res://scenes/components/time_ui.tscn" id="3_ipyou"]
+[ext_resource type="Script" path="res://scripts/dataclass/date_time.gd" id="3_vk33i"]
+[ext_resource type="Script" path="res://scenes/map_light.gd" id="6_qovsq"]
+
+[sub_resource type="Resource" id="Resource_bos8w"]
+script = ExtResource("3_vk33i")
+minute = 30
+hour = 6
+day = 1
+month = 1
+year = 1098
+
+[sub_resource type="Resource" id="Resource_83qvp"]
+script = ExtResource("3_vk33i")
+minute = 0
+hour = 7
+day = 1
+month = 1
+year = 1098
+
+[sub_resource type="Resource" id="Resource_dpsbx"]
+script = ExtResource("3_vk33i")
+minute = 0
+hour = 18
+day = 1
+month = 1
+year = 1098
+
+[sub_resource type="Resource" id="Resource_7hgro"]
+script = ExtResource("3_vk33i")
+minute = 0
+hour = 20
+day = 1
+month = 1
+year = 1
+
+[sub_resource type="Resource" id="Resource_scgxc"]
+script = ExtResource("3_vk33i")
+minute = 0
+hour = 5
+day = 1
+month = 1
+year = 1098
+
+[node name="World" type="Node2D"]
+
+[node name="TimeMgr" type="Node" parent="."]
+script = ExtResource("2_wqp3t")
+date_time = SubResource("Resource_bos8w")
+day_time = SubResource("Resource_83qvp")
+twilight_time = SubResource("Resource_dpsbx")
+night_time = SubResource("Resource_7hgro")
+dawn_time = SubResource("Resource_scgxc")
+
+[node name="TextureRect" type="Sprite2D" parent="."]
+texture = ExtResource("3_eq87v")
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="TimeUi" parent="GUI" instance=ExtResource("3_ipyou")]
+grow_horizontal = 0
+
+[node name="FpsStat" parent="." instance=ExtResource("1_7sg7f")]
+
+[node name="MapLight" type="DirectionalLight2D" parent="." node_paths=PackedStringArray("time_system")]
+blend_mode = 2
+script = ExtResource("6_qovsq")
+day_light = Color(1, 1, 1, 1)
+twilight_light = Color(1, 0.866667, 0.74902, 1)
+night_light = Color(0.352941, 0.505882, 0.929412, 1)
+dawn_light = Color(0.733333, 0.933333, 1, 1)
+time_system = NodePath("../TimeMgr")
+
+[connection signal="day_state_changed" from="TimeMgr" to="TimeMgr" method="_on_day_state_changed"]
+[connection signal="day_state_changed" from="TimeMgr" to="MapLight" method="transition"]
+[connection signal="time_changed" from="TimeMgr" to="GUI/TimeUi" method="_on_time_mgr_time_changed"]
+[connection signal="time_scale_changed" from="TimeMgr" to="GUI/TimeUi" method="_on_time_mgr_time_scale_changed"]
