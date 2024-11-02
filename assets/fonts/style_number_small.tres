@@ -1,0 +1,6 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://5j47d8xfvkoj"]
+
+[ext_resource type="FontFile" uid="uid://byjdovawflxyj" path="res://assets/fonts/BENDER.OTF" id="1_inknj"]
+
+[resource]
+font = ExtResource("1_inknj")
