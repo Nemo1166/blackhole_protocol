@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://nsmrbretqidc"]
 
-[ext_resource type="Script" path="res://scenes/components/fps_stat.gd" id="1_kxtpy"]
+[ext_resource type="Script" path="res://scenes/gui/components/fps_stat.gd" id="1_kxtpy"]
 [ext_resource type="LabelSettings" uid="uid://5j47d8xfvkoj" path="res://assets/fonts/style_number_small.tres" id="2_lc2vf"]
 
 [node name="FpsStat" type="CanvasLayer"]

@@ -1,4 +1,4 @@
-extends Control
+extends MarginContainer
 
 @onready var t_label: Label = %TimeShow
 @onready var time_scale: Label = %TimeScale

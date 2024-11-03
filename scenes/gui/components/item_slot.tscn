@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6aqirfbqqeud"]
+
+[ext_resource type="Texture2D" uid="uid://bu8wnm47rm0qq" path="res://assets/image/icon/MTL_DIAMOND_SHD.png" id="1_dlewf"]
+[ext_resource type="Script" path="res://scenes/gui/components/item_slot.gd" id="1_fc366"]
+[ext_resource type="Script" path="res://scripts/dataclass/item.gd" id="2_cpfab"]
+[ext_resource type="LabelSettings" uid="uid://5j47d8xfvkoj" path="res://assets/fonts/style_number_small.tres" id="2_v5xdo"]
+
+[sub_resource type="Resource" id="Resource_6ibja"]
+script = ExtResource("2_cpfab")
+name = "a"
+description = ""
+icon = ExtResource("1_dlewf")
+type = 5
+price = 0
+weight = 0.0
+is_fuel = false
+fuel_value = 0
+
+[node name="ItemUI" type="MarginContainer"]
+custom_minimum_size = Vector2(64, 64)
+offset_right = 64.0
+offset_bottom = 64.0
+script = ExtResource("1_fc366")
+item = SubResource("Resource_6ibja")
+amount = 10000
+
+[node name="TextureRect" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("1_dlewf")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -14.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="TextureRect/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "9999"
+label_settings = ExtResource("2_v5xdo")
+horizontal_alignment = 2
+vertical_alignment = 1
