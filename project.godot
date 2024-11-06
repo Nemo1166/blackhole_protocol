@@ -8,17 +8,54 @@
 
 config_version=5
 
+[addons]
+
+resources_spreadsheet_view/array_color_tint=100.0
+resources_spreadsheet_view/color_rows=true
+resources_spreadsheet_view/array_min_width=128.0
+resources_spreadsheet_view/resource_preview_size=32.0
+resources_spreadsheet_view/clip_headers=true
+resources_spreadsheet_view/dupe_arrays=true
+resources_spreadsheet_view/context_menu_on_leftclick=false
+resources_spreadsheet_view/fold_docks=false
+
 [application]
 
 config/name="blackhole_protocol"
-run/main_scene="res://scenes/world.tscn"
+run/main_scene="res://scenes/game_controller.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://default_icon.svg"
+
+[autoload]
+
+Global="*res://scripts/global.gd"
 
 [display]
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_resource_groups/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/radial_progress/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://assets/": "red",
+"res://data/": "gray",
+"res://scenes/": "blue",
+"res://scenes/gui/": "green",
+"res://scripts/": "pink"
+}
+
+[godot_resource_groups]
+
+auto_rebuild=true
+
+[gui]
+
+theme/custom_font="res://assets/fonts/HarmonyOS_Sans_SC_Regular.woff2"
 
 [input]
 
@@ -41,3 +78,4 @@ speed_down={
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

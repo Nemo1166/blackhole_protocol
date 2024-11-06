@@ -1,0 +1,95 @@
+[gd_scene load_steps=6 format=3 uid="uid://b872d2inyew6l"]
+
+[ext_resource type="Script" path="res://scenes/gui/main_menu.gd" id="1_gac2s"]
+[ext_resource type="PackedScene" uid="uid://b3y8yqbau65nl" path="res://scenes/gui/splash_screen.tscn" id="2_2nedn"]
+[ext_resource type="Shader" path="res://shaders/change_color.gdshader" id="2_05t2d"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2wyaq"]
+shader = ExtResource("2_05t2d")
+shader_parameter/from = Color(0, 0, 0, 1)
+shader_parameter/to = Color(1, 1, 1, 1)
+shader_parameter/threshold = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sdki6"]
+shader = ExtResource("2_05t2d")
+shader_parameter/from = Color(0, 0, 0, 1)
+shader_parameter/to = Color(1, 1, 1, 1)
+shader_parameter/threshold = 0.1
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gac2s")
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.8, 0.823529, 0.847059, 1)
+
+[node name="SplashScreen" parent="." instance=ExtResource("2_2nedn")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="CmdContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = 84.0
+offset_right = 120.0
+offset_bottom = 146.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+metadata/_edit_group_ = true
+
+[node name="AwakeBtn" type="Button" parent="CmdContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_2wyaq")
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "Awake"
+expand_icon = true
+
+[node name="ExitBtn" type="Button" parent="CmdContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_sdki6")
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "Exit"
+expand_icon = true
+
+[node name="LoginPrompt" type="Label" parent="."]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -104.0
+offset_right = 20.0
+offset_bottom = -85.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Welcome back, Doctor."
+
+[connection signal="login" from="SplashScreen" to="." method="_on_splash_screen_login"]
+[connection signal="pressed" from="CmdContainer/AwakeBtn" to="." method="_on_button_pressed"]
+[connection signal="button_up" from="CmdContainer/ExitBtn" to="." method="_on_exit_btn_button_up"]
+[connection signal="mouse_exited" from="CmdContainer/ExitBtn" to="." method="_on_exit_btn_mouse_exited"]

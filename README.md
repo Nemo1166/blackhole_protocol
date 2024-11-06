@@ -2,7 +2,8 @@
 
 黑洞协议
 
-![GitHub repo size](https://img.shields.io/github/repo-size/Nemo1166/blackhole_protocol)
+![GitHub repo size](https://img.shields.io/github/repo-size/Nemo1166/blackhole_protocol) ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/Nemo1166/blackhole_protocol)
+
 
 
 > <img src="icon.png" height="64px" alt="logo">

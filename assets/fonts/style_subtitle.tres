@@ -1,9 +1,8 @@
 [gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://c1h8htpl43tff"]
 
-[ext_resource type="FontFile" uid="uid://dywnc7hxpvbs3" path="res://assets/fonts/SourceHanSerifSC_subset.woff2" id="1_glr0b"]
+[ext_resource type="FontFile" uid="uid://h57tyu1r5jvd" path="res://assets/fonts/SourceHanSerifSC_subset.woff2" id="1_glr0b"]
 
 [resource]
 font = ExtResource("1_glr0b")
 font_size = 36
-shadow_size = 8
 shadow_color = Color(0, 0, 0, 0.6)

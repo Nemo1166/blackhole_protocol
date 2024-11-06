@@ -1,0 +1,144 @@
+[gd_scene load_steps=7 format=3 uid="uid://b3y8yqbau65nl"]
+
+[ext_resource type="Script" path="res://scenes/gui/splash_screen.gd" id="1_aesdq"]
+[ext_resource type="Shader" path="res://shaders/change_color.gdshader" id="1_urjr5"]
+[ext_resource type="Texture2D" uid="uid://cm0p2yhokv8ca" path="res://assets/image/Avatar_def_01.png" id="2_nu2t7"]
+[ext_resource type="LabelSettings" uid="uid://k521rg6fqgkx" path="res://assets/fonts/style_normal.tres" id="3_5yiw1"]
+[ext_resource type="LabelSettings" uid="uid://cfll3mt2npsjq" path="res://assets/fonts/style_normal_small.tres" id="4_ovbkm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kqhmo"]
+shader = ExtResource("1_urjr5")
+shader_parameter/from = Color(1, 1, 1, 1)
+shader_parameter/to = Color(0, 0, 0, 1)
+shader_parameter/threshold = 0.01
+
+[node name="SplashScreen" type="Control"]
+material = SubResource("ShaderMaterial_kqhmo")
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aesdq")
+metadata/_edit_lock_ = true
+
+[node name="Bg" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Bg"]
+visible = false
+layout_mode = 2
+
+[node name="SolidBG" type="ColorRect" parent="Bg"]
+layout_mode = 2
+color = Color(0.8, 0.823529, 0.847059, 1)
+
+[node name="CurrUser" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 55.0
+offset_top = -104.0
+offset_right = 263.0
+offset_bottom = -57.0
+grow_vertical = 0
+theme_override_constants/separation = 8
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="CurrUser"]
+layout_mode = 2
+
+[node name="UserAvatar" type="TextureRect" parent="CurrUser/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("2_nu2t7")
+expand_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CurrUser"]
+use_parent_material = true
+layout_mode = 2
+
+[node name="UserName" type="Label" parent="CurrUser/VBoxContainer"]
+unique_name_in_owner = true
+use_parent_material = true
+layout_mode = 2
+text = "Dr. ██"
+label_settings = ExtResource("3_5yiw1")
+
+[node name="UserPermission" type="Label" parent="CurrUser/VBoxContainer"]
+unique_name_in_owner = true
+use_parent_material = true
+layout_mode = 2
+text = "Administrator"
+label_settings = ExtResource("4_ovbkm")
+
+[node name="PRTS" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -83.5
+offset_right = 110.0
+offset_bottom = 83.5
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PRTS"]
+use_parent_material = true
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+
+[node name="ColorRect2" type="ColorRect" parent="PRTS/VBoxContainer"]
+use_parent_material = true
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="PRTS/VBoxContainer"]
+use_parent_material = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[b][font_size=86]PRTS[/font_size][/b]
+[font size=12][b]SYNTHESIZE  INFORMATION[/b][/font]
+[font n=assets/fonts/BENDER.OTF s=40]ANALYSIS[/font] [font n=assets/fonts/Bender-Bold.otf s=40]OS[/font]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="ColorRect" type="ColorRect" parent="PRTS/VBoxContainer"]
+use_parent_material = true
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="LoginPrompt" type="Label" parent="."]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -104.0
+offset_right = 20.0
+offset_bottom = -85.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Please login."

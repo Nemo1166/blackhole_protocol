@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cdha5gcswv4rj"]
+
+[ext_resource type="FontFile" uid="uid://h57tyu1r5jvd" path="res://assets/fonts/SourceHanSerifSC_subset.woff2" id="1_0r427"]
+
+[resource]
+font = ExtResource("1_0r427")
+shadow_color = Color(0, 0, 0, 0.6)
