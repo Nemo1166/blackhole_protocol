@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://ca62le5xa6qld"]
+
+[ext_resource type="PackedScene" uid="uid://b872d2inyew6l" path="res://scenes/gui/main_menu.tscn" id="1_3jerc"]
+[ext_resource type="Script" path="res://scenes/game_controller.gd" id="1_ecvf7"]
+[ext_resource type="PackedScene" uid="uid://nsmrbretqidc" path="res://scenes/gui/components/fps_stat.tscn" id="3_wywkl"]
+
+[node name="GameController" type="Node" node_paths=PackedStringArray("world_2d", "gui")]
+script = ExtResource("1_ecvf7")
+world_2d = NodePath("World2D")
+gui = NodePath("GUI")
+
+[node name="World2D" type="Node2D" parent="."]
+
+[node name="GUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenu" parent="GUI" instance=ExtResource("1_3jerc")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="Transition" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="FpsStat" parent="." instance=ExtResource("3_wywkl")]
+
+[connection signal="start_new_game" from="GUI/MainMenu" to="GUI/MainMenu" method="_on_start_new_game"]

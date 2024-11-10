@@ -1,37 +1,31 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6aqirfbqqeud"]
+[gd_scene load_steps=9 format=3 uid="uid://b6aqirfbqqeud"]
 
-[ext_resource type="Texture2D" uid="uid://bu8wnm47rm0qq" path="res://assets/image/icon/MTL_DIAMOND_SHD.png" id="1_dlewf"]
-[ext_resource type="Script" path="res://scenes/gui/components/item_slot.gd" id="1_fc366"]
-[ext_resource type="Script" path="res://scripts/dataclass/item.gd" id="2_cpfab"]
-[ext_resource type="LabelSettings" uid="uid://5j47d8xfvkoj" path="res://assets/fonts/style_number_small.tres" id="2_v5xdo"]
+[ext_resource type="Shader" path="res://shaders/item_highlight.gdshader" id="1_dv0v2"]
+[ext_resource type="Script" path="res://scenes/gui/components/item_slot.gd" id="1_ktbdu"]
+[ext_resource type="Texture2D" uid="uid://chvsaqfe445cd" path="res://assets/image/item/道具_带框_源石碎片.png" id="1_vfm7v"]
+[ext_resource type="Resource" uid="uid://bavbyqhktu5qc" path="res://data/items/orig_shard.tres" id="2_p8l4d"]
+[ext_resource type="LabelSettings" uid="uid://5j47d8xfvkoj" path="res://assets/fonts/style_number_small.tres" id="4_4uqsi"]
+[ext_resource type="LabelSettings" uid="uid://cdha5gcswv4rj" path="res://assets/fonts/style_smalltitle.tres" id="5_4nrjt"]
+[ext_resource type="Texture2D" uid="uid://cvq7irdk6s6pq" path="res://assets/image/item/道具_源石碎片.png" id="6_sr328"]
 
-[sub_resource type="Resource" id="Resource_6ibja"]
-script = ExtResource("2_cpfab")
-name = "a"
-description = ""
-icon = ExtResource("1_dlewf")
-type = 5
-price = 0
-weight = 0.0
-is_fuel = false
-fuel_value = 0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5wc1b"]
+shader = ExtResource("1_dv0v2")
+shader_parameter/outline_c = Color(1, 0.501961, 0, 1)
+shader_parameter/progress = 0.0
 
-[node name="ItemUI" type="MarginContainer"]
-custom_minimum_size = Vector2(64, 64)
-offset_right = 64.0
-offset_bottom = 64.0
-script = ExtResource("1_fc366")
-item = SubResource("Resource_6ibja")
-amount = 10000
-
-[node name="TextureRect" type="TextureRect" parent="."]
-unique_name_in_owner = true
-layout_mode = 2
-texture = ExtResource("1_dlewf")
+[node name="ItemSlot" type="TextureRect"]
+material = SubResource("ShaderMaterial_5wc1b")
+custom_minimum_size = Vector2(48, 48)
+offset_right = 48.0
+offset_bottom = 48.0
+texture = ExtResource("1_vfm7v")
 expand_mode = 2
 stretch_mode = 4
+script = ExtResource("1_ktbdu")
+item = ExtResource("2_p8l4d")
+amount = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="TextureRect"]
+[node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -43,17 +37,82 @@ offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="TextureRect/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="Label" type="Label" parent="TextureRect/PanelContainer/MarginContainer"]
+[node name="Amount" type="Label" parent="PanelContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "9999"
-label_settings = ExtResource("2_v5xdo")
+label_settings = ExtResource("4_4uqsi")
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="DescPanel" type="PanelContainer" parent="."]
+visible = false
+z_index = 9
+layout_mode = 1
+offset_right = 337.0
+offset_bottom = 91.0
+
+[node name="MarginContainer" type="MarginContainer" parent="DescPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DescPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DescPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DescPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 6.0
+metadata/_edit_group_ = true
+
+[node name="DescTitle" type="Label" parent="DescPanel/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Title
+"
+label_settings = ExtResource("5_4nrjt")
+
+[node name="Desc" type="RichTextLabel" parent="DescPanel/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/bold_italics_font_size = 14
+theme_override_font_sizes/italics_font_size = 14
+theme_override_font_sizes/mono_font_size = 14
+theme_override_font_sizes/normal_font_size = 14
+theme_override_font_sizes/bold_font_size = 14
+bbcode_enabled = true
+text = "lorem ipsum dolor adadrester"
+fit_content = true
+scroll_active = false
+
+[node name="TextureRect" type="TextureRect" parent="DescPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_sr328")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DescPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DescPanel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "获取方法："
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

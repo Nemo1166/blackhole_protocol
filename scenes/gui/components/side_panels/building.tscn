@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://0acso1f7lbx2"]
+
+[ext_resource type="Script" path="res://scenes/gui/components/side_panels/building.gd" id="1_4dxub"]
+[ext_resource type="LabelSettings" uid="uid://cdha5gcswv4rj" path="res://assets/fonts/style_smalltitle.tres" id="1_ks1ko"]
+
+[node name="VBoxContainer" type="VBoxContainer"]
+script = ExtResource("1_4dxub")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "建造选项"
+label_settings = ExtResource("1_ks1ko")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Prod" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "制造站"
+
+[connection signal="pressed" from="GridContainer/Prod" to="." method="build_prod"]

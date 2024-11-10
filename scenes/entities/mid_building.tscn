@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://3yunttm6n0gy"]
+
+[ext_resource type="PackedScene" uid="uid://bv5hmkmsoosxo" path="res://scenes/entities/base_building.tscn" id="1_cnrac"]
+[ext_resource type="Script" path="res://scenes/entities/mid_building.gd" id="2_4ingk"]
+[ext_resource type="Texture2D" uid="uid://bk8mk1fj0ig3c" path="res://assets/image/entity_border.svg" id="3_3axoo"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_finj0"]
+size = Vector2(256, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vsljb"]
+size = Vector2(256, 160)
+
+[node name="MidBuilding" instance=ExtResource("1_cnrac")]
+script = ExtResource("2_4ingk")
+title = "中型设施"
+
+[node name="Building" parent="." index="0"]
+position = Vector2(128, 80)
+
+[node name="Sprite2D" type="Sprite2D" parent="Building" index="0"]
+texture = SubResource("PlaceholderTexture2D_finj0")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Building" index="1"]
+offset_left = -128.0
+offset_top = -80.0
+offset_right = 128.0
+offset_bottom = 80.0
+texture = ExtResource("3_3axoo")
+region_rect = Rect2(0, 0, 400, 400)
+patch_margin_left = 50
+patch_margin_top = 47
+patch_margin_right = 48
+patch_margin_bottom = 48
+
+[node name="MarginContainer" parent="." index="1"]
+offset_right = 256.0
+offset_bottom = 160.0
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(-32, -48)
+shape = SubResource("RectangleShape2D_vsljb")

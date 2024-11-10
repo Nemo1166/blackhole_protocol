@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3 uid="uid://be4u0vls5dhvb"]
+
+[ext_resource type="Script" path="res://scenes/gui/components/side_panels/prod_station_ctrl.gd" id="1_1v12c"]
+[ext_resource type="Texture2D" uid="uid://bcn203djuv0k1" path="res://assets/image/icon/Item_Tier_4.webp" id="2_fbo8m"]
+
+[node name="ProdStationCtrl" type="VBoxContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_1v12c")
+
+[node name="ProductUI" type="HBoxContainer" parent="."]
+layout_mode = 2
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="ProductUI"]
+layout_mode = 2
+
+[node name="bg" type="TextureRect" parent="ProductUI/MarginContainer"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("2_fbo8m")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="ProductUI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="CurrProduct" type="TextureRect" parent="ProductUI/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 4
+
+[node name="ProductName" type="Label" parent="ProductUI"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "未选择产品"
+
+[node name="CancelPlan" type="Button" parent="ProductUI"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+text = " 取消现有计划 "
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 6
+
+[node name="ProdInfo" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ProdInfo"]
+layout_mode = 2
+text = "生产信息"
+
+[connection signal="gui_input" from="ProductUI" to="." method="_on_product_ui_gui_input"]
+[connection signal="pressed" from="ProductUI/CancelPlan" to="." method="_on_cancel_plan_pressed"]

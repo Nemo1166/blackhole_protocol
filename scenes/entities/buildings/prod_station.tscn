@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmr2pmvo3kjp6"]
+
+[ext_resource type="PackedScene" uid="uid://3yunttm6n0gy" path="res://scenes/entities/mid_building.tscn" id="1_f357i"]
+[ext_resource type="Script" path="res://scenes/entities/buildings/prod_station.gd" id="2_bajt5"]
+[ext_resource type="PackedScene" uid="uid://be4u0vls5dhvb" path="res://scenes/gui/components/side_panels/prod_station_ctrl.tscn" id="3_b74k5"]
+[ext_resource type="Texture2D" uid="uid://b4hw3hu3etlyp" path="res://assets/image/pics/RIIC_Factory.png" id="4_hiu8j"]
+
+[node name="ProdStation" instance=ExtResource("1_f357i")]
+script = ExtResource("2_bajt5")
+title = "制造站"
+level = 1
+ctrl_panel = ExtResource("3_b74k5")
+is_built = true
+
+[node name="ProdStat" type="Sprite2D" parent="Building" index="1"]
+position = Vector2(0, -7.62939e-06)
+scale = Vector2(0.141125, 0.194175)
+texture = ExtResource("4_hiu8j")
+
+[node name="ColorRect" type="ColorRect" parent="Building" index="2"]
+self_modulate = Color(1, 1, 1, 0.313726)
+offset_left = -128.0
+offset_top = -80.0
+offset_right = 128.0
+offset_bottom = 80.0
+
+[node name="SelfStatus" parent="MarginContainer/Top/HBoxContainer2" index="1"]
+visible = false
+
+[node name="ProdIcon" type="TextureRect" parent="MarginContainer/VBoxContainer" index="0"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Area2D" parent="." index="2"]
+visible = false

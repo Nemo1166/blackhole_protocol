@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://xndwjn1qiawc"]
+
+[ext_resource type="PackedScene" uid="uid://bv5hmkmsoosxo" path="res://scenes/entities/base_building.tscn" id="1_5hlce"]
+[ext_resource type="Script" path="res://scenes/entities/large_building.gd" id="2_4dbh2"]
+
+[node name="LargeBuilding" instance=ExtResource("1_5hlce")]
+script = ExtResource("2_4dbh2")
+title = "大型设施"

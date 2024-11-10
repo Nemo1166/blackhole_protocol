@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8drvrmy5s72w"]
+
+[ext_resource type="Shader" path="res://shaders/change_color.gdshader" id="1_b75pl"]
+[ext_resource type="Script" path="res://scenes/gui/components/sidepanel.gd" id="1_ggqru"]
+[ext_resource type="FontFile" uid="uid://ddjm3jbnq4wxq" path="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf" id="3_chh0t"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_txdtf"]
+shader = ExtResource("1_b75pl")
+shader_parameter/from = Color(1, 1, 1, 1)
+shader_parameter/to = Color(0.6875, 0, 0, 1)
+shader_parameter/threshold = 0.15
+
+[sub_resource type="LabelSettings" id="LabelSettings_bl3s2"]
+font_size = 24
+
+[node name="PanelContainer" type="PanelContainer"]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = 48.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("1_ggqru")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_txdtf")
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_chh0t")
+theme_override_font_sizes/font_size = 24
+text = " power-off "
+icon_alignment = 1
+expand_icon = true
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 8.0
+text = "Title"
+label_settings = SubResource("LabelSettings_bl3s2")
+horizontal_alignment = 1
+
+[node name="CtrlPanel" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]

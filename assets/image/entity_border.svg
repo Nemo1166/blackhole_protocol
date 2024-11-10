@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #000;
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: 8px;
+      }
+    </style>
+  </defs>
+  <g id="_图层_1-2" data-name="图层 1">
+    <path class="cls-2" d="M184,200h32-32Z"/>
+    <line class="cls-2" x1="200" y1="183.5" x2="200" y2="216.5"/>
+    <polygon class="cls-1" points="8 8 48 8 48 0 0 0 0 48 8 48 8 8"/>
+    <polygon class="cls-1" points="392 392 352 392 352 400 400 400 400 352 392 352 392 392"/>
+    <polygon class="cls-1" points="8 392 8 352 0 352 0 400 48 400 48 392 8 392"/>
+    <polygon class="cls-1" points="352 0 352 8 392 8 392 48 400 48 400 0 352 0"/>
+  </g>
+</svg>

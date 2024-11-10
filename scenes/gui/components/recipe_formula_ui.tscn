@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=3 uid="uid://b4ermeut63f42"]
+
+[ext_resource type="Script" path="res://scenes/gui/components/recipe_formula_ui.gd" id="1_tv11q"]
+[ext_resource type="LabelSettings" uid="uid://5j47d8xfvkoj" path="res://assets/fonts/style_number_small.tres" id="2_lcqer"]
+[ext_resource type="Shader" path="res://shaders/change_color.gdshader" id="2_pjfpo"]
+[ext_resource type="Resource" uid="uid://dd4aiglwcr6pq" path="res://data/recipes/originium_shard.tres" id="2_vmedg"]
+[ext_resource type="LabelSettings" uid="uid://cfll3mt2npsjq" path="res://assets/fonts/style_normal_small.tres" id="3_ub04b"]
+[ext_resource type="Texture2D" uid="uid://dwtxb6slqdmeq" path="res://assets/image/icon/caret-right.svg" id="3_wrdg3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nxrwd"]
+shader = ExtResource("2_pjfpo")
+shader_parameter/from = Color(0, 0, 0, 1)
+shader_parameter/to = Color(1, 1, 1, 1)
+shader_parameter/threshold = 0.1
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 122.0
+offset_bottom = 48.0
+script = ExtResource("1_tv11q")
+recipe = ExtResource("2_vmedg")
+
+[node name="Product" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+expand_mode = 1
+stretch_mode = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RecipeFormulaUI" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/RecipeFormulaUI"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Desc" type="Label" parent="PanelContainer/RecipeFormulaUI/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = ExtResource("3_ub04b")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/RecipeFormulaUI/VBoxContainer"]
+layout_mode = 2
+
+[node name="Ingrediants" type="GridContainer" parent="PanelContainer/RecipeFormulaUI/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/RecipeFormulaUI/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Duration" type="Label" parent="PanelContainer/RecipeFormulaUI/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "2h"
+label_settings = ExtResource("2_lcqer")
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/RecipeFormulaUI/VBoxContainer/HBoxContainer/VBoxContainer"]
+material = SubResource("ShaderMaterial_nxrwd")
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("3_wrdg3")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Results" type="GridContainer" parent="PanelContainer/RecipeFormulaUI/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 3
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="Product" to="." method="_on_product_mouse_entered"]
+[connection signal="mouse_exited" from="Product" to="." method="_on_product_mouse_exited"]

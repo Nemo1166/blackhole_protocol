@@ -1,0 +1,13 @@
+extends Node2D
+
+@onready var time_mgr: TimeMgr = $TimeMgr
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	Global.game = self
+	Global.load_resources()
+	print(Global.items)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass

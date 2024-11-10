@@ -1,0 +1,114 @@
+[gd_scene load_steps=6 format=3 uid="uid://1l3x7wolrojj"]
+
+[ext_resource type="Script" path="res://scenes/riic.gd" id="1_a1njk"]
+[ext_resource type="LabelSettings" uid="uid://c1h8htpl43tff" path="res://assets/fonts/style_subtitle.tres" id="1_n3hck"]
+[ext_resource type="PackedScene" uid="uid://dgvb65v2fhvgy" path="res://scenes/entities/buildings/ctrl_centre.tscn" id="3_h5fi1"]
+[ext_resource type="PackedScene" uid="uid://3yunttm6n0gy" path="res://scenes/entities/mid_building.tscn" id="3_obp5v"]
+[ext_resource type="PackedScene" uid="uid://b8drvrmy5s72w" path="res://scenes/gui/components/sidepanel.tscn" id="4_frfd3"]
+
+[node name="RIIC" type="Node2D"]
+script = ExtResource("1_a1njk")
+metadata/_edit_horizontal_guides_ = [48.0, 0.0, 648.0]
+metadata/_edit_vertical_guides_ = [1152.0, 0.0]
+
+[node name="Layers" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Board" type="Node2D" parent="Layers"]
+
+[node name="CtrlCentre" parent="Layers/Board" instance=ExtResource("3_h5fi1")]
+position = Vector2(576, 224)
+
+[node name="MidBuilding" parent="Layers/Board" instance=ExtResource("3_obp5v")]
+position = Vector2(272, 104)
+
+[node name="MidBuilding7" parent="Layers/Board" instance=ExtResource("3_obp5v")]
+position = Vector2(832, 48)
+
+[node name="MidBuilding2" parent="Layers/Board" instance=ExtResource("3_obp5v")]
+position = Vector2(552, 48)
+
+[node name="MidBuilding3" parent="Layers/Board" instance=ExtResource("3_obp5v")]
+position = Vector2(920, 272)
+
+[node name="MidBuilding4" parent="Layers/Board" instance=ExtResource("3_obp5v")]
+position = Vector2(832, 496)
+
+[node name="MidBuilding5" parent="Layers/Board" instance=ExtResource("3_obp5v")]
+position = Vector2(552, 496)
+
+[node name="MidBuilding6" parent="Layers/Board" instance=ExtResource("3_obp5v")]
+position = Vector2(272, 443)
+
+[node name="UpperLevel" type="Node2D" parent="Layers"]
+
+[node name="LowerLevel" type="Node2D" parent="Layers"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 328)
+zoom = Vector2(0.8, 0.8)
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+editor_draw_drag_margin = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Title" type="Label" parent="UI"]
+visible = false
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 196.0
+offset_bottom = 117.0
+text = "罗德岛基建"
+label_settings = ExtResource("1_n3hck")
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="UI"]
+offset_left = 16.0
+offset_top = 128.0
+offset_right = 192.0
+offset_bottom = 320.0
+theme_override_constants/v_separation = 16
+metadata/_edit_group_ = true
+
+[node name="Button" type="Button" parent="UI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "甲板 (WIP)"
+
+[node name="Button2" type="Button" parent="UI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "上层区 (WIP)"
+
+[node name="Button3" type="Button" parent="UI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "下层区 (WIP)"
+
+[node name="PanelContainer" parent="UI" instance=ExtResource("4_frfd3")]
+offset_left = 0.0
+offset_right = 384.0
+
+[node name="DebugToolContainer" type="VBoxContainer" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -117.0
+offset_right = 118.0
+offset_bottom = -90.0
+grow_vertical = 0
+metadata/_edit_group_ = true
+
+[node name="Button" type="Button" parent="UI/DebugToolContainer"]
+layout_mode = 2
+text = "重置摄像机"
+
+[connection signal="side_panel_closed" from="UI/PanelContainer" to="." method="_on_panel_container_side_panel_closed"]
+[connection signal="side_panel_opened" from="UI/PanelContainer" to="UI/PanelContainer" method="on_panel_show"]
+[connection signal="pressed" from="UI/DebugToolContainer/Button" to="." method="_on_button_pressed"]

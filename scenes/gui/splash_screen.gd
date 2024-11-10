@@ -10,16 +10,17 @@ var blink_login_prompt = false
 func _ready() -> void:
 	var _time = Time.get_datetime_dict_from_system().hour
 	hide_all()
-	Global.set_tween(%Bg, "modulate:a", 1, 0.5)
-	await get_tree().create_timer(0.8).timeout
-	Global.set_tween(%PRTS, "modulate:a", 1, 0.5)
-	await get_tree().create_timer(0.8).timeout
-	Global.set_tween(%PRTS, "position:y", %PRTS.position.y - 40, 1)
-	await get_tree().create_timer(1.3).timeout
+	await UITweens.fade_in(%Bg, 1, 0)
+	await UITweens.fade_in(%PRTS, 1, 0.8)
+	await UITweens.set_tween(%PRTS, "position:y", %PRTS.position.y - 40, 1, 1)
+	await UITweens.tween_delay(1.3)
+	UITweens.fade_in($FingerPrint, 0.5)
 	blink_login_prompt = true
+	is_login = false
+	
 
-var is_login:=false
-var timer: float = 0
+var is_login:=true
+var timer: float = -PI/4
 func _process(delta: float) -> void:
 	if not is_login:
 		if Input.is_anything_pressed():
@@ -34,21 +35,21 @@ func _process(delta: float) -> void:
 func hide_all():
 	var children = get_children()
 	for child in children:
-		child.modulate.a = 0
+		if child is Control:
+			child.modulate.a = 0
 
 
 func _on_login() -> void:
-	Global.set_tween(login_prompt, "modulate:a", 1, 0.5)
-	Global.set_tween(login_prompt, "text", "Authenticating...", 0.5)
-	await get_tree().create_timer(1.5).timeout
-	Global.set_tween(login_prompt, "text", "Authentication success, access granted.", 0.5)
-	await get_tree().create_timer(2).timeout
+	$TouchSFX.play()
+	UITweens.fade_in(login_prompt, 0.5)
+	UITweens.change_text(login_prompt, "Authenticating...", 0.5)
+	UITweens.fade_out($FingerPrint, 0.5, 0, true)
+	await UITweens.change_text(login_prompt, "Authentication success, access granted.", 0.5, 1.5)
+	await UITweens.tween_delay(1)
 	login.emit()
-	Global.set_tween(%CurrUser, "modulate:a", 1, 0.5)
-	await get_tree().create_timer(0.5).timeout
-	Global.set_tween(login_prompt, "text", "Welcome back, Doctor.", 0.5)
-	bg.queue_free()
-	await get_tree().create_timer(4).timeout
-	Global.set_tween(login_prompt, "modulate:a", 0, 0.5)
-	await get_tree().create_timer(0.5).timeout
-	login_prompt.queue_free()
+	UITweens.fade_out(bg, 0.5, 0, true)
+	# Global.set_tween(%CurrUser, "modulate:a", 1, 0.5)
+	UITweens.fade_in(%CurrUser, 0.5)
+	await UITweens.change_text(login_prompt, "Welcome back, Doctor.", 0.5, 1.5)
+	#await UITweens.fade_out(login_prompt, 0.5, 4, true)
+	$TouchSFX.queue_free()

@@ -1,0 +1,98 @@
+[gd_scene load_steps=6 format=3 uid="uid://bv5hmkmsoosxo"]
+
+[ext_resource type="Script" path="res://scenes/entities/base_building.gd" id="1_bduo2"]
+[ext_resource type="LabelSettings" uid="uid://cdha5gcswv4rj" path="res://assets/fonts/style_smalltitle.tres" id="2_ys4wb"]
+[ext_resource type="LabelSettings" uid="uid://cfll3mt2npsjq" path="res://assets/fonts/style_normal_small.tres" id="3_6xshx"]
+
+[sub_resource type="GDScript" id="GDScript_4n04o"]
+script/source = "extends ProgressBar
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	if value == 0:
+		modulate.a = 0
+	else:
+		modulate.a = 1
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0lhfu"]
+size = Vector2(320, 256)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_bduo2")
+
+[node name="Building" type="Node2D" parent="."]
+position = Vector2(160, 128)
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 320.0
+offset_bottom = 256.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Top" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Top"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Title" type="Label" parent="MarginContainer/Top/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "设施"
+label_settings = ExtResource("2_ys4wb")
+
+[node name="Level" type="Label" parent="MarginContainer/Top/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Lv. -"
+label_settings = ExtResource("2_ys4wb")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/Top"]
+layout_mode = 2
+
+[node name="ProdStatus" type="Label" parent="MarginContainer/Top/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "空闲中"
+label_settings = ExtResource("3_6xshx")
+
+[node name="SelfStatus" type="Label" parent="MarginContainer/Top/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "状态信息"
+label_settings = ExtResource("3_6xshx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+rounded = true
+show_percentage = false
+script = SubResource("GDScript_4n04o")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(160, 128)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_0lhfu")
+
+[connection signal="input_event" from="Area2D" to="." method="handle_input_event"]

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=4 format=3 uid="uid://dd4aiglwcr6pq"]
+
+[ext_resource type="Resource" uid="uid://chqiqdi08er2g" path="res://data/items/orirock_oncentration.tres" id="1_iqrdg"]
+[ext_resource type="Script" path="res://scripts/dataclass/recipe.gd" id="1_tppb6"]
+[ext_resource type="Resource" uid="uid://bavbyqhktu5qc" path="res://data/items/orig_shard.tres" id="2_l8elo"]
+
+[resource]
+script = ExtResource("1_tppb6")
+id = 1
+name = "源石碎片"
+description = "从固源岩提取源石碎片"
+ingredients = {
+ExtResource("1_iqrdg"): 4
+}
+results = {
+ExtResource("2_l8elo"): 1
+}
+time_in_hour = 6

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dgvb65v2fhvgy"]
+
+[ext_resource type="PackedScene" uid="uid://xndwjn1qiawc" path="res://scenes/entities/large_building.tscn" id="1_oahdm"]
+[ext_resource type="Script" path="res://scenes/entities/buildings/ctrl_centre.gd" id="2_oo6qq"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_21j3q"]
+size = Vector2(320, 256)
+
+[node name="CtrlCentre" instance=ExtResource("1_oahdm")]
+script = ExtResource("2_oo6qq")
+title = "控制中心"
+is_built = true
+can_destroy = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Building" index="0"]
+texture = SubResource("PlaceholderTexture2D_21j3q")

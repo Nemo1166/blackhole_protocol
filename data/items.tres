@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceGroup" load_steps=2 format=3 uid="uid://j25s3ndx1ivd"]
+
+[ext_resource type="Script" path="res://addons/godot_resource_groups/resource_group.gd" id="1_cpm2v"]
+
+[resource]
+script = ExtResource("1_cpm2v")
+base_folder = "res://data/items"
+includes = Array[String]([])
+excludes = Array[String]([])
+paths = Array[String](["res://data/items/orig_shard.tres", "res://data/items/orirock_oncentration.tres"])

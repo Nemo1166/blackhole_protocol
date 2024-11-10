@@ -56,3 +56,38 @@ func get_minutes(ignore_day: bool = true) -> int:
 		return minute + hour * 60
 	else:
 		return minute + hour * 60 + day * 24 * 60 + month * N_DAY * 24 * 60 + year * N_MONTH * N_DAY * 24 * 60
+
+
+func get_finish_time(hours: int) -> DateTime:
+	var finish_time := DateTime.new()
+	finish_time.year = year
+	finish_time.month = month
+	finish_time.day = day
+	finish_time.hour = hour + hours
+	finish_time.minute = minute
+	if finish_time.hour >= 24:
+		finish_time.day += finish_time.hour / 24
+		finish_time.hour %= 24
+		if finish_time.day > N_DAY:
+			finish_time.month += finish_time.day / N_DAY
+			finish_time.day %= N_DAY
+			if finish_time.month > N_MONTH:
+				finish_time.year += finish_time.month / N_MONTH
+				finish_time.month %= N_MONTH
+	return finish_time
+
+
+func get_date_str() -> String:
+	return str(year) + '年' + str(month) + '月' + str(day) + '日'
+
+func get_time_str() -> String:
+	return "%02d:%02d" % [hour, minute]
+
+func copy() -> DateTime:
+	var t_copy := DateTime.new()
+	t_copy.year = year
+	t_copy.month = month
+	t_copy.day = day
+	t_copy.hour = hour
+	t_copy.minute = minute
+	return t_copy

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b872d2inyew6l"]
+[gd_scene load_steps=7 format=3 uid="uid://b872d2inyew6l"]
 
 [ext_resource type="Script" path="res://scenes/gui/main_menu.gd" id="1_gac2s"]
 [ext_resource type="PackedScene" uid="uid://b3y8yqbau65nl" path="res://scenes/gui/splash_screen.tscn" id="2_2nedn"]
 [ext_resource type="Shader" path="res://shaders/change_color.gdshader" id="2_05t2d"]
+[ext_resource type="Texture2D" uid="uid://bcf1xcjy7txt5" path="res://assets/image/bg/Bg_rhodes_flower.png" id="2_gp5br"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2wyaq"]
 shader = ExtResource("2_05t2d")
@@ -25,7 +26,26 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gac2s")
 
-[node name="Bg" type="ColorRect" parent="."]
+[node name="bg" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_gp5br")
+expand_mode = 3
+
+[node name="Mask" type="ColorRect" parent="bg"]
+modulate = Color(1, 1, 1, 0.501961)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,9 +68,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -120.0
-offset_top = 84.0
+offset_top = 83.0
 offset_right = 120.0
-offset_bottom = 146.0
+offset_bottom = 187.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8

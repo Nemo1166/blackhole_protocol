@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://bavbyqhktu5qc"]
+
+[ext_resource type="Texture2D" uid="uid://cvq7irdk6s6pq" path="res://assets/image/item/道具_源石碎片.png" id="1_xcdc5"]
+[ext_resource type="Script" path="res://scripts/dataclass/item.gd" id="3_6lqsn"]
+
+[resource]
+script = ExtResource("3_6lqsn")
+id = 1
+name = "源石碎片"
+desc_basic = "从污染区域中收集到的源石碎片"
+desc_ext = "从遭受重度污染的地区回收的源石碎块，存在高感染威胁及一定突变概率，是哥伦比亚疾病防控中心毒性数据库重点提及的危险物质。"
+icon = ExtResource("1_xcdc5")
+tier = 5
+type = 4
+weight = 8.0
+is_fuel = true
+fuel_value = 16

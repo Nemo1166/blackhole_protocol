@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dnwyjbh817v27"]
+
+[ext_resource type="FontFile" uid="uid://bwvj2n1gcgryf" path="res://assets/fonts/HarmonyOS_Sans_SC_Regular.woff2" id="1_lo5cr"]
+
+[resource]
+Label/fonts/font = ExtResource("1_lo5cr")
