@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dbj66s5bpalk4"
-path="res://.godot/imported/fa-solid-900.woff2-2cd20ae98db92ebcfafb8829fa831164.fontdata"
+uid="uid://ddjm3jbnq4wxq"
+path="res://.godot/imported/Font Awesome 6 Free-Solid-900.otf-61307374d56991d83f5a470204e8bcbb.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/fa-solid-900.woff2"
-dest_files=["res://.godot/imported/fa-solid-900.woff2-2cd20ae98db92ebcfafb8829fa831164.fontdata"]
+source_file="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf"
+dest_files=["res://.godot/imported/Font Awesome 6 Free-Solid-900.otf-61307374d56991d83f5a470204e8bcbb.fontdata"]
 
 [params]
 
