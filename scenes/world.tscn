@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=4 uid="uid://vq3he0hbxr2h"]
+[gd_scene load_steps=18 format=4 uid="uid://vq3he0hbxr2h"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_ivdhi"]
 [ext_resource type="Script" path="res://scripts/TimeMgr.gd" id="2_wqp3t"]
 [ext_resource type="Texture2D" uid="uid://c667m4m74se4h" path="res://assets/image/terra_hexmap.png" id="3_eq87v"]
 [ext_resource type="Script" path="res://scripts/dataclass/date_time.gd" id="3_vk33i"]
 [ext_resource type="PackedScene" uid="uid://1l3x7wolrojj" path="res://scenes/riic.tscn" id="4_7pxol"]
+[ext_resource type="Script" path="res://scripts/ResMgr.gd" id="4_dl0qj"]
 [ext_resource type="TileSet" uid="uid://cb0ntb3ojridd" path="res://assets/res/territory_border_tileset.tres" id="4_sy3k1"]
 [ext_resource type="Shader" path="res://shaders/change_territory_border_color.gdshader" id="5_6a5l3"]
 [ext_resource type="TileSet" uid="uid://e7wa2pcdfu5d" path="res://assets/res/hex_tileset.tres" id="5_oa6v3"]
@@ -69,6 +70,9 @@ day_time = SubResource("Resource_83qvp")
 twilight_time = SubResource("Resource_dpsbx")
 night_time = SubResource("Resource_7hgro")
 dawn_time = SubResource("Resource_scgxc")
+
+[node name="ResourceMgr" type="Node" parent="."]
+script = ExtResource("4_dl0qj")
 
 [node name="Map" type="Node2D" parent="."]
 visible = false

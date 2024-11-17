@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://1l3x7wolrojj"]
+[gd_scene load_steps=7 format=3 uid="uid://1l3x7wolrojj"]
 
 [ext_resource type="Script" path="res://scenes/riic.gd" id="1_a1njk"]
 [ext_resource type="LabelSettings" uid="uid://c1h8htpl43tff" path="res://assets/fonts/style_subtitle.tres" id="1_n3hck"]
+[ext_resource type="Script" path="res://scripts/dataclass/warehouse.gd" id="2_ostp6"]
 [ext_resource type="PackedScene" uid="uid://dgvb65v2fhvgy" path="res://scenes/entities/buildings/ctrl_centre.tscn" id="3_h5fi1"]
 [ext_resource type="PackedScene" uid="uid://3yunttm6n0gy" path="res://scenes/entities/mid_building.tscn" id="3_obp5v"]
 [ext_resource type="PackedScene" uid="uid://b8drvrmy5s72w" path="res://scenes/gui/components/sidepanel.tscn" id="4_frfd3"]
@@ -10,6 +11,9 @@
 script = ExtResource("1_a1njk")
 metadata/_edit_horizontal_guides_ = [48.0, 0.0, 648.0]
 metadata/_edit_vertical_guides_ = [1152.0, 0.0]
+
+[node name="Warehouse" type="Node" parent="."]
+script = ExtResource("2_ostp6")
 
 [node name="Layers" type="Node2D" parent="."]
 unique_name_in_owner = true

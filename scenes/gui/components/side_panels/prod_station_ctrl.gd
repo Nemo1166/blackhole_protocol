@@ -1,7 +1,7 @@
 class_name ProdStationCtrl extends VBoxContainer
 
 
-@export var factory: ProdStation
+@export var factory: BaseFactory
 var formula_ui = preload("res://scenes/gui/components/recipe_formula_ui.tscn")
 
 
@@ -16,7 +16,7 @@ func _process(_delta: float) -> void:
 	pass
 
 func on_select_recipe(recipe: Recipe):
-	factory.set_plan(recipe)
+	factory.set_recipe(recipe)
 	var product: Item = recipe.results.keys()[0]
 	%CurrProduct.texture = product.icon
 	%ProductName.text = product.name
@@ -52,4 +52,4 @@ func _on_cancel_plan_pressed() -> void:
 	%CurrProduct.texture = null
 	%ProductName.text = '未选择产品'
 	%CancelPlan.hide()
-	factory.remove_plan()
+	factory.remove_recipe()

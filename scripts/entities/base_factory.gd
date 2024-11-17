@@ -12,6 +12,8 @@ var efficincy: float = 1.0
 # var buff
 
 var io_warehouse: Warehouse
+var input_inventory: Dictionary = {}
+var output_inventory: Dictionary = {}
 
 enum State {
 	IDLE,
@@ -78,3 +80,63 @@ func state_to(state: State) -> void:
 			is_working = false
 		State.STOPPED:
 			is_working = false
+
+
+# 库存管理
+
+# func pickup_item(item: Item, amount: int) -> void:
+# 	if not input_inventory.has(item):
+# 		input_inventory[item] = 0
+# 	var avail_amount = io_warehouse.get_item_amount(item)
+# 	if avail_amount < amount:
+# 		# not enough
+# 		input_inventory[item] += avail_amount
+# 		io_warehouse.remove_item(item, avail_amount)
+# 	else:
+# 		# enough
+# 		input_inventory[item] += amount
+# 		io_warehouse.remove_item(item, amount)
+
+func pickup_item(item: Item, amount: int) -> void:
+	if not input_inventory.has(item):
+		input_inventory[item] = 0
+	var avail_amount = io_warehouse.get_item_amount(item)
+	var amount_to_pickup = min(amount, avail_amount)
+	io_warehouse.remove_item(item, amount_to_pickup)
+	input_inventory[item] += amount_to_pickup
+
+
+func drop_all() -> void:
+	if input_inventory.size() == 0:
+		return
+	for item in input_inventory.keys():
+		var avail_space = io_warehouse.get_avail_space(item)
+		if avail_space < input_inventory[item]:
+			io_warehouse.add_item(item, avail_space)
+			input_inventory[item] -= avail_space
+		else:
+			io_warehouse.add_item(item, input_inventory[item])
+			input_inventory.erase(item)
+
+
+func collect_ingredients() -> void:
+	const AMOUNT_MULTIPLIER: int = 2
+	if not is_configured:
+		return
+	for item in curr_recipe.ingredients.keys():
+		var amount_needed = curr_recipe.ingredients[item] * AMOUNT_MULTIPLIER
+		if not input_inventory.has(item):
+			input_inventory[item] = 0
+		if input_inventory[item] < amount_needed:
+			pickup_item(item, amount_needed - input_inventory[item])
+
+
+func has_enough_ingredients() -> bool:
+	if not is_configured:
+		return false
+	for item in curr_recipe.ingredients.keys():
+		if not input_inventory.has(item):
+			return false
+		if input_inventory[item] < curr_recipe.ingredients[item]:
+			return false
+	return true
