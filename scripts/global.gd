@@ -1,7 +1,7 @@
 extends Node
 
 var game_ctrl: GameController = null
-var game: Node
+var game: GameWorld
 
 var is_init = true
 

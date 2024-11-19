@@ -3,13 +3,14 @@ class_name ProdStation extends BaseBuilding
 
 @onready var factory: BaseFactory = $Factory
 
-func set_plan(recipe: Recipe):
-	factory.set_recipe(recipe)
+func initiate(loc_idx: int):
+	factory.link_warehouse(loc_idx)
+
+func on_set_plan(recipe: Recipe):
 	%ProdIcon.texture = recipe.results.keys()[0].icon
 
-func remove_plan():
+func on_remove_plan():
 	%ProdIcon.texture = null
-	factory.remove_recipe()
 
 
 func gen_ctrl_panel():
@@ -31,3 +32,11 @@ func _on_factory_state_changed(state: BaseFactory.State) -> void:
 
 func _on_factory_progress_changed(progress: float) -> void:
 	set_progress(progress)
+
+
+func _on_factory_sufficiency_changed(is_sufficient: bool) -> void:
+	if is_sufficient:
+		%SelfStatus.hide()
+	else:
+		%SelfStatus.show()
+		%SelfStatus.text = '原料不足'

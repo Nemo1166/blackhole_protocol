@@ -1,6 +1,7 @@
 extends VBoxContainer
 
 var building_slot: BaseBuilding
+var loc_id: int
 
 enum SlotType {
 	Large,
@@ -25,6 +26,7 @@ func put_building(scene: Node):
 	building_slot.queue_free()
 
 func build_prod():
-	var new = preload("res://scenes/entities/buildings/prod_station.tscn").instantiate()
+	var new: ProdStation = preload("res://scenes/entities/buildings/prod_station.tscn").instantiate()
 	put_building(new)
+	new.initiate(loc_id)
 	close_sidepanel.emit()

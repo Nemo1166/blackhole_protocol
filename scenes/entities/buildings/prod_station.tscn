@@ -40,5 +40,8 @@ size_flags_vertical = 8
 expand_mode = 1
 stretch_mode = 4
 
+[connection signal="plan_removed" from="Factory" to="." method="on_remove_plan"]
+[connection signal="plan_set" from="Factory" to="." method="on_set_plan"]
 [connection signal="progress_changed" from="Factory" to="." method="_on_factory_progress_changed"]
 [connection signal="state_changed" from="Factory" to="." method="_on_factory_state_changed"]
+[connection signal="sufficiency_changed" from="Factory" to="." method="_on_factory_sufficiency_changed"]

@@ -1,20 +1,20 @@
 class_name ResourceMgr extends Node
 
 
-var locations: Array[Warehouse] = []
+var depots: Array[Warehouse] = []
 
 
-func register_location(location: Warehouse) -> void:
-	locations.append(location)
+func register_depot(depot: Warehouse) -> void:
+	depots.append(depot)
 
 
-func unregister_location(location: Warehouse) -> void:
-	locations.erase(location)
+func unregister_depot(depot: Warehouse) -> void:
+	depots.erase(depot)
 
 
-func get_location_by_title(title: String) -> Warehouse:
-	for location in locations:
-		if location.title == title:
-			return location
-	return null
+func get_depot_idx(depot: Warehouse) -> int:
+	return depots.find(depot)
 
+
+func get_depot(idx: int) -> Warehouse:
+	return depots[idx]

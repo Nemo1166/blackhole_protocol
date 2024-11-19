@@ -113,6 +113,20 @@ metadata/_edit_group_ = true
 layout_mode = 2
 text = "重置摄像机"
 
+[node name="Button2" type="Button" parent="UI/DebugToolContainer"]
+layout_mode = 2
+text = "Add 10 Orirock"
+
+[node name="debug_invent" type="GridContainer" parent="UI"]
+unique_name_in_owner = true
+offset_left = 16.0
+offset_top = 352.0
+offset_right = 192.0
+offset_bottom = 472.0
+columns = 3
+
+[connection signal="item_changed" from="Warehouse" to="." method="debug_update_inventory"]
 [connection signal="side_panel_closed" from="UI/PanelContainer" to="." method="_on_panel_container_side_panel_closed"]
 [connection signal="side_panel_opened" from="UI/PanelContainer" to="UI/PanelContainer" method="on_panel_show"]
 [connection signal="pressed" from="UI/DebugToolContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="UI/DebugToolContainer/Button2" to="." method="_on_button_2_pressed"]

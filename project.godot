@@ -30,6 +30,8 @@ config/icon="res://default_icon.svg"
 
 Global="*res://scripts/global.gd"
 UITweens="*res://scripts/ui_tweens.gd"
+PlaytimeManager="*res://addons/playtime_timer/playtime_manager.gd"
+GGS="*res://addons/ggs/plugin/singleton/ggs.tscn"
 
 [display]
 
@@ -38,7 +40,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_resource_groups/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/radial_progress/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
+enabled=PackedStringArray("res://addons/ggs/plugin.cfg", "res://addons/godot_resource_groups/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/playtime_timer/plugin.cfg", "res://addons/radial_progress/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
 
 [file_customization]
 

@@ -11,6 +11,7 @@ signal item_changed(item: Item, amount: int)
 
 func _ready() -> void:
 	item_changed.connect(self.update_storage)
+	item_changed.connect(self.get_status)
 
 
 func add_item(item: Item, amount: int) -> void:
@@ -18,14 +19,15 @@ func add_item(item: Item, amount: int) -> void:
 		inventory[item] = amount
 	else:
 		inventory[item] += amount
-	item_changed.emit(item, inventory[item])
+	item_changed.emit(item, amount)
 
 func remove_item(item: Item, amount: int) -> void:
 	if inventory.has(item):
 		inventory[item] -= amount
-		if inventory[item] <= 0:
-			inventory.erase(item)
-		item_changed.emit(item, inventory[item])
+		item_changed.emit(item, -amount)
+		#if inventory[item] <= 0:
+			#inventory.erase(item)
+		
 
 
 func get_item_amount(item: Item) -> int:
@@ -40,10 +42,16 @@ func get_avail_space(item: Item) -> int:
 	return int(avail_space / item.weight)
 
 
-func update_storage() -> void:
+func update_storage(_item: Item, _amount: int) -> void:
 	storage = 0
 	for item: Item in inventory.keys():
 		if inventory[item] == 0:
 			inventory.erase(item)
 		else:
 			storage += item.weight * inventory[item]
+
+
+func get_status(_item, _amount) -> void:
+	print("Storage: " + str(storage) + "/" + str(capacity))
+	for item in inventory.keys():
+		print(item.name + ": " + str(inventory[item]))

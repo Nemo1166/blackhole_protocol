@@ -5,12 +5,12 @@ extends PanelContainer
 @onready var ctrl_panel: MarginContainer = %CtrlPanel
 
 signal side_panel_closed
-signal side_panel_opened(built: BaseBuilding)
+signal side_panel_opened(built: BaseBuilding, loc: int)
 
 var is_opened: bool = false
+var loc_id: int
 
-
-func on_panel_show(built: BaseBuilding):
+func on_panel_show(built: BaseBuilding, loc: int):
 	clear_panel()
 	if not is_opened:
 		# print('viewport ', get_viewport().size)
@@ -21,6 +21,7 @@ func on_panel_show(built: BaseBuilding):
 	if not built.is_built:
 		var ctrl = preload("res://scenes/gui/components/side_panels/building.tscn").instantiate()
 		ctrl.building_slot = built
+		ctrl.loc_id = loc
 		ctrl_panel.add_child(ctrl)
 		ctrl.close_sidepanel.connect(_on_close_button_pressed)
 		return
