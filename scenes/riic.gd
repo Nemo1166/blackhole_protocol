@@ -38,7 +38,7 @@ func update_signal_connection():
 					e.building_selected.connect(on_building_selected)
 
 func on_building_selected(built: BaseBuilding):
-	print(built.position)
+	# print(built.position)
 	elevator.hide()
 	if not is_zoomin:
 		prev_camera_pos = camera.position
@@ -46,14 +46,16 @@ func on_building_selected(built: BaseBuilding):
 		is_zoomin = true
 	camera.position.y = built.position.y + 120
 	camera.position.x = built.position.x + 280
-	camera.zoom = Vector2(1.5, 1.5)
+	#camera.zoom = Vector2(1.5, 1.5)
+	UITweens.set_tween(camera, 'zoom', Vector2(1.5, 1.5), 0.2)
 	side_panel.side_panel_opened.emit(built, loc_id)
 	print('camera moved to ', camera.position)
 
 
 func camera_reset():
 	camera.position = prev_camera_pos
-	camera.zoom = prev_camera_zoom
+	#camera.zoom = prev_camera_zoom
+	UITweens.set_tween(camera, 'zoom', prev_camera_zoom, 0.2)
 	#print('camera pos ', camera.position)
 	is_zoomin = false
 
@@ -65,6 +67,7 @@ func _on_button_pressed() -> void:
 
 func _on_panel_container_side_panel_closed() -> void:
 	camera_reset()
+	elevator.show()
 
 
 func _on_button_2_pressed() -> void:
@@ -85,3 +88,7 @@ func debug_update_inventory(_item: Item, _amount: int):
 			ITEM_SLOT.amount = warehouse.inventory[item]
 			%debug_invent.add_child(ITEM_SLOT)
 			
+
+
+func _on_button_3_pressed() -> void:
+	AudioMgr.play_random_bgm()

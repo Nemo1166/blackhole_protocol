@@ -32,6 +32,7 @@ Global="*res://scripts/global.gd"
 UITweens="*res://scripts/ui_tweens.gd"
 PlaytimeManager="*res://addons/playtime_timer/playtime_manager.gd"
 GGS="*res://addons/ggs/plugin/singleton/ggs.tscn"
+AudioMgr="*res://global/audio_mgr.tscn"
 
 [display]
 

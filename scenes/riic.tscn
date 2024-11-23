@@ -102,10 +102,10 @@ offset_right = 384.0
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = -117.0
-offset_right = 118.0
-offset_bottom = -90.0
+offset_left = 24.0
+offset_top = -125.0
+offset_right = 143.0
+offset_bottom = -36.0
 grow_vertical = 0
 metadata/_edit_group_ = true
 
@@ -117,12 +117,20 @@ text = "重置摄像机"
 layout_mode = 2
 text = "Add 10 Orirock"
 
-[node name="debug_invent" type="GridContainer" parent="UI"]
-unique_name_in_owner = true
+[node name="Button3" type="Button" parent="UI/DebugToolContainer"]
+layout_mode = 2
+text = "Random bgm"
+
+[node name="PanelContainer2" type="PanelContainer" parent="UI"]
 offset_left = 16.0
-offset_top = 352.0
+offset_top = 360.0
 offset_right = 192.0
-offset_bottom = 472.0
+offset_bottom = 488.0
+metadata/_edit_group_ = true
+
+[node name="debug_invent" type="GridContainer" parent="UI/PanelContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
 columns = 3
 
 [connection signal="item_changed" from="Warehouse" to="." method="debug_update_inventory"]
@@ -130,3 +138,4 @@ columns = 3
 [connection signal="side_panel_opened" from="UI/PanelContainer" to="UI/PanelContainer" method="on_panel_show"]
 [connection signal="pressed" from="UI/DebugToolContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="UI/DebugToolContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="UI/DebugToolContainer/Button3" to="." method="_on_button_3_pressed"]

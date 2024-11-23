@@ -19,7 +19,7 @@ func _ready() -> void:
 	amount_container.hide()
 	if item:
 		self.texture = item.icon
-		if amount > 1:
+		if amount > 0:
 			amount_container.show()
 			if amount > 999999:
 				amount_label.text = "%dM" % (amount / 1000000)

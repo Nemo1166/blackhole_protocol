@@ -63,9 +63,6 @@ func process_day_state() -> void:
 			day_state_changed.emit(curr_state)
 
 
-
-
-
 func handle_input() -> void:
 	if Input.is_action_just_pressed("pause"):
 		is_paused = !is_paused

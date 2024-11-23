@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://be4u0vls5dhvb"]
+[gd_scene load_steps=4 format=3 uid="uid://be4u0vls5dhvb"]
 
 [ext_resource type="Script" path="res://scenes/gui/components/side_panels/prod_station_ctrl.gd" id="1_1v12c"]
 [ext_resource type="Texture2D" uid="uid://bcn203djuv0k1" path="res://assets/image/icon/Item_Tier_4.webp" id="2_fbo8m"]
+[ext_resource type="LabelSettings" uid="uid://cdha5gcswv4rj" path="res://assets/fonts/style_smalltitle.tres" id="3_j7qmr"]
 
 [node name="ProdStationCtrl" type="VBoxContainer"]
 size_flags_horizontal = 3
@@ -47,18 +48,35 @@ layout_mode = 2
 size_flags_horizontal = 8
 text = " 取消现有计划 "
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="RecipeSelector" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RecipeSelector"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RecipeSelector/VBoxContainer"]
+layout_mode = 2
+text = "可用配方"
+
+[node name="RecipeGrid" type="GridContainer" parent="RecipeSelector/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4
 columns = 6
 
 [node name="ProdInfo" type="MarginContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ProdInfo"]
 layout_mode = 2
 theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="ProdInfo/VBoxContainer"]
+layout_mode = 2
+text = "生产信息"
+label_settings = ExtResource("3_j7qmr")
 
 [node name="Priority" type="HBoxContainer" parent="ProdInfo/VBoxContainer"]
 layout_mode = 2
@@ -98,32 +116,45 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "++"
 
-[node name="Label" type="Label" parent="ProdInfo/VBoxContainer"]
+[node name="Progress" type="HBoxContainer" parent="ProdInfo/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "生产信息"
+theme_override_constants/separation = 8
 
-[node name="ProgressBar" type="ProgressBar" parent="ProdInfo/VBoxContainer"]
+[node name="Input" type="HBoxContainer" parent="ProdInfo/VBoxContainer/Progress"]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="ProdInfo/VBoxContainer/Progress"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 1
 
-[node name="Inventory" type="HBoxContainer" parent="ProdInfo/VBoxContainer"]
+[node name="Output" type="HBoxContainer" parent="ProdInfo/VBoxContainer/Progress"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ProdInfo/VBoxContainer/Inventory"]
+[node name="InputInv" type="VBoxContainer" parent="ProdInfo/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="input" type="Label" parent="ProdInfo/VBoxContainer/Inventory/VBoxContainer"]
+[node name="Label" type="Label" parent="ProdInfo/VBoxContainer/InputInv"]
 layout_mode = 2
-text = "原料库存"
+text = "库存"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="ProdInfo/VBoxContainer/Inventory"]
+[node name="GridContainer" type="GridContainer" parent="ProdInfo/VBoxContainer/InputInv"]
 layout_mode = 2
-size_flags_horizontal = 3
+columns = 4
 
-[node name="input2" type="Label" parent="ProdInfo/VBoxContainer/Inventory/VBoxContainer2"]
+[node name="OutputInv" type="VBoxContainer" parent="ProdInfo/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "产品库存"
+
+[node name="Label" type="Label" parent="ProdInfo/VBoxContainer/OutputInv"]
+layout_mode = 2
+text = "待出库"
+
+[node name="GridContainer" type="GridContainer" parent="ProdInfo/VBoxContainer/OutputInv"]
+layout_mode = 2
+columns = 4
 
 [connection signal="gui_input" from="ProductUI" to="." method="_on_product_ui_gui_input"]
 [connection signal="pressed" from="ProductUI/CancelPlan" to="." method="_on_cancel_plan_pressed"]

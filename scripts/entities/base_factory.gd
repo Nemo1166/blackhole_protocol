@@ -27,6 +27,7 @@ signal progress_changed(progress: float)
 signal sufficiency_changed(is_sufficient: bool)
 signal plan_set(recipe: Recipe)
 signal plan_removed
+signal inventory_changed
 
 
 func _ready() -> void:
@@ -121,6 +122,7 @@ func pickup_item(item: Item, amount: int) -> void:
 	var amount_to_pickup = min(amount, avail_amount)
 	io_warehouse.remove_item(item, amount_to_pickup)
 	input_inventory[item] += amount_to_pickup
+	inventory_changed.emit()
 
 
 func drop_inventory(depot: Dictionary) -> void:
@@ -134,6 +136,7 @@ func drop_inventory(depot: Dictionary) -> void:
 		else:
 			io_warehouse.add_item(item, depot[item])
 			depot.erase(item)
+	inventory_changed.emit()
 
 
 func collect_ingredients() -> void:

@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8ax18843lmex"]
+
+[ext_resource type="Script" path="res://global/audio_mgr.gd" id="1_40uq0"]
+
+[node name="AudioMgr" type="Node"]
+script = ExtResource("1_40uq0")
+bgm_list = Array[AudioStream]([null])
+
+[node name="BGMAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"bgm"
+
+[node name="SFXAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"sfx"
+
+[connection signal="finished" from="BGMAudioStreamPlayer" to="." method="_on_bgm_finished"]

@@ -18,6 +18,6 @@ func _ready() -> void:
 
 func start_new_game() -> void:
 	var world = preload("res://scenes/world.tscn").instantiate()
-	print(typeof(world))
+	# print(typeof(world))
 	world_2d.add_child(world)
 	$GUI.hide()

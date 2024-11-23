@@ -1,0 +1,30 @@
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://r10etlclxowu"]
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_7fo1o"]
+resource_name = "LowPassFilter"
+cutoff_hz = 800.0
+resonance = 0.8
+db = 1
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_dpj16"]
+resource_name = "Reverb"
+dry = 0.8
+wet = 0.2
+
+[resource]
+bus/1/name = &"bgm"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.000600815
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectLowPassFilter_7fo1o")
+bus/1/effect/0/enabled = false
+bus/1/effect/1/effect = SubResource("AudioEffectReverb_dpj16")
+bus/1/effect/1/enabled = false
+bus/2/name = &"sfx"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"

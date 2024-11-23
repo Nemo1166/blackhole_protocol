@@ -40,10 +40,10 @@ func on_panel_show(built: BaseBuilding, loc: int):
 		ctrl_panel.add_child(label)
 
 func _on_close_button_pressed() -> void:
-	print('viewport ', get_viewport().size)
+	# print('viewport ', get_viewport().size)
 	side_panel_closed.emit()
 	UITweens.set_tween(self, "position:x", position.x + size.x, 0.25)
-	print('sidebar moved to ', position)
+	# print('sidebar moved to ', position)
 	is_opened = false
 	clear_panel()
 
