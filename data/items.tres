@@ -7,4 +7,4 @@ script = ExtResource("1_cpm2v")
 base_folder = "res://data/items"
 includes = Array[String]([])
 excludes = Array[String]([])
-paths = Array[String](["res://data/items/orig_shard.tres", "res://data/items/orirock_oncentration.tres"])
+paths = Array[String](["res://data/items/gold.tres", "res://data/items/metal.tres", "res://data/items/orig_shard.tres", "res://data/items/orirock_oncentration.tres", "res://data/items/stone.tres", "res://data/items/wood.tres"])

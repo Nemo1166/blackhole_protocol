@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=3 format=3 uid="uid://d32fas7st5c0y"]
+
+[ext_resource type="Resource" uid="uid://cbxgrsp7rmkdb" path="res://data/items/wood.tres" id="1_uvl4e"]
+[ext_resource type="Script" path="res://scripts/dataclass/recipe.gd" id="3_6sv3r"]
+
+[resource]
+script = ExtResource("3_6sv3r")
+id = 1
+name = "采集木材"
+type = 0
+description = ""
+ingredients = {}
+results = {
+ExtResource("1_uvl4e"): 6
+}
+time_in_hour = 6

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=3 format=3 uid="uid://codnfw8q8kitt"]
+
+[ext_resource type="Resource" uid="uid://o6ecxxdgkwqb" path="res://data/items/stone.tres" id="1_nna60"]
+[ext_resource type="Script" path="res://scripts/dataclass/recipe.gd" id="3_ivvwe"]
+
+[resource]
+script = ExtResource("3_ivvwe")
+id = 2
+name = "采集石材"
+type = 0
+description = ""
+ingredients = {}
+results = {
+ExtResource("1_nna60"): 4
+}
+time_in_hour = 6

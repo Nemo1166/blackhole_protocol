@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=3 format=3 uid="uid://cjy3kv4gw3s75"]
+
+[ext_resource type="Resource" uid="uid://cowlkv1okvr75" path="res://data/items/metal.tres" id="1_itd7q"]
+[ext_resource type="Script" path="res://scripts/dataclass/recipe.gd" id="3_21pe6"]
+
+[resource]
+script = ExtResource("3_21pe6")
+id = 3
+name = "开采铁矿"
+type = 0
+description = ""
+ingredients = {}
+results = {
+ExtResource("1_itd7q"): 3
+}
+time_in_hour = 6

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://o6ecxxdgkwqb"]
+
+[ext_resource type="Script" path="res://scripts/dataclass/item.gd" id="1_7r7ok"]
+[ext_resource type="Texture2D" uid="uid://gjj4le2d4op0" path="res://assets/image/item/资源_石材.png" id="1_y11r4"]
+
+[resource]
+script = ExtResource("1_7r7ok")
+id = 2
+name = &"石材"
+desc_basic = ""
+desc_ext = ""
+icon = ExtResource("1_y11r4")
+tier = 1
+type = 5
+weight = 0.0
+is_fuel = false
+fuel_value = 0

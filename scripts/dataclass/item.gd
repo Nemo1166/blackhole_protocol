@@ -6,11 +6,12 @@ enum ItemType {
 	MATERIAL,
 	COMPONENT,
 	PRODUCT,
+	CURRENCY,
 	OTHER
 }
 
 @export var id: int = 0
-@export var name: String = ""
+@export var name: StringName = ""
 @export var desc_basic: String = ""
 @export var desc_ext: String = ""
 @export var icon: Texture = null
