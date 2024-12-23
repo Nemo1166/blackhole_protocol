@@ -1,0 +1,152 @@
+[gd_scene load_steps=4 format=3 uid="uid://dyyyy23gajq7x"]
+
+[ext_resource type="Script" path="res://scenes/gui/components/config.gd" id="1_ftn3h"]
+[ext_resource type="FontFile" uid="uid://ddjm3jbnq4wxq" path="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf" id="2_ook2a"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3l7y3"]
+font_size = 20
+
+[node name="Config" type="VBoxContainer"]
+offset_right = 320.0
+offset_bottom = 256.0
+theme_override_constants/separation = 16
+script = ExtResource("1_ftn3h")
+
+[node name="VolMaster" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="VolMaster"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_ook2a")
+text = "volume-low"
+label_settings = SubResource("LabelSettings_3l7y3")
+horizontal_alignment = 1
+
+[node name="Value" type="HScrollBar" parent="VolMaster"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 7.0
+max_value = 1.0
+step = 0.05
+
+[node name="VolMusic" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="VolMusic"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_ook2a")
+text = "music"
+label_settings = SubResource("LabelSettings_3l7y3")
+horizontal_alignment = 1
+
+[node name="Value" type="HScrollBar" parent="VolMusic"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 7.0
+max_value = 1.0
+step = 0.05
+
+[node name="VolSFX" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="VolSFX"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_ook2a")
+text = "bell"
+label_settings = SubResource("LabelSettings_3l7y3")
+horizontal_alignment = 1
+
+[node name="Value" type="HScrollBar" parent="VolSFX"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 7.0
+max_value = 1.0
+step = 0.05
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="VisVsync" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="VisVsync"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Vsync"
+label_settings = SubResource("LabelSettings_3l7y3")
+horizontal_alignment = 1
+
+[node name="Value" type="CheckButton" parent="VisVsync"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+size_flags_stretch_ratio = 7.0
+
+[node name="VisMaxFPS" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="VisMaxFPS"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Max fps (0 is inf.)"
+label_settings = SubResource("LabelSettings_3l7y3")
+horizontal_alignment = 1
+
+[node name="Value" type="OptionButton" parent="VisMaxFPS"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+size_flags_stretch_ratio = 7.0
+item_count = 5
+popup/item_0/text = "30"
+popup/item_1/text = "45"
+popup/item_1/id = 1
+popup/item_2/text = "60"
+popup/item_2/id = 2
+popup/item_3/text = "90"
+popup/item_3/id = 3
+popup/item_4/text = "120"
+popup/item_4/id = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Check" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_ook2a")
+theme_override_font_sizes/font_size = 20
+text = " check "
+
+[node name="Cancel" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_ook2a")
+theme_override_font_sizes/font_size = 20
+text = " xmark "
+
+[connection signal="value_changed" from="VolMaster/Value" to="." method="_on_vol_master_value_changed"]
+[connection signal="toggled" from="VisVsync/Value" to="." method="_on_vsync_toggled"]
+[connection signal="pressed" from="HBoxContainer/Check" to="." method="set_config"]
+[connection signal="pressed" from="HBoxContainer/Cancel" to="." method="reset_all"]

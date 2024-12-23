@@ -2,8 +2,6 @@ extends Control
 
 @onready var cmd_container: VBoxContainer = %CmdContainer
 
-signal start_new_game
-
 var show_cmd: bool = false
 
 # Called when the node enters the scene tree for the first time.
@@ -28,16 +26,15 @@ func _on_exit_btn_mouse_exited() -> void:
 	is_quitting = false
 
 
-func _on_button_pressed() -> void:
-	%AwakeBtn.text = 'WIP: Please stay in tune.'
-	start_new_game.emit()
+func _on_awake() -> void:
+	%AwakeBtn.text = "正在尝试建立神经连接"
+	%AwakeBtn.disabled = true
+	WorkerThreadPool.add_task(func():
+		Global.game_ctrl.start_new_game())
+	
 
 
 func _on_splash_screen_login() -> void:
 	$bg.modulate.a = 1
 	print('login')
 	UITweens.set_tween(%CmdContainer, "modulate:a", 1, 0.5)
-
-
-func _on_start_new_game() -> void:
-	%AwakeBtn.text = "正在尝试建立神经连接"

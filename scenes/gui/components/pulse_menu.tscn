@@ -1,12 +1,49 @@
-[gd_scene load_steps=4 format=3 uid="uid://kintt5kosfen"]
+[gd_scene load_steps=11 format=3 uid="uid://kintt5kosfen"]
 
 [ext_resource type="Script" path="res://scenes/gui/components/pulse_menu.gd" id="1_ucch8"]
+[ext_resource type="Texture2D" uid="uid://bt2qyhqqf6g0j" path="res://assets/image/bg/Avg_bg_abyss_1.png" id="2_pjewn"]
 [ext_resource type="Texture2D" uid="uid://kjhd6x4bto40" path="res://icon.png" id="2_ptc4k"]
+[ext_resource type="LabelSettings" uid="uid://eg820b0h2of8" path="res://assets/fonts/style_title.tres" id="3_mdimc"]
+[ext_resource type="LabelSettings" uid="uid://5j47d8xfvkoj" path="res://assets/fonts/style_number_small.tres" id="4_dpgcx"]
+[ext_resource type="FontFile" uid="uid://b8ebcid5ynsjq" path="res://assets/fonts/Novecento Bold.ttf" id="4_rj5yy"]
+[ext_resource type="PackedScene" uid="uid://dyyyy23gajq7x" path="res://scenes/gui/components/config.tscn" id="5_454tl"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xe8oh"]
+[sub_resource type="GDScript" id="GDScript_bdp0v"]
+script/source = "extends Button
+
+
+var is_quitting: bool = false:
+	set(v):
+		is_quitting = v
+		if v:
+			text = \"离开？\"
+		else:
+			text = \"离开\"
+
+func _on_pressed() -> void:
+	if is_quitting:
+		get_tree().quit()
+	is_quitting = true
+
+func _on_mouse_exited() -> void:
+	is_quitting = false
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_ta7rb"]
+font = ExtResource("4_rj5yy")
+font_size = 24
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_nsapi"]
+font = ExtResource("4_rj5yy")
+font_size = 60
+font_color = Color(0, 0, 0, 1)
+shadow_color = Color(1, 1, 1, 1)
 
 [node name="PulseMenu" type="CanvasLayer"]
+layer = 10
 script = ExtResource("1_ucch8")
+metadata/_edit_horizontal_guides_ = [320.0]
 
 [node name="Panel" type="TextureRect" parent="."]
 anchors_preset = 15
@@ -14,61 +51,142 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("PlaceholderTexture2D_xe8oh")
+mouse_filter = 0
+texture = ExtResource("2_pjewn")
+expand_mode = 1
+stretch_mode = 6
 metadata/_edit_lock_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(120, 0)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -88.0
-offset_top = -4.0
-offset_right = 100.0
-offset_bottom = 170.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -256.0
+offset_top = 64.0
+offset_right = -64.0
+offset_bottom = 320.0
+grow_horizontal = 0
 theme_override_constants/separation = 8
 metadata/_edit_group_ = true
 
 [node name="Resume" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Resume "
+text = "继续"
+flat = true
 
-[node name="Button2" type="Button" parent="VBoxContainer"]
+[node name="SettingsBtn" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "设置"
+flat = true
+
+[node name="SaveBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 disabled = true
-text = "Save"
+text = "保存"
+flat = true
 
-[node name="Button3" type="Button" parent="VBoxContainer"]
+[node name="LoadBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 disabled = true
-text = "Load"
+text = "载入"
+flat = true
 
-[node name="Button4" type="Button" parent="VBoxContainer"]
+[node name="ExitBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Exit"
+text = "离开"
+flat = true
+script = SubResource("GDScript_bdp0v")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -196.0
-offset_right = 64.0
-offset_bottom = -36.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Subtitle" type="Label" parent="."]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.501961)
+offset_left = 48.0
+offset_top = 128.0
+offset_right = 256.0
+offset_bottom = 161.0
+text = "Title"
+label_settings = SubResource("LabelSettings_ta7rb")
+vertical_alignment = 1
+
+[node name="Title" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 224.0
+offset_bottom = 152.0
+text = "标题"
+label_settings = ExtResource("3_mdimc")
+
+[node name="BPTitle" type="Label" parent="."]
+self_modulate = Color(1, 1, 1, 0.25098)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -748.0
+offset_top = -136.0
+offset_right = -66.0
+offset_bottom = -63.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "BLACKHOLE PROTOCOL"
+label_settings = SubResource("LabelSettings_nsapi")
+
+[node name="Logo" type="TextureRect" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -192.0
+offset_top = -200.0
+offset_right = -64.0
+offset_bottom = -56.0
+grow_horizontal = 0
+grow_vertical = 0
 texture = ExtResource("2_ptc4k")
 expand_mode = 1
 stretch_mode = 4
 
+[node name="Info" type="VBoxContainer" parent="."]
+modulate = Color(0.804688, 0.804688, 0.804688, 1)
+offset_left = 64.0
+offset_top = 480.0
+offset_right = 259.0
+offset_bottom = 576.0
+theme_override_constants/separation = 16
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="Info"]
+layout_mode = 2
+text = "游戏已暂停"
+
+[node name="PlayStat" type="Label" parent="Info"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Seed: 00000000
+8888 年 88 月 88 日 88:88
+Playtime: 88:88:88"
+label_settings = ExtResource("4_dpgcx")
+
+[node name="Config" parent="." instance=ExtResource("5_454tl")]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 256.0
+offset_top = 64.0
+offset_right = 640.0
+offset_bottom = -330.0
+grow_vertical = 2
+
 [connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/SettingsBtn" to="." method="_on_settings_btn_pressed"]
+[connection signal="mouse_exited" from="VBoxContainer/ExitBtn" to="VBoxContainer/ExitBtn" method="_on_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/ExitBtn" to="VBoxContainer/ExitBtn" method="_on_pressed"]
+[connection signal="hidden" from="Config" to="." method="clear_left_title"]
