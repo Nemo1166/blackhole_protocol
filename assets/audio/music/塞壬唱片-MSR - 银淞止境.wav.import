@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c4liy6qxcbxfm"
+path="res://.godot/imported/塞壬唱片-MSR - 银淞止境.wav-6d72fc769a62b8928bc5dfaad03e456c.sample"
+
+[deps]
+
+source_file="res://assets/audio/music/塞壬唱片-MSR - 银淞止境.wav"
+dest_files=["res://.godot/imported/塞壬唱片-MSR - 银淞止境.wav-6d72fc769a62b8928bc5dfaad03e456c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

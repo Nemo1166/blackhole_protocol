@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cymeg6754dvsy"
+path="res://.godot/imported/塞壬唱片-MSR - RATIO ULTIMA.wav-91b225fb3402c47f2ccfecc0214aec8e.sample"
+
+[deps]
+
+source_file="res://assets/audio/music/塞壬唱片-MSR - RATIO ULTIMA.wav"
+dest_files=["res://.godot/imported/塞壬唱片-MSR - RATIO ULTIMA.wav-91b225fb3402c47f2ccfecc0214aec8e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,10 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8ax18843lmex"]
+[gd_scene load_steps=5 format=3 uid="uid://b8ax18843lmex"]
 
 [ext_resource type="Script" path="res://global/audio_mgr.gd" id="1_40uq0"]
+[ext_resource type="AudioStream" uid="uid://sljmhg6fmpgn" path="res://assets/audio/music/10 Quantum Circuit.mp3" id="2_3s8st"]
+[ext_resource type="AudioStream" uid="uid://djgmy1afhylhl" path="res://assets/audio/music/塞壬唱片-MSR - Merciful Broken Sun.wav" id="3_ltjme"]
+[ext_resource type="AudioStream" uid="uid://c4liy6qxcbxfm" path="res://assets/audio/music/塞壬唱片-MSR - 银淞止境.wav" id="4_mqst3"]
 
 [node name="AudioMgr" type="Node"]
 script = ExtResource("1_40uq0")
-bgm_list = Array[AudioStream]([null])
+bgm_list = Array[AudioStream]([ExtResource("2_3s8st"), ExtResource("3_ltjme"), ExtResource("4_mqst3")])
 
 [node name="BGMAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"bgm"
