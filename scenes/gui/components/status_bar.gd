@@ -10,3 +10,7 @@ func _ready() -> void:
 	time_mgr.time_changed.connect(time_ui.on_time_changed)
 	time_mgr.time_scale_changed.connect(time_ui.on_time_scale_changed)
 	time_ui.update_all(time_mgr.date_time, time_mgr.AVAIL_TIME_SCALE[time_mgr.current_time_scale_idx])
+
+signal open_pause_menu
+func _on_settings_pressed() -> void:
+	open_pause_menu.emit()

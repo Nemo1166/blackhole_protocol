@@ -75,7 +75,6 @@ dawn_time = SubResource("Resource_scgxc")
 script = ExtResource("4_dl0qj")
 
 [node name="Map" type="Node2D" parent="."]
-visible = false
 
 [node name="TextureRect" type="Sprite2D" parent="Map"]
 visible = false
@@ -107,6 +106,7 @@ dawn_light = Color(0.733333, 0.933333, 1, 1)
 time_system = NodePath("../../TimeMgr")
 
 [node name="RIIC" parent="." instance=ExtResource("4_7pxol")]
+visible = false
 
 [node name="StatusBar" parent="." node_paths=PackedStringArray("time_mgr") instance=ExtResource("9_h6qtu")]
 time_mgr = NodePath("../TimeMgr")

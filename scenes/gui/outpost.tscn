@@ -1,0 +1,84 @@
+[gd_scene load_steps=2 format=3 uid="uid://jacqeqbla3dy"]
+
+[ext_resource type="LabelSettings" uid="uid://c1h8htpl43tff" path="res://assets/fonts/style_subtitle.tres" id="1_h0ouy"]
+
+[node name="Outpost" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_horizontal_guides_ = [48.0]
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 64.0
+offset_right = 576.0
+offset_bottom = 128.0
+text = "Outpost #00"
+label_settings = ExtResource("1_h0ouy")
+
+[node name="Traits" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 768.0
+offset_top = 64.0
+offset_right = 1120.0
+offset_bottom = 128.0
+alignment = 2
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 160.0
+offset_right = 960.0
+offset_bottom = 512.0
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="GridContainer"]
+custom_minimum_size = Vector2(176, 112)
+layout_mode = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="GridContainer"]
+custom_minimum_size = Vector2(176, 112)
+layout_mode = 2
+
+[node name="PanelContainer3" type="PanelContainer" parent="GridContainer"]
+custom_minimum_size = Vector2(176, 112)
+layout_mode = 2
+
+[node name="PanelContainer4" type="PanelContainer" parent="GridContainer"]
+custom_minimum_size = Vector2(176, 112)
+layout_mode = 2
+
+[node name="PanelContainer5" type="PanelContainer" parent="GridContainer"]
+custom_minimum_size = Vector2(176, 112)
+layout_mode = 2
+
+[node name="PanelContainer6" type="PanelContainer" parent="GridContainer"]
+custom_minimum_size = Vector2(176, 112)
+layout_mode = 2
+
+[node name="PanelContainer7" type="PanelContainer" parent="GridContainer"]
+custom_minimum_size = Vector2(176, 112)
+layout_mode = 2
+
+[node name="PanelContainer8" type="PanelContainer" parent="GridContainer"]
+custom_minimum_size = Vector2(176, 112)
+layout_mode = 2
+
+[node name="TabBar" type="TabBar" parent="."]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 112.0
+offset_right = 688.0
+offset_bottom = 139.0
+current_tab = 0
+tab_count = 2
+tab_0/title = "1"
+tab_0/tooltip = "ttt"
+tab_1/title = "2"
+tab_1/tooltip = "222"

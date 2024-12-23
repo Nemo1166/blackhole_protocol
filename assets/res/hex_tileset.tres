@@ -1,16 +1,17 @@
 [gd_resource type="TileSet" load_steps=5 format=3 uid="uid://e7wa2pcdfu5d"]
 
 [ext_resource type="Texture2D" uid="uid://df6isbap3legu" path="res://assets/image/tiles/TILE.png" id="1_lcve4"]
-[ext_resource type="Texture2D" uid="uid://b04o3lyhcg6go" path="res://assets/image/tiles/bound.png" id="2_p5qw8"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o7m16"]
+load_path = "res://.godot/imported/rook.png-93859e83b3e45f8cb8e5b86fe9312c05.ctex"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8bg1d"]
+texture = SubResource("CompressedTexture2D_o7m16")
+texture_region_size = Vector2i(92, 108)
+0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_67w8a"]
 texture = ExtResource("1_lcve4")
-margins = Vector2i(0, 1)
-texture_region_size = Vector2i(92, 106)
-0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wv754"]
-texture = ExtResource("2_p5qw8")
 margins = Vector2i(0, 1)
 texture_region_size = Vector2i(92, 106)
 0:0/0 = 0
@@ -19,4 +20,4 @@ texture_region_size = Vector2i(92, 106)
 tile_shape = 3
 tile_size = Vector2i(92, 108)
 sources/1 = SubResource("TileSetAtlasSource_67w8a")
-sources/2 = SubResource("TileSetAtlasSource_wv754")
+sources/0 = SubResource("TileSetAtlasSource_8bg1d")

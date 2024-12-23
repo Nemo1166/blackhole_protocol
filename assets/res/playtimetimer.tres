@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PlaytimeTimer" load_steps=2 format=3 uid="uid://dgya0pnrevww4"]
+
+[ext_resource type="Script" path="res://addons/playtime_timer/playtime_timer.gd" id="1_g68my"]
+
+[resource]
+script = ExtResource("1_g68my")
+is_active = false
+is_paused = false
+total_time_usec = 0
+total_time_sec = 0.0
+preexisting_time = 0

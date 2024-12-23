@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7xougd1lt0g0"]
+
+[ext_resource type="Script" path="res://scenes/gui/components/dialog_panel.gd" id="1_k8ey0"]
+[ext_resource type="LabelSettings" uid="uid://cdha5gcswv4rj" path="res://assets/fonts/style_smalltitle.tres" id="1_sgiov"]
+[ext_resource type="Texture2D" uid="uid://kjhd6x4bto40" path="res://icon.png" id="2_7jgu8"]
+[ext_resource type="FontFile" uid="uid://ddjm3jbnq4wxq" path="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf" id="2_frmfv"]
+
+[node name="CanvasLayer" type="CanvasLayer" groups=["dialog_panel"]]
+script = ExtResource("1_k8ey0")
+
+[node name="Panel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="TitleContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="HeroIcon" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/TitleContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("2_7jgu8")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer/TitleContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+text = "标题"
+label_settings = ExtResource("1_sgiov")
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/TitleContainer"]
+layout_mode = 2
+tooltip_text = "关闭窗口"
+theme_override_fonts/font = ExtResource("2_frmfv")
+text = " xmark "
+
+[node name="Content" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/TitleContainer/CloseButton" to="." method="_on_close_button_pressed"]

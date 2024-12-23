@@ -1,0 +1,129 @@
+[gd_scene load_steps=6 format=3 uid="uid://uh5kqp23dt83"]
+
+[ext_resource type="Script" path="res://scenes/gui/components/ui_bottom.gd" id="1_4066y"]
+[ext_resource type="Texture2D" uid="uid://bynbu3f0px21k" path="res://assets/image/territories/Logo_雷姆必拓.png" id="1_smd0q"]
+[ext_resource type="LabelSettings" uid="uid://cdha5gcswv4rj" path="res://assets/fonts/style_smalltitle.tres" id="2_1hp15"]
+[ext_resource type="FontFile" uid="uid://ddjm3jbnq4wxq" path="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf" id="4_uvaf0"]
+[ext_resource type="PackedScene" uid="uid://dj24qcvbdf0jt" path="res://scenes/gui/components/ui_sidebar_content.tscn" id="5_3ffqp"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_4066y")
+metadata/_edit_horizontal_guides_ = [48.0]
+
+[node name="SidePanel" type="PanelContainer" parent="."]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = 64.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="SidePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SidePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="HBoxContainer" parent="SidePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SidePanel/MarginContainer/VBoxContainer/Title"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="HousingTexture" type="TextureRect" parent="SidePanel/MarginContainer/VBoxContainer/Title/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("1_smd0q")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Housing" type="Label" parent="SidePanel/MarginContainer/VBoxContainer/Title/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "荒野"
+label_settings = ExtResource("2_1hp15")
+
+[node name="CloseSPButton" type="Button" parent="SidePanel/MarginContainer/VBoxContainer/Title"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "关闭窗口"
+theme_override_fonts/font = ExtResource("4_uvaf0")
+text = " xmark "
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SidePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Content" parent="SidePanel/MarginContainer/VBoxContainer/ScrollContainer" instance=ExtResource("5_3ffqp")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SP_opened" type="ReferenceRect" parent="."]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = 64.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SP_collapsed" type="ReferenceRect" parent="."]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -352.0
+offset_top = 576.0
+offset_right = -48.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BuildOutpost" type="ReferenceRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -194.0
+offset_right = 160.0
+offset_bottom = 188.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="FacilityInfo" type="ReferenceRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -544.0
+offset_top = -260.0
+offset_right = 160.0
+offset_bottom = 284.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[connection signal="pressed" from="SidePanel/MarginContainer/VBoxContainer/Title/CloseSPButton" to="." method="_on_close_sp_button_pressed"]
+[connection signal="build_outpost" from="SidePanel/MarginContainer/VBoxContainer/ScrollContainer/Content" to="." method="_on_build_outpost"]

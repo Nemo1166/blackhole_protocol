@@ -1,0 +1,229 @@
+[gd_scene load_steps=11 format=3 uid="uid://dj24qcvbdf0jt"]
+
+[ext_resource type="LabelSettings" uid="uid://cdha5gcswv4rj" path="res://assets/fonts/style_smalltitle.tres" id="1_exy8f"]
+[ext_resource type="Script" path="res://scenes/gui/components/ui_sidebar_content.gd" id="1_ql57r"]
+[ext_resource type="LabelSettings" uid="uid://5j47d8xfvkoj" path="res://assets/fonts/style_number_small.tres" id="2_s25o6"]
+[ext_resource type="FontFile" uid="uid://ddjm3jbnq4wxq" path="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf" id="4_e3n4g"]
+[ext_resource type="PackedScene" uid="uid://dml41cp7fs4r3" path="res://scenes/gui/components/currency_ui.tscn" id="4_yvajh"]
+[ext_resource type="FontFile" uid="uid://byjdovawflxyj" path="res://assets/fonts/BENDER.OTF" id="5_of6gl"]
+
+[sub_resource type="GDScript" id="GDScript_y76gm"]
+script/source = "extends HBoxContainer
+
+@onready var rename_btn: Button = $OpNameRename
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	rename_btn.hide()
+
+
+func _on_mouse_entered() -> void:
+	rename_btn.show()
+
+
+func _on_mouse_exited() -> void:
+	rename_btn.hide()
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_nru0f"]
+font = ExtResource("5_of6gl")
+font_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5e4pg"]
+font_size = 18
+
+[sub_resource type="LabelSettings" id="LabelSettings_f0l7f"]
+font_size = 10
+
+[node name="Content" type="MarginContainer"]
+offset_right = 352.0
+offset_bottom = 512.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_ql57r")
+
+[node name="PlaceHolder" type="Label" parent="."]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Select an area to view details."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="AreaInfo" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Location" type="HBoxContainer" parent="VBoxContainer/AreaInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="VBoxContainer/AreaInfo/Location"]
+layout_mode = 2
+text = "位置 "
+label_settings = ExtResource("1_exy8f")
+
+[node name="LocValue" type="Label" parent="VBoxContainer/AreaInfo/Location"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "(0,0)"
+label_settings = ExtResource("2_s25o6")
+vertical_alignment = 2
+
+[node name="Resource" type="HBoxContainer" parent="VBoxContainer/AreaInfo"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="VBoxContainer/AreaInfo/Resource"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "资源 "
+label_settings = ExtResource("1_exy8f")
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/AreaInfo/Resource"]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+columns = 2
+
+[node name="ResW" type="Label" parent="VBoxContainer/AreaInfo/Resource/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "aaa"
+vertical_alignment = 1
+
+[node name="ResS" type="Label" parent="VBoxContainer/AreaInfo/Resource/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "aaa"
+vertical_alignment = 1
+
+[node name="ResM" type="Label" parent="VBoxContainer/AreaInfo/Resource/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "aaa"
+vertical_alignment = 1
+
+[node name="ResF" type="Label" parent="VBoxContainer/AreaInfo/Resource/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "aaa"
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/AreaInfo"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="BuildOutpostBtn" type="Button" parent="VBoxContainer/AreaInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Build Outpost"
+
+[node name="OutpostView" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MetaData" type="HBoxContainer" parent="VBoxContainer/OutpostView"]
+layout_mode = 2
+script = SubResource("GDScript_y76gm")
+
+[node name="Label" type="Label" parent="VBoxContainer/OutpostView/MetaData"]
+layout_mode = 2
+text = "Outpost"
+label_settings = ExtResource("1_exy8f")
+vertical_alignment = 1
+
+[node name="OpName" type="Label" parent="VBoxContainer/OutpostView/MetaData"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Name"
+label_settings = ExtResource("1_exy8f")
+vertical_alignment = 1
+
+[node name="OpNameRename" type="Button" parent="VBoxContainer/OutpostView/MetaData"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("4_e3n4g")
+disabled = true
+text = "pen *WIP"
+flat = true
+
+[node name="OpID" type="Label" parent="VBoxContainer/OutpostView/MetaData"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "#999"
+label_settings = SubResource("LabelSettings_nru0f")
+vertical_alignment = 2
+
+[node name="Traits" type="HBoxContainer" parent="VBoxContainer/OutpostView"]
+layout_mode = 2
+alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/OutpostView/Traits"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/OutpostView/Traits/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/OutpostView/Traits/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="VBoxContainer/OutpostView/Traits/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "2"
+label_settings = SubResource("LabelSettings_5e4pg")
+
+[node name="Populations" type="Label" parent="VBoxContainer/OutpostView/Traits/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "^10"
+label_settings = SubResource("LabelSettings_f0l7f")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/OutpostView"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/OutpostView/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "查看库存"
+
+[node name="CurrencyUI" parent="VBoxContainer/OutpostView/HBoxContainer" instance=ExtResource("4_yvajh")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/OutpostView"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="Facilities" type="VBoxContainer" parent="VBoxContainer/OutpostView"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/OutpostView/Facilities"]
+layout_mode = 2
+text = "设施"
+label_settings = ExtResource("1_exy8f")
+
+[node name="Button" type="Button" parent="VBoxContainer/OutpostView"]
+layout_mode = 2
+text = "Build Facility"
+
+[connection signal="pressed" from="VBoxContainer/AreaInfo/BuildOutpostBtn" to="." method="_on_build_outpost_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/OutpostView/MetaData" to="VBoxContainer/OutpostView/MetaData" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/OutpostView/MetaData" to="VBoxContainer/OutpostView/MetaData" method="_on_mouse_exited"]

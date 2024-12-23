@@ -77,5 +77,7 @@ size_flags_horizontal = 8
 theme_override_fonts/font = ExtResource("1_20v7d")
 theme_override_font_sizes/font_size = 28
 action_mode = 0
-text = " gear "
+text = " sliders "
 flat = true
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/SysContainer/Static/Settings" to="." method="_on_settings_pressed"]
