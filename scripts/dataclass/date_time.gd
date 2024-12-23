@@ -1,12 +1,13 @@
 class_name DateTime extends Resource
 
-const N_MONTH: int = 4
+const N_MONTH: int = 12
 const N_DAY: int = 28
 
 const MINUTE_PER_TICK: int = 1
 
 signal date_changed
 signal time_changed
+signal time_changed_delta(delta: int)
 
 @export_range(0, 59) var minute: int = 0
 @export_range(0, 23) var hour: int = 0
@@ -20,17 +21,17 @@ var delta_time := 0.0
 func minute_increase(delta: float) -> void:
 	delta_time += delta
 	if delta_time <= MINUTE_PER_TICK: return
-	
-	time_changed.emit()
+
 	var delta_minute := int(delta_time)
 	delta_time -= delta_minute
+	time_changed_delta.emit(delta_minute)
 
 	minute += delta_minute
 	hour += minute / 60
 	minute %= 60
+	time_changed.emit()
 
 	if hour >= 24:
-		date_changed.emit()
 		day += hour / 24 
 		hour %= 24
 		if day > N_DAY:
@@ -39,6 +40,7 @@ func minute_increase(delta: float) -> void:
 			if month > N_MONTH:
 				year += month / N_MONTH
 				month %= N_MONTH
+		date_changed.emit()
 
 
 func diff(other: DateTime) -> DateTime:
@@ -78,7 +80,7 @@ func get_finish_time(hours: int) -> DateTime:
 
 
 func get_date_str() -> String:
-	return str(year) + '年' + str(month) + '月' + str(day) + '日'
+	return str(year) + ' 年 ' + str(month) + ' 月 ' + str(day) + ' 日'
 
 func get_time_str() -> String:
 	return "%02d:%02d" % [hour, minute]

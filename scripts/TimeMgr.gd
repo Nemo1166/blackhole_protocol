@@ -4,6 +4,7 @@ class_name TimeMgr
 
 signal date_changed(date: DateTime)
 signal time_changed(time: DateTime)
+signal time_changed_delta(delta: int)
 signal time_scale_changed(t_scale: float)
 
 @export var date_time: DateTime
@@ -27,9 +28,10 @@ signal day_state_changed(state: DayState)
 func _ready() -> void:
 	date_time.connect("date_changed", self._on_date_changed)
 	date_time.connect("time_changed", self._on_time_changed)
+	date_time.connect("time_changed_delta", self._on_time_changed_delta)
 	process_day_state()
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	handle_input()
 	if is_paused: return
 
@@ -88,8 +90,13 @@ func _on_date_changed() -> void:
 func _on_time_changed() -> void:
 	time_changed.emit(date_time)
 
+func _on_time_changed_delta(delta: int) -> void:
+	time_changed_delta.emit(delta)
 
 #func _on_day_state_changed(state: TimeMgr.DayState) -> void:
 	##const state_str = ["DAY", "TWILIGHT", "NIGHT", "DAWN"]
 	##print('State changed to %s' % state_str[state])
 	#pass # Replace with function body.
+
+func get_datetime_str() -> String:
+	return "%s  %s" % [date_time.get_date_str(), date_time.get_time_str()]
