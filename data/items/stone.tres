@@ -6,7 +6,8 @@
 [resource]
 script = ExtResource("1_7r7ok")
 id = 2
-name = &"石材"
+name = &"stone"
+display_name = "石材"
 desc_basic = ""
 desc_ext = ""
 icon = ExtResource("1_y11r4")

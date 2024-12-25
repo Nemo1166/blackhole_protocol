@@ -13,4 +13,4 @@ ingredients = {}
 results = {
 ExtResource("1_uvl4e"): 6
 }
-time_in_hour = 6
+time_in_hour = 1

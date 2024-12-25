@@ -6,7 +6,8 @@
 [resource]
 script = ExtResource("3_6lqsn")
 id = 11
-name = &"源石碎片"
+name = &"orig_shard"
+display_name = "源石碎片"
 desc_basic = "从污染区域中收集到的源石碎片"
 desc_ext = "从遭受重度污染的地区回收的源石碎块，存在高感染威胁及一定突变概率，是哥伦比亚疾病防控中心毒性数据库重点提及的危险物质。"
 icon = ExtResource("1_xcdc5")

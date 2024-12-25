@@ -6,7 +6,8 @@
 [resource]
 script = ExtResource("2_uhs12")
 id = 4
-name = &"赤金"
+name = &"gold"
+display_name = "赤金"
 desc_basic = ""
 desc_ext = ""
 icon = ExtResource("1_yupt5")
