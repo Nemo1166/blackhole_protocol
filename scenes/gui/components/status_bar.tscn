@@ -1,10 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://b78gvijnruwny"]
+[gd_scene load_steps=6 format=3 uid="uid://b78gvijnruwny"]
 
 [ext_resource type="FontFile" uid="uid://ddjm3jbnq4wxq" path="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf" id="1_20v7d"]
 [ext_resource type="Script" path="res://scenes/gui/components/status_bar.gd" id="1_p1q1f"]
 [ext_resource type="PackedScene" uid="uid://c33tertlfci8r" path="res://scenes/gui/components/time_ui.tscn" id="2_gi4k0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03omg"]
+
+[sub_resource type="GDScript" id="GDScript_og2dm"]
+script/source = "extends Button
+
+func _on_pressed() -> void:
+	AudioMgr.play_random_bgm()
+"
 
 [node name="StatusBar" type="CanvasLayer"]
 script = ExtResource("1_p1q1f")
@@ -55,6 +62,17 @@ action_mode = 0
 text = " flask "
 flat = true
 
+[node name="music" type="Button" parent="PanelContainer/MarginContainer/SysContainer/SysTray"]
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "换碟"
+theme_override_fonts/font = ExtResource("1_20v7d")
+theme_override_font_sizes/font_size = 28
+action_mode = 0
+text = " music "
+flat = true
+script = SubResource("GDScript_og2dm")
+
 [node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/SysContainer"]
 custom_minimum_size = Vector2(8, 0)
 layout_mode = 2
@@ -80,4 +98,5 @@ action_mode = 0
 text = " sliders "
 flat = true
 
+[connection signal="pressed" from="PanelContainer/MarginContainer/SysContainer/SysTray/music" to="PanelContainer/MarginContainer/SysContainer/SysTray/music" method="_on_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/SysContainer/Static/Settings" to="." method="_on_settings_pressed"]

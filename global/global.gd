@@ -46,6 +46,7 @@ func save_user_config():
 
 #region common prefabs
 
+const ITEM_SLOT = preload("res://scenes/gui/components/item_slot.tscn")
 const ITEM_DESC_PANEL = preload("res://scenes/gui/components/item_desc_panel.tscn")
 const DIALOG_PANEL = preload("res://scenes/gui/components/dialog_panel.tscn")
 const MESSAGE_BOX = preload("res://scenes/gui/components/message_box.tscn")
@@ -59,9 +60,20 @@ func set_seed(value: int = 0):
 		game_seed = value
 	seed(game_seed)
 
+func clear_children(node: Control):
+	for child in node.get_children():
+		child.queue_free()
+
+#subregion dialog
+
 func close_all_dialog():
 	for node in get_tree().get_nodes_in_group("dialog_panel"):
 		node.queue_free()
+
+func close_dialog(title: String):
+	for node in get_tree().get_nodes_in_group("dialog_panel"):
+		if node.title.text == title:
+			node.queue_free()
 
 func has_dialog(title: String) -> bool:
 	for node in get_tree().get_nodes_in_group("dialog_panel"):
@@ -79,8 +91,8 @@ enum MessageBoxLevel {
 func show_message_box(content: String, level: MessageBoxLevel = MessageBoxLevel.Info, title: String = "Message"):
 	var box = MESSAGE_BOX.instantiate()
 	get_tree().get_root().add_child(box)
-	box.set_content(content)
-	box.set_icon(level)
+	box.set_message(content)
+	box.set_msg_icon(level)
 	box.set_title(title)
 	box.show()
 
@@ -107,3 +119,16 @@ func get_item(item_name: String) -> Item:
 		if item.name == item_name:
 			return item
 	return null
+
+func get_recipe(recipe_name: String) -> Recipe:
+	for recipe in recipes.values():
+		if recipe.name == recipe_name:
+			return recipe
+	return null
+
+func filter_recipes(type: Recipe.Type) -> Array[Recipe]:
+	var result = []
+	for recipe in recipes.values():
+		if recipe.type == type:
+			result.append(recipe)
+	return result

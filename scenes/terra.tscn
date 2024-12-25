@@ -152,6 +152,7 @@ time_mgr = NodePath("../TimeMgr")
 
 [connection signal="day_state_changed" from="TimeMgr" to="TimeMgr" method="_on_day_state_changed"]
 [connection signal="day_state_changed" from="TimeMgr" to="Map/MapLight" method="transition"]
+[connection signal="time_changed_delta" from="TimeMgr" to="." method="_on_time_changed_delta"]
 [connection signal="cell_deselected" from="Map" to="." method="_on_map_cell_deselected"]
 [connection signal="cell_deselected" from="Map" to="Map" method="clear_selected"]
 [connection signal="cell_selected" from="Map" to="Camera2D" method="focus_on"]

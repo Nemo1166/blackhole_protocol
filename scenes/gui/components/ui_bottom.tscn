@@ -98,32 +98,30 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="BuildOutpost" type="ReferenceRect" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = -194.0
-offset_right = 160.0
-offset_bottom = 188.0
-grow_horizontal = 2
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -640.0
+offset_top = 128.0
+offset_right = -400.0
+offset_bottom = -200.0
+grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 
 [node name="FacilityInfo" type="ReferenceRect" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -544.0
-offset_top = -260.0
-offset_right = 160.0
-offset_bottom = 284.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 80.0
+offset_right = -416.0
+offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
 [connection signal="pressed" from="SidePanel/MarginContainer/VBoxContainer/Title/CloseSPButton" to="." method="_on_close_sp_button_pressed"]
+[connection signal="build_facility" from="SidePanel/MarginContainer/VBoxContainer/ScrollContainer/Content" to="." method="_on_build_facility"]
 [connection signal="build_outpost" from="SidePanel/MarginContainer/VBoxContainer/ScrollContainer/Content" to="." method="_on_build_outpost"]

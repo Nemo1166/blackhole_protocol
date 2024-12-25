@@ -5,7 +5,7 @@ extends CanvasLayer
 
 @onready var sidepanel_content: MarginContainer = %Content
 
-
+var outpost_id: int
 
 var data: Dictionary
 # Called when the node enters the scene tree for the first time.
@@ -19,6 +19,9 @@ func _ready() -> void:
 	side_panel.set_position($SP_collapsed.position)
 	side_panel.set_size($SP_collapsed.size)
 	%CloseSPButton.hide()
+
+func _enter_tree() -> void:
+	EventBus.subscribe("show_facility", show_facility_info)
 
 func show_housing(index: int = -1) -> void:
 	if index == -1:
@@ -52,11 +55,27 @@ func open_side_panel(loc: Vector2i):
 func update_placeholder(flag: bool):
 	sidepanel_content.update_placeholder(flag)
 
-
 func _on_close_sp_button_pressed() -> void:
 	side_panel_closed.emit()
 	close_side_panel()
 
+#region panel
+
+func show_facility_info(args: Array):
+	var outpost = args[0]
+	var facility = args[1]
+	Global.close_dialog("设施信息")
+	
+	var dialog_panel: DialogPanel = Global.DIALOG_PANEL.instantiate()
+	add_child(dialog_panel)
+	dialog_panel.set_title("设施信息")
+	dialog_panel.set_panel_by_ref($FacilityInfo)
+	
+	const FACILITY_VIEW = preload("res://scenes/gui/components/facility_view.tscn")
+	var view = FACILITY_VIEW.instantiate()
+	dialog_panel.set_content(view)
+	view.set_facility_info(outpost, facility)
+	
 
 func _on_build_outpost() -> void:
 	if Global.has_dialog("建造据点"):
@@ -65,3 +84,17 @@ func _on_build_outpost() -> void:
 	add_child(dialog_panel)
 	dialog_panel.set_title("建造据点")
 	dialog_panel.set_panel_by_ref($BuildOutpost)
+
+
+func _on_build_facility() -> void:
+	if Global.has_dialog("建造设施"):
+		return
+	var dialog_panel: DialogPanel = Global.DIALOG_PANEL.instantiate()
+	add_child(dialog_panel)
+	dialog_panel.set_title("建造设施")
+	dialog_panel.set_panel_by_ref($BuildOutpost)
+	var selector = preload("res://scenes/gui/components/facility_selector.tscn").instantiate()
+	dialog_panel.set_content(selector)
+	selector.pass_oid(outpost_id)
+	selector.update_desc()
+	

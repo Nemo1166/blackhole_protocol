@@ -12,6 +12,7 @@ enum ItemType {
 
 @export var id: int = 0
 @export var name: StringName = ""
+@export var display_name: String = ""
 @export var desc_basic: String = ""
 @export var desc_ext: String = ""
 @export var icon: Texture = null

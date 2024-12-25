@@ -40,6 +40,16 @@ func get_outpost_data(location: Vector2i) -> OutpostDM.Outpost:
 func update_cell_housing(cell: Vector2i, housing: int) -> void:
 	map_data.update_cell_housing(cell, housing)
 
+func collect_cell_resources(loc: Vector2i, type: StringName, amount: int) -> int:
+	var cell = get_cell_data(loc)
+	if cell != null:
+		var avail_amount = cell.collect_resources(type, amount)
+		if avail_amount > 0:
+			print("Collect %d %s from %s" % [avail_amount, type, loc])
+			EventBus.publish("update_cell_resources", [loc, cell.resources])
+			return avail_amount
+	return 0
+
 #region Outpost Data
 
 var outpost_id := 0
@@ -72,3 +82,6 @@ func remove_outpost(id: int) -> void:
 			outpost_data.erase(i)
 			break
 
+func update_outposts(delta: float) -> void:
+	for outpost in outpost_data:
+		outpost.update(delta)

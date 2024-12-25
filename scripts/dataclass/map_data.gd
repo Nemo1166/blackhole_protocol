@@ -43,19 +43,54 @@ class Cell extends Resource:
 		self.housing = housing
 		self.resources = CellRes.new(resources.x, resources.y, resources.z, resources.w)
 
+	func collect_resources(type: StringName, amount: int) -> int:
+		match type:
+			"wood":
+				if resources.wood >= amount:
+					resources.wood -= amount
+					return amount
+				else:
+					var collected = resources.wood
+					resources.wood = 0
+					return collected
+			"stone":
+				if resources.stone >= amount:
+					resources.stone -= amount
+					return amount
+				else:
+					var collected = resources.stone
+					resources.stone = 0
+					return collected
+			"food":
+				if resources.food >= amount:
+					resources.food -= amount
+					return amount
+				else:
+					var collected = resources.food
+					resources.food = 0
+					return collected
+			"iron":
+				if resources.iron >= amount:
+					resources.iron -= amount
+					return amount
+				else:
+					var collected = resources.iron
+					resources.iron = 0
+					return collected
+		return 0
 
 class CellRes extends Resource:
 	@export var wood: int = 0
 	@export var stone: int = 0
 	@export var food: int = 0
-	@export var metal: int = 0
+	@export var iron: int = 0
 	@export var water: float = 1
 
-	func _init(wood_coef: float = 1, stone_coef: float = 1, food_coef: float = 0.8, metal_coef: float = 0.5):
-		self.wood = int(randi_range(1000, 2000) * wood_coef)
+	func _init(wood_coef: float = 1, stone_coef: float = 1, food_coef: float = 0.8, iron_coef: float = 0.5):
+		self.wood = int(randi_range(100, 105) * wood_coef)
 		self.stone = int(randi_range(1000, 2000) * stone_coef)
 		self.food = int(randi_range(1000, 2000) * food_coef)
-		self.metal = int(randi_range(1000, 2000) * metal_coef)
+		self.iron = int(randi_range(1000, 2000) * iron_coef)
 		self.water = randf() * 0.5 + 0.5
 
 enum Visibility {

@@ -20,7 +20,15 @@ func _ready() -> void:
 
 func build_rhodes():
 	var rhodes: OutpostDM.Outpost = terra.build_outpost(20, Vector2i(0,0), "罗德岛")
+	rhodes.inventory.add_item(Global.items[4], 1000)
 	rhodes.build(OutpostDM.Facilities.Mine.new())
+	var mine = rhodes.get_facility("Mine")
+	var unit = mine.units[0]
+	unit.set_plan(Global.get_recipe("开采铁矿"))
+	unit = mine.add_unit(OutpostDM.ProductionUnit.new())
+	unit.set_plan(Global.get_recipe("采集木材"))
+	unit = mine.add_unit(OutpostDM.ProductionUnit.new())
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -39,3 +47,7 @@ func update_housing_info(index: int) -> void:
 
 func _on_map_cell_deselected() -> void:
 	ui.close_side_panel()
+
+
+func _on_time_changed_delta(delta: int) -> void:
+	terra.update_outposts(delta)

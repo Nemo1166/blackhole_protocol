@@ -9,6 +9,7 @@ class Facilities:
 		@export var units: Array[ProductionUnit] = []
 		@export_storage var progress: float = 0.0
 		@export var productivity: float = 1.0
+		@export var acceptable_recipe: Recipe.Type = Recipe.Type.Other
 
 		func _init():
 			name = "BaseWorkshop"
@@ -18,9 +19,11 @@ class Facilities:
 				unit.update(delta)
 			manage_inventory()
 		
-		func add_unit(unit: ProductionUnit):
+		func add_unit(unit: ProductionUnit) -> ProductionUnit:
 			unit.priority_changed.connect(allocate_productivity)
+			unit.location = outpost.location
 			units.append(unit)
+			return unit
 
 		func remove_unit(unit: ProductionUnit):
 			unit.priority_changed.disconnect(allocate_productivity)
@@ -41,6 +44,8 @@ class Facilities:
 		
 		func manage_inventory():
 			for unit in units:
+				if unit.plan == null:
+					continue
 				# check material
 				if unit.prod_state == ProductionUnit.ProdState.INSUFFICIENT_MATERIAL:
 					for item in unit.plan.ingredients.keys():
@@ -67,20 +72,26 @@ class Facilities:
 				progress = 0
 				# outpost.inventory.add_item(Item.Food, 1)
 				print("Farm produce food")
+		
+		func get_cost(facility_level: int) -> int:
+			match facility_level:
+				1: return 100 # new
+				2: return 120  # upgrade
+				3: return 180 # upgrade
+			return -1
 
-	class Mine extends BaseFacility:
-		@export var plan: Array[StringName] = []
-		@export_storage var progress: float = 0.0
-
+	class Mine extends BaseWorkshop:
 		func _init():
 			name = "Mine"
+			display_name = "采集场"
+			acceptable_recipe = Recipe.Type.Mining
 		
-		func update(delta: float):
-			progress += delta
-			if progress >= 10:
-				progress = 0
-				# outpost.inventory.add_item(Item.Metal, 1)
-				print("Mine produce metal")
+		func get_cost(facility_level: int) -> int:
+			match facility_level:
+				1: return 150 # new
+				2: return 200  # upgrade
+				3: return 320 # upgrade
+			return -1
 	
 	class Factory extends BaseFacility:
 		@export var plan: Array[Recipe] = []
@@ -108,6 +119,7 @@ class Outpost extends Resource:
 	@export_storage var inventory: Inventory = Inventory.new()
 
 	@export var _facilities: Array[BaseFacility] = []
+	@export_storage var max_facility: int = 3
 
 	func _init(id: int, name: String, owner: int, location: Vector2i):
 		self.id = id
@@ -118,9 +130,37 @@ class Outpost extends Resource:
 
 	#region Manage Facilities
 
-	func build(facility: BaseFacility):
+	func build(facility: BaseFacility, is_free: bool = false) -> bool:
+		if not can_build_facility():
+			print("Outpost is full")
+			return false
+		if is_free:
+			_add_facility(facility)
+			return true
+		if not has_enough_gold(facility.get_cost(1)):
+			print("Not enough gold")
+			return false
+		inventory.remove_item(Global.items[4], facility.get_cost(1))
+		_add_facility(facility)
+		return true
+	
+	func _add_facility(facility: BaseFacility):
 		facility.outpost = self
 		_facilities.append(facility)
+		if facility is Facilities.BaseWorkshop:
+			facility.add_unit(ProductionUnit.new())
+	
+	func destroy(facility: BaseFacility):
+		if _facilities.has(facility):
+			_facilities.erase(facility)
+		else:
+			print("Facility not found")
+	
+	func can_build_facility() -> bool:
+		return _facilities.size() < max_facility
+	
+	func has_enough_gold(cost: int) -> bool:
+		return get_gold_amount() >= cost
 
 	func update(delta: float):
 		for facility in _facilities:
@@ -146,6 +186,8 @@ class Outpost extends Resource:
 		if from.get_item_amount(item) >= amount:
 			from.remove_item(item, amount)
 			to.add_item(item, amount)
+			print("Deliver item: %s, amount: %d from %s to %s" % [item.name, amount, from, to])
+			EventBus.publish("update_inventory", [self.id, inventory._inventory])
 		else:
 			print("Not enough item to deliver")
 		
@@ -174,7 +216,7 @@ class Inventory extends Resource:
 
 class BaseFacility extends Resource:
 	@export var name: StringName = ""
-	@export var cost: int = 0
+	@export var display_name: String = ""
 	@export var level: int = 1
 	@export_storage var outpost: Outpost
 
@@ -184,6 +226,9 @@ class BaseFacility extends Resource:
 	## override
 	func update(_delta: float):
 		print("Facility update")
+	
+	func get_cost(level: int) -> int:
+		return 0
 
 class ProductionUnit extends Resource:
 	@export var name: StringName = ""
@@ -195,12 +240,18 @@ class ProductionUnit extends Resource:
 				priority = value
 				emit_signal("priority_changed")
 	
+	@export_storage var location: Vector2i = Vector2i(0, 0)
 	@export_storage var progress: float = 0.0
 	@export_storage var efficiency: float = 1.0
 	@export_storage var internal_inventory: Inventory = Inventory.new()
 	@export var plan: Recipe = null
 
-	@export var work_state: WorkState = WorkState.IDLE
+	signal work_state_changed(work_state: WorkState)
+	@export var work_state: WorkState = WorkState.IDLE:
+		set(value):
+			if value != work_state:
+				work_state = value
+				work_state_changed.emit(value)
 	@export var prod_state: ProdState = ProdState.NORMAL 
 	var cached_time_in_minutes: float = 0.0
 
@@ -213,7 +264,6 @@ class ProductionUnit extends Resource:
 	enum ProdState {
 		NORMAL,
 		INSUFFICIENT_MATERIAL,
-		TOO_MANY_PRODUCT,
 	}
 
 	func _init():
@@ -234,24 +284,34 @@ class ProductionUnit extends Resource:
 			cached_time_in_minutes = plan.time_in_hour * 60
 		match prod_state:
 			ProdState.NORMAL:
-				progress += delta * efficiency / cached_time_in_minutes
+				progress += delta * efficiency / cached_time_in_minutes * 100
+				# print("Progress: %f" % progress)
 				if progress >= 100:
 					progress = 0
 					generate_production()
 			ProdState.INSUFFICIENT_MATERIAL:
 				check_material()
-			ProdState.TOO_MANY_PRODUCT:
-				check_space()
 
 	func generate_production():
 		if plan == null:
 			print("No plan to generate production")
 			return
-		# add result to internal inventory
-		for item in plan.results.keys():
-			internal_inventory.add_item(item, plan.results[item])
-		# check space
-		check_space()
+		if plan.type == Recipe.Type.Mining:
+			var result: Item = plan.results.keys()[0]
+			# get available amount from map
+			var avail_amount = Global.game.terra.collect_cell_resources(
+									location, result.name, plan.results[result])
+			if avail_amount > 0:
+				internal_inventory.add_item(result, avail_amount)
+				print("Production generated: %s, amount: %d" % [result.name, avail_amount])
+			else:
+				# no available resource in map
+				print("No available resource in map")
+				return
+		else:
+			# add result to internal inventory
+			for item in plan.results.keys():
+				internal_inventory.add_item(item, plan.results[item])
 		if prod_state == ProdState.NORMAL:
 			prod_state = ProdState.INSUFFICIENT_MATERIAL
 
@@ -266,13 +326,6 @@ class ProductionUnit extends Resource:
 	func consume_material():
 		for item in plan.ingredients.keys():
 			internal_inventory.remove_item(item, plan.ingredients[item])
-	
-	func check_space():
-		for item in plan.results.keys():
-			if internal_inventory.get_item_amount(item) > PROD_COEF * plan.results[item]:
-				prod_state = ProdState.TOO_MANY_PRODUCT
-				return
-		prod_state = ProdState.NORMAL
 		
 	#region plan
 	func set_plan(recipe: Recipe):

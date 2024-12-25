@@ -1,0 +1,111 @@
+[gd_scene load_steps=6 format=3 uid="uid://dr7mcchyaneju"]
+
+[ext_resource type="LabelSettings" uid="uid://c1h8htpl43tff" path="res://assets/fonts/style_subtitle.tres" id="1_6et2s"]
+[ext_resource type="Script" path="res://scenes/gui/components/facility_view.gd" id="1_cjm7p"]
+[ext_resource type="LabelSettings" uid="uid://du8flicqbonao" path="res://assets/fonts/style_number.tres" id="2_73bpg"]
+[ext_resource type="PackedScene" uid="uid://cv018sh01t4fk" path="res://scenes/gui/components/unit_view.tscn" id="4_yn3ul"]
+
+[sub_resource type="GDScript" id="GDScript_8wym0"]
+script/source = "extends GridContainer
+
+
+func update_view(inventory: Dictionary):
+	clear()
+	for item in inventory.keys():
+		var amount = inventory[item]
+		var item_slot = Global.ITEM_SLOT.instantiate()
+		item_slot.set_item(item, amount)
+		add_child(item_slot)
+
+func clear():
+	for c in get_children():
+		c.queue_free()
+"
+
+[node name="FacilityViewer" type="HBoxContainer"]
+offset_right = 768.0
+offset_bottom = 576.0
+script = ExtResource("1_cjm7p")
+
+[node name="FacilityView" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="TitleContainer" type="HBoxContainer" parent="FacilityView"]
+layout_mode = 2
+
+[node name="FacilityName" type="Label" parent="FacilityView/TitleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "设施"
+label_settings = ExtResource("1_6et2s")
+
+[node name="Label" type="Label" parent="FacilityView/TitleContainer"]
+layout_mode = 2
+text = "位于 #"
+label_settings = ExtResource("2_73bpg")
+
+[node name="OutpostID" type="Label" parent="FacilityView/TitleContainer"]
+layout_mode = 2
+text = "000"
+label_settings = ExtResource("2_73bpg")
+
+[node name="HSeparator" type="HSeparator" parent="FacilityView"]
+layout_mode = 2
+
+[node name="Metadata" type="HBoxContainer" parent="FacilityView"]
+layout_mode = 2
+
+[node name="UnitViewContainer" type="VBoxContainer" parent="FacilityView"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="UnitView" parent="FacilityView/UnitViewContainer" instance=ExtResource("4_yn3ul")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Operations" type="HBoxContainer" parent="FacilityView"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="FacilityView/Operations"]
+layout_mode = 2
+text = "拆除设施 (WIP)"
+
+[node name="WarehouseView" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TitleContainer" type="HBoxContainer" parent="WarehouseView"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WarehouseView/TitleContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "仓库"
+label_settings = ExtResource("1_6et2s")
+
+[node name="PanelContainer" type="PanelContainer" parent="WarehouseView"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="WarehouseView/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ScrollContainer" type="ScrollContainer" parent="WarehouseView/PanelContainer/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="WarehouseViewer" type="GridContainer" parent="WarehouseView/PanelContainer/MarginContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 4
+script = SubResource("GDScript_8wym0")
