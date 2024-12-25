@@ -1,9 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7xougd1lt0g0"]
+[gd_scene load_steps=6 format=3 uid="uid://b7xougd1lt0g0"]
 
 [ext_resource type="Script" path="res://scenes/gui/components/dialog_panel.gd" id="1_k8ey0"]
 [ext_resource type="LabelSettings" uid="uid://cdha5gcswv4rj" path="res://assets/fonts/style_smalltitle.tres" id="1_sgiov"]
 [ext_resource type="Texture2D" uid="uid://kjhd6x4bto40" path="res://icon.png" id="2_7jgu8"]
 [ext_resource type="FontFile" uid="uid://ddjm3jbnq4wxq" path="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf" id="2_frmfv"]
+
+[sub_resource type="GDScript" id="GDScript_ug8dx"]
+script/source = "extends MarginContainer
+
+
+signal close_dialog
+"
 
 [node name="CanvasLayer" type="CanvasLayer" groups=["dialog_panel"]]
 script = ExtResource("1_k8ey0")
@@ -56,5 +63,7 @@ text = " xmark "
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+script = SubResource("GDScript_ug8dx")
 
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/TitleContainer/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="close_dialog" from="Panel/MarginContainer/VBoxContainer/Content" to="." method="queue_free"]

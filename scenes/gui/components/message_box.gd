@@ -14,5 +14,5 @@ func set_msg_icon(level: Global.MessageBoxLevel):
 		Global.MessageBoxLevel.Check:
 			font_icon.text = "circle-check"
 
-func set_content(text: String):
+func set_message(text: String):
 	%RichTextLabel.text = text

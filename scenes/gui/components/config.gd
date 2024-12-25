@@ -57,4 +57,5 @@ func set_config() -> void:
 	if not vsync.pressed:
 		Engine.max_fps = MAX_FPS_LIST[max_fps.selected]
 	Global.save_user_config()
+	AudioMgr.update_volume()
 	hide()

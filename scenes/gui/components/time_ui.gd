@@ -11,10 +11,10 @@ var panel_keep_show = false
 func _ready() -> void:
 	panel_container.modulate.a = 0
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed():
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			panel_keep_show = not panel_keep_show
+#func _unhandled_input(event: InputEvent) -> void:
+	#if event is InputEventMouseButton and event.is_pressed():
+		#if event.button_index == MOUSE_BUTTON_LEFT:
+			#panel_keep_show = not panel_keep_show
 
 func update_all(time: DateTime, t_scale: float):
 	on_date_changed(time)

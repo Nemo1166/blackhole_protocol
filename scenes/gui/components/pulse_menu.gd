@@ -11,7 +11,6 @@ var time_status: bool
 func _ready() -> void:
 	time_status = Global.game.time_mgr.is_paused
 	Global.game.time_mgr.is_paused = true
-	AudioMgr.toggle_bgm_effect(true)
 	config.hide()
 	clear_left_title()
 
@@ -21,11 +20,14 @@ func set_play_stat(terra_time: String, play_time_sec: int) -> void:
 		terra_time, 
 		play_time_sec / 3600, play_time_sec % 3600 / 60, play_time_sec % 60]
 
+func _enter_tree() -> void:
+	AudioMgr.toggle_bgm_effect(true)
+
 func _exit_tree() -> void:
+	AudioMgr.toggle_bgm_effect(false)
 	Global.game.time_mgr.is_paused = time_status
 
 func _on_resume_pressed() -> void:
-	AudioMgr.toggle_bgm_effect(false)
 	PlaytimeManager.resume_all()
 	self.queue_free()
 
