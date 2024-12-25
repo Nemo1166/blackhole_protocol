@@ -1,23 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6aqirfbqqeud"]
+[gd_scene load_steps=5 format=3 uid="uid://b6aqirfbqqeud"]
 
-[ext_resource type="Shader" path="res://shaders/item_highlight.gdshader" id="1_dv0v2"]
 [ext_resource type="Script" path="res://scenes/gui/components/item_slot.gd" id="1_ktbdu"]
 [ext_resource type="Texture2D" uid="uid://chvsaqfe445cd" path="res://assets/image/item/道具_带框_源石碎片.png" id="1_vfm7v"]
 [ext_resource type="Resource" uid="uid://bavbyqhktu5qc" path="res://data/items/orig_shard.tres" id="2_p8l4d"]
 [ext_resource type="LabelSettings" uid="uid://5j47d8xfvkoj" path="res://assets/fonts/style_number_small.tres" id="4_4uqsi"]
-[ext_resource type="LabelSettings" uid="uid://cdha5gcswv4rj" path="res://assets/fonts/style_smalltitle.tres" id="5_4nrjt"]
-[ext_resource type="Texture2D" uid="uid://cvq7irdk6s6pq" path="res://assets/image/item/道具_源石碎片.png" id="6_sr328"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5wc1b"]
-shader = ExtResource("1_dv0v2")
-shader_parameter/outline_c = Color(1, 0.501961, 0, 1)
-shader_parameter/progress = 0.0
 
 [node name="ItemSlot" type="TextureRect"]
-material = SubResource("ShaderMaterial_5wc1b")
 custom_minimum_size = Vector2(48, 48)
 offset_right = 48.0
 offset_bottom = 48.0
+tooltip_text = "1"
 texture = ExtResource("1_vfm7v")
 expand_mode = 2
 stretch_mode = 4
@@ -51,68 +43,3 @@ text = "9999"
 label_settings = ExtResource("4_4uqsi")
 horizontal_alignment = 2
 vertical_alignment = 1
-
-[node name="DescPanel" type="PanelContainer" parent="."]
-visible = false
-z_index = 9
-layout_mode = 1
-offset_right = 337.0
-offset_bottom = 91.0
-
-[node name="MarginContainer" type="MarginContainer" parent="DescPanel"]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DescPanel/MarginContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="DescPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DescPanel/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 6.0
-metadata/_edit_group_ = true
-
-[node name="DescTitle" type="Label" parent="DescPanel/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 0
-text = "Title
-"
-label_settings = ExtResource("5_4nrjt")
-
-[node name="Desc" type="RichTextLabel" parent="DescPanel/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/bold_italics_font_size = 14
-theme_override_font_sizes/italics_font_size = 14
-theme_override_font_sizes/mono_font_size = 14
-theme_override_font_sizes/normal_font_size = 14
-theme_override_font_sizes/bold_font_size = 14
-bbcode_enabled = true
-text = "lorem ipsum dolor adadrester"
-fit_content = true
-scroll_active = false
-
-[node name="TextureRect" type="TextureRect" parent="DescPanel/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("6_sr328")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DescPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="DescPanel/MarginContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "获取方法："
-
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
