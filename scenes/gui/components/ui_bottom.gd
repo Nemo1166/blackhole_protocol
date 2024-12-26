@@ -74,7 +74,7 @@ func show_facility_info(args: Array):
 	const FACILITY_VIEW = preload("res://scenes/gui/components/facility_view.tscn")
 	var view = FACILITY_VIEW.instantiate()
 	dialog_panel.set_content(view)
-	view.set_facility_info(outpost, facility)
+	view.set_facility_info(facility)
 	
 
 func _on_build_outpost() -> void:

@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("3_6lqsn")
-id = 11
+id = 41
 name = &"orig_shard"
 display_name = "源石碎片"
 desc_basic = "从污染区域中收集到的源石碎片"

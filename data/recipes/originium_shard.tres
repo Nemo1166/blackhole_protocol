@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("1_tppb6")
-id = 11
+id = 31
 name = "源石碎片"
 type = 2
 description = "从固源岩提取源石碎片"

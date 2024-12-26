@@ -55,7 +55,7 @@ func load_settings() -> bool:
 
 
 func start_new_game() -> void:
-	var world = preload("res://scenes/world.tscn").instantiate()
+	var world = preload("res://scenes/terra.tscn").instantiate()
 	# print(typeof(world))
 	world_2d.add_child.call_deferred(world)
 	gui.queue_free()

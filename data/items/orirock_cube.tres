@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://e1peq4uli0ul"]
+
+[ext_resource type="Texture2D" uid="uid://bj2eg15jgxosd" path="res://assets/image/item/道具_固源岩.png" id="1_o41wl"]
+[ext_resource type="Script" path="res://scripts/dataclass/item.gd" id="2_t8wok"]
+
+[resource]
+script = ExtResource("2_t8wok")
+id = 11
+name = &"orirock_cube"
+display_name = "固源岩"
+desc_basic = ""
+desc_ext = ""
+icon = ExtResource("1_o41wl")
+tier = 2
+type = 5
+weight = 0.0
+is_fuel = false
+fuel_value = 0

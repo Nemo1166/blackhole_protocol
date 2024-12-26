@@ -8,8 +8,6 @@ extends Node
 
 func _ready() -> void:
 	update_volume()
-	await get_tree().create_timer(1).timeout
-	play_random_bgm()
 
 var volume: Vector2 = Vector2(0, 0) # bgm, sfx
 

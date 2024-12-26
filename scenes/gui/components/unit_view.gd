@@ -3,7 +3,9 @@ extends Control
 @onready var ingredients: HBoxContainer = %Ingredients
 @onready var progress: ProgressBar = %Progress
 @onready var results: HBoxContainer = %Results
-@onready var state: Label = %State
+@onready var work_state: Label = %WorkState
+@onready var prod_state: Label = %ProdState
+
 
 var unit: OutpostDM.ProductionUnit = null
 
@@ -14,17 +16,20 @@ func _process(_delta: float) -> void:
 
 func _exit_tree() -> void:
 	if unit != null:
-		unit.work_state_changed.disconnect(update_status)
+		unit.work_state_changed.disconnect(update_work_state)
+		unit.prod_state_changed.disconnect(update_prod_state)
 
 func connect_unit(prod_unit: OutpostDM.ProductionUnit):
 	self.unit = prod_unit
 	update_view()
-	unit.work_state_changed.connect(update_status)
+	unit.work_state_changed.connect(update_work_state)
+	unit.prod_state_changed.connect(update_prod_state)
 
 func update_view():
 	update_recipe_view()
 	update_progress(unit.progress)
-	update_status(unit.work_state)
+	update_work_state(unit.work_state)
+	update_prod_state(unit.prod_state)
 
 func update_recipe_view():
 	Global.clear_children(ingredients)
@@ -50,14 +55,21 @@ func update_recipe_view():
 func update_progress(value: float):
 	progress.value = value
 
-func update_status(s: OutpostDM.ProductionUnit.WorkState):
+func update_work_state(s: OutpostDM.ProductionUnit.WorkState):
 	match s:
 		OutpostDM.ProductionUnit.WorkState.IDLE:
-			state.text = "空闲中"
+			work_state.text = "空闲中"
 		OutpostDM.ProductionUnit.WorkState.PRODUCING:
-			state.text = "工作中"
+			work_state.text = "工作中"
 		OutpostDM.ProductionUnit.WorkState.STOPPED:
-			state.text = "已停止"
+			work_state.text = "已停止"
+
+func update_prod_state(s: OutpostDM.ProductionUnit.ProdState):
+	match s:
+		OutpostDM.ProductionUnit.ProdState.NORMAL:
+			prod_state.text = ""
+		OutpostDM.ProductionUnit.ProdState.INSUFFICIENT_MATERIAL:
+			prod_state.text = "材料不足"
 
 func create_miner():
 	var texture_rect = TextureRect.new()

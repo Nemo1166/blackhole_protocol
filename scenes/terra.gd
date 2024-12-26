@@ -17,6 +17,9 @@ func _ready() -> void:
 	PlaytimeManager.start_all()
 	
 	build_rhodes()
+	
+	await get_tree().create_timer(1).timeout
+	AudioMgr.play_random_bgm()
 
 func build_rhodes():
 	var rhodes: OutpostDM.Outpost = terra.build_outpost(20, Vector2i(0,0), "罗德岛")

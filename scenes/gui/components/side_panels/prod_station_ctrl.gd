@@ -2,7 +2,6 @@ class_name ProdStationCtrl extends VBoxContainer
 
 
 @export var factory: BaseFactory
-const formula_ui = preload("res://scenes/gui/components/recipe_formula_ui.tscn")
 const ITEM_SLOT = preload("res://scenes/gui/components/item_slot.tscn")
 
 func _ready() -> void:
@@ -42,13 +41,6 @@ func show_avail_recipes():
 		for r in existed_recipes:
 			r.queue_free()
 	# put
-	for id in Global.recipes.keys():
-		var formula: RecipeFormulaUI = formula_ui.instantiate()
-		
-		formula.recipe = Global.recipes[id]
-		#formula.update_ui()
-		formula.recipe_selected.connect(on_select_recipe)
-		%RecipeGrid.add_child(formula)
 	$RecipeSelector.show()
 
 var toggle_flag = 0

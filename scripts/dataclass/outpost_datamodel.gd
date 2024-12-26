@@ -50,7 +50,7 @@ class Facilities:
 				# check material
 				if unit.prod_state == ProductionUnit.ProdState.INSUFFICIENT_MATERIAL:
 					for item in unit.plan.ingredients.keys():
-						if outpost.get_item_amount(item) > unit.plan.ingredients[item]:
+						if outpost.get_item_amount(item) >= unit.plan.ingredients[item]:
 							# request item from outpost
 							outpost.deliver_item(outpost.inventory, unit.internal_inventory, item, unit.plan.ingredients[item])
 				# check products
@@ -94,19 +94,18 @@ class Facilities:
 				3: return 320 # upgrade
 			return -1
 	
-	class Factory extends BaseFacility:
-		@export var plan: Array[Recipe] = []
-		@export_storage var progress: float = 0.0
-
+	class Crafting extends BaseWorkshop:
 		func _init():
-			name = "Factory"
+			name = "Crafting"
+			display_name = "制造站"
+			acceptable_recipe = Recipe.Type.Crafting_L
 		
-		func update(delta: float):
-			progress += delta
-			if progress >= 10:
-				progress = 0
-				# outpost.inventory.add_item(Item.Tool, 1)
-				print("Factory produce tool")
+		func get_cost(facility_level: int) -> int:
+			match facility_level:
+				1: return 200 # new
+				2: return 240  # upgrade
+				3: return 320 # upgrade
+			return -1
 
 #region DataClass
 
@@ -153,6 +152,8 @@ class Outpost extends Resource:
 	
 	func destroy(facility: BaseFacility):
 		if _facilities.has(facility):
+			# return 80% of the cost
+			inventory.add_item(Global.items[4], int(facility.get_cost(facility.level) * 0.8))
 			_facilities.erase(facility)
 		else:
 			print("Facility not found")
@@ -254,7 +255,13 @@ class ProductionUnit extends Resource:
 			if value != work_state:
 				work_state = value
 				work_state_changed.emit(value)
-	@export var prod_state: ProdState = ProdState.NORMAL 
+	
+	signal prod_state_changed(prod_state: ProdState)
+	@export var prod_state: ProdState = ProdState.NORMAL:
+		set(value):
+			if value != prod_state:
+				prod_state = value
+				prod_state_changed.emit(value) 
 	var cached_time_in_minutes: float = 0.0
 
 	signal priority_changed
@@ -308,7 +315,7 @@ class ProductionUnit extends Resource:
 				print("Production generated: %s, amount: %d" % [result.name, avail_amount])
 			else:
 				# no available resource in map
-				print("No available resource in map")
+				print("No available resource %s in map" % result.name)
 				return
 		else:
 			# add result to internal inventory

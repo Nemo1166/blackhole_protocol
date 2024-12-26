@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cv018sh01t4fk"]
+[gd_scene load_steps=6 format=3 uid="uid://cv018sh01t4fk"]
 
 [ext_resource type="Script" path="res://scenes/gui/components/unit_view.gd" id="1_72fat"]
 [ext_resource type="PackedScene" uid="uid://b6aqirfbqqeud" path="res://scenes/gui/components/item_slot.tscn" id="1_kgi0t"]
 [ext_resource type="FontFile" uid="uid://ddjm3jbnq4wxq" path="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf" id="2_uw41d"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_p7kfk"]
+font_color = Color(1, 0.501961, 0, 1)
 
 [sub_resource type="GDScript" id="GDScript_kiekv"]
 script/source = "extends GridContainer
@@ -38,16 +41,23 @@ script = ExtResource("1_72fat")
 
 [node name="Metadata" type="HBoxContainer" parent="."]
 layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="Label" type="Label" parent="Metadata"]
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 0
 text = "生产单元"
 
-[node name="State" type="Label" parent="Metadata"]
+[node name="WorkState" type="Label" parent="Metadata"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "状态"
+
+[node name="ProdState" type="Label" parent="Metadata"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "生产状态"
+label_settings = SubResource("LabelSettings_p7kfk")
 
 [node name="UnitStat" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -82,18 +92,24 @@ theme_override_font_sizes/font_size = 24
 text = "gear"
 
 [node name="PopupPanel" type="PopupPanel" parent="."]
+size = Vector2i(168, 100)
+visible = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PopupPanel"]
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 96.0
+offset_right = 164.0
 offset_bottom = 96.0
+
+[node name="Label" type="Label" parent="PopupPanel/VBoxContainer"]
+layout_mode = 2
+text = "选择要执行的生产计划"
 
 [node name="RecipeViews" type="GridContainer" parent="PopupPanel/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-columns = 5
+columns = 6
 script = SubResource("GDScript_kiekv")
 
 [node name="Button" type="Button" parent="PopupPanel/VBoxContainer/RecipeViews"]

@@ -73,7 +73,7 @@ layout_mode = 2
 
 [node name="Button" type="Button" parent="FacilityView/Operations"]
 layout_mode = 2
-text = "拆除设施 (WIP)"
+text = "拆除设施"
 
 [node name="WarehouseView" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -110,3 +110,5 @@ theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 4
 script = SubResource("GDScript_8wym0")
+
+[connection signal="pressed" from="FacilityView/Operations/Button" to="." method="_on_destroy_facility"]

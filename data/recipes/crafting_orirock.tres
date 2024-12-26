@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=4 format=3 uid="uid://0wqefccyc0hy"]
+
+[ext_resource type="Resource" uid="uid://o6ecxxdgkwqb" path="res://data/items/stone.tres" id="1_eetfm"]
+[ext_resource type="Script" path="res://scripts/dataclass/recipe.gd" id="2_1e36c"]
+[ext_resource type="Resource" uid="uid://u5hy36tgmpfi" path="res://data/items/orirock.tres" id="2_vdgu7"]
+
+[resource]
+script = ExtResource("2_1e36c")
+id = 11
+name = "提炼源岩"
+type = 1
+description = ""
+ingredients = {
+ExtResource("1_eetfm"): 12
+}
+results = {
+ExtResource("2_vdgu7"): 1
+}
+time_in_hour = 4

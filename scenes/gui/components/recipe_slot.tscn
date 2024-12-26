@@ -22,12 +22,19 @@ func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			recipe_selected.emit(this_recipe)
+
+func _make_custom_tooltip(_for_text: String) -> Object:
+	const RECIPE_TOOLTIP = preload(\"res://scenes/gui/components/tooltips/recipe_tooltip.tscn\")
+	var tooltip = RECIPE_TOOLTIP.instantiate()
+	tooltip.set_tooltip(this_recipe)
+	return tooltip
 "
 
 [node name="RecipeSlot" type="PanelContainer"]
 custom_minimum_size = Vector2(36, 36)
 offset_right = 36.0
 offset_bottom = 36.0
+tooltip_text = "1"
 script = SubResource("GDScript_kfcii")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

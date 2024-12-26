@@ -7,4 +7,4 @@ script = ExtResource("1_al6r2")
 base_folder = "res://data/recipes"
 includes = Array[String]([])
 excludes = Array[String]([])
-paths = Array[String](["res://data/recipes/mining_iron.tres", "res://data/recipes/mining_stone.tres", "res://data/recipes/mining_wood.tres", "res://data/recipes/originium_shard.tres"])
+paths = Array[String](["res://data/recipes/crafting_orirock.tres", "res://data/recipes/crafting_orirock_cube.tres", "res://data/recipes/mining_iron.tres", "res://data/recipes/mining_stone.tres", "res://data/recipes/mining_wood.tres", "res://data/recipes/originium_shard.tres"])

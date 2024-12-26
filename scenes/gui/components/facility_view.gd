@@ -4,7 +4,8 @@ extends Control
 @onready var outpost_id: Label = $FacilityView/TitleContainer/OutpostID
 @onready var unit_view_container: VBoxContainer = %UnitViewContainer
 
-var oid := 0
+var outpost: OutpostDM.Outpost
+var this_facility: OutpostDM.BaseFacility
 
 func _enter_tree() -> void:
 	EventBus.subscribe("update_inventory", update_inventory)
@@ -13,12 +14,13 @@ func _exit_tree() -> void:
 	EventBus.unsubscribe("update_inventory", update_inventory)
 
 func update_inventory(args: Array):
-	if args[0] == oid:
+	if args[0] == outpost.id:
 		update_warehouse_view(args[1])
 
-func set_facility_info(outpost: OutpostDM.Outpost, facility: OutpostDM.BaseFacility):
-	oid = outpost.id
-	outpost_id.text = str(oid)
+func set_facility_info(facility: OutpostDM.BaseFacility):
+	outpost = facility.outpost
+	this_facility = facility
+	outpost_id.text = str(outpost.id)
 	update_facility_view(facility)
 	update_warehouse_view(outpost.inventory._inventory)
 	init_units_view(facility.units)
@@ -36,5 +38,9 @@ func init_units_view(units: Array[OutpostDM.ProductionUnit]):
 		var view = UNIT_VIEW.instantiate()
 		unit_view_container.add_child(view)
 		view.connect_unit(unit)
-		
-	
+
+
+func _on_destroy_facility() -> void:
+	outpost.destroy(this_facility)
+	EventBus.publish("update_outpost_view")
+	Global.close_all_dialog()
