@@ -1,12 +1,39 @@
-[gd_scene load_steps=4 format=3 uid="uid://cv018sh01t4fk"]
+[gd_scene load_steps=5 format=3 uid="uid://cv018sh01t4fk"]
 
 [ext_resource type="Script" path="res://scenes/gui/components/unit_view.gd" id="1_72fat"]
 [ext_resource type="PackedScene" uid="uid://b6aqirfbqqeud" path="res://scenes/gui/components/item_slot.tscn" id="1_kgi0t"]
 [ext_resource type="FontFile" uid="uid://ddjm3jbnq4wxq" path="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf" id="2_uw41d"]
 
+[sub_resource type="GDScript" id="GDScript_kiekv"]
+script/source = "extends GridContainer
+
+signal recipe_selected(recipe: Recipe)
+
+func show_avail_recipe(type: Recipe.Type):
+	clear()
+	var avail_recipes = Global.filter_recipes(type)
+	const RECIPE_SLOT = preload(\"res://scenes/gui/components/recipe_slot.tscn\")
+	for r: Recipe in avail_recipes:
+		var slot = RECIPE_SLOT.instantiate()
+		add_child(slot)
+		slot.set_view(r)
+		slot.recipe_selected.connect(_on_recipe_selected)
+
+func _on_recipe_selected(recipe):
+	recipe_selected.emit(recipe)
+
+func clear():
+	for c in get_children():
+		if is_instance_of(c, Button):
+			continue
+		else:
+			c.queue_free()
+			
+"
+
 [node name="UnitView" type="VBoxContainer"]
 offset_right = 512.0
-offset_bottom = 96.0
+offset_bottom = 71.0
 script = ExtResource("1_72fat")
 
 [node name="Metadata" type="HBoxContainer" parent="."]
@@ -52,5 +79,36 @@ layout_mode = 2
 size_flags_horizontal = 8
 theme_override_fonts/font = ExtResource("2_uw41d")
 theme_override_font_sizes/font_size = 24
-disabled = true
 text = "gear"
+
+[node name="PopupPanel" type="PopupPanel" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupPanel"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 96.0
+offset_bottom = 96.0
+
+[node name="RecipeViews" type="GridContainer" parent="PopupPanel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+columns = 5
+script = SubResource("GDScript_kiekv")
+
+[node name="Button" type="Button" parent="PopupPanel/VBoxContainer/RecipeViews"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+tooltip_text = "取消现有生产方案"
+theme_override_fonts/font = ExtResource("2_uw41d")
+text = "ban"
+
+[node name="Button" type="Button" parent="PopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = " 关闭 "
+
+[connection signal="pressed" from="UnitStat/Button" to="." method="open_recipe_selector"]
+[connection signal="recipe_selected" from="PopupPanel/VBoxContainer/RecipeViews" to="." method="_on_recipe_views_recipe_selected"]
+[connection signal="pressed" from="PopupPanel/VBoxContainer/RecipeViews/Button" to="." method="_on_clear_plan"]
+[connection signal="pressed" from="PopupPanel/VBoxContainer/Button" to="PopupPanel" method="hide"]

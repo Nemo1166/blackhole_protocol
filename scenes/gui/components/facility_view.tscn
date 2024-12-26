@@ -25,6 +25,7 @@ func clear():
 [node name="FacilityViewer" type="HBoxContainer"]
 offset_right = 768.0
 offset_bottom = 576.0
+theme_override_constants/separation = 16
 script = ExtResource("1_cjm7p")
 
 [node name="FacilityView" type="VBoxContainer" parent="."]

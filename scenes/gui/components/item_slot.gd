@@ -7,7 +7,6 @@ class_name ItemSlot extends TextureRect
 @onready var amount_label: Label = %Amount
 @onready var amount_container: PanelContainer = $PanelContainer
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	amount_container.hide()

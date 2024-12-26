@@ -23,7 +23,7 @@ func set_panel_by_rect(rect: Rect2):
 
 func set_panel_by_ref(ref: ReferenceRect):
 	panel.position = ref.position
-	panel.size = ref.size
+	panel.set_deferred("size", ref.size)
 
 func set_content(node: Control):
 	for c in %Content.get_children():

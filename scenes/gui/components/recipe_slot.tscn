@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://c01uvwqt2qedn"]
+
+[ext_resource type="Texture2D" uid="uid://gjj4le2d4op0" path="res://assets/image/item/资源_石材.png" id="1_klyb3"]
+
+[sub_resource type="GDScript" id="GDScript_kfcii"]
+script/source = "extends PanelContainer
+
+@onready var recipe_texture: TextureRect = %TextureRect
+
+var this_recipe: Recipe = null
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	recipe_texture.texture = null
+
+func set_view(recipe: Recipe):
+	this_recipe = recipe
+	recipe_texture.texture = recipe.results.keys()[0].icon
+
+signal recipe_selected(recipe: Recipe)
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			recipe_selected.emit(this_recipe)
+"
+
+[node name="RecipeSlot" type="PanelContainer"]
+custom_minimum_size = Vector2(36, 36)
+offset_right = 36.0
+offset_bottom = 36.0
+script = SubResource("GDScript_kfcii")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("1_klyb3")
+expand_mode = 1
+stretch_mode = 4

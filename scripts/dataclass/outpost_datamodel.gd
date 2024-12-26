@@ -22,6 +22,7 @@ class Facilities:
 		func add_unit(unit: ProductionUnit) -> ProductionUnit:
 			unit.priority_changed.connect(allocate_productivity)
 			unit.location = outpost.location
+			unit.acceptable_recipe = acceptable_recipe
 			units.append(unit)
 			return unit
 
@@ -241,6 +242,7 @@ class ProductionUnit extends Resource:
 				emit_signal("priority_changed")
 	
 	@export_storage var location: Vector2i = Vector2i(0, 0)
+	@export_storage var acceptable_recipe: Recipe.Type = Recipe.Type.Other
 	@export_storage var progress: float = 0.0
 	@export_storage var efficiency: float = 1.0
 	@export_storage var internal_inventory: Inventory = Inventory.new()
@@ -329,9 +331,12 @@ class ProductionUnit extends Resource:
 		
 	#region plan
 	func set_plan(recipe: Recipe):
+		if recipe == plan:
+			return
 		plan = recipe
 		progress = 0
 		work_state = WorkState.PRODUCING
+		cached_time_in_minutes = recipe.time_in_hour * 60
 		check_material()
 
 	func clear_plan():

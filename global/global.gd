@@ -127,7 +127,7 @@ func get_recipe(recipe_name: String) -> Recipe:
 	return null
 
 func filter_recipes(type: Recipe.Type) -> Array[Recipe]:
-	var result = []
+	var result: Array[Recipe] = []
 	for recipe in recipes.values():
 		if recipe.type == type:
 			result.append(recipe)
