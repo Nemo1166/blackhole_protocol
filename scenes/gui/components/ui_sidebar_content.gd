@@ -41,7 +41,6 @@ func show_content(loc: Vector2i):
 	if outpost != null:
 		print(outpost.name)
 		# has outpost
-		%BuildOutpostBtn.hide()
 		outpost_view.show()
 		## metadata
 		%OpName.text = outpost.name
@@ -55,7 +54,6 @@ func show_content(loc: Vector2i):
 		%Facilities.update_facilities(facilities)
 	else:
 		# has no outpost
-		%BuildOutpostBtn.show()
 		outpost_view.hide()
 
 func show_res(res: MapData.CellRes):
@@ -73,7 +71,7 @@ func update_placeholder(reachable: bool):
 		place_holder.text = '(区域未开放)'
 
 signal build_outpost
-func _on_build_outpost_pressed() -> void:
+func _on_build_outpost() -> void:
 	build_outpost.emit()
 
 signal build_facility

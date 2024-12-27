@@ -1,6 +1,5 @@
-[gd_scene load_steps=8 format=3 uid="uid://nvxuyxvw1tm6"]
+[gd_scene load_steps=7 format=3 uid="uid://nvxuyxvw1tm6"]
 
-[ext_resource type="LabelSettings" uid="uid://cfll3mt2npsjq" path="res://assets/fonts/style_normal_small.tres" id="1_0aj44"]
 [ext_resource type="Script" path="res://scenes/gui/components/tooltips/recipe_tooltip.gd" id="1_7cm0g"]
 [ext_resource type="LabelSettings" uid="uid://5j47d8xfvkoj" path="res://assets/fonts/style_number_small.tres" id="2_725ok"]
 [ext_resource type="LabelSettings" uid="uid://cdha5gcswv4rj" path="res://assets/fonts/style_smalltitle.tres" id="2_ohhmx"]
@@ -13,53 +12,52 @@ shader_parameter/from = Color(0, 0, 0, 1)
 shader_parameter/to = Color(1, 1, 1, 1)
 shader_parameter/threshold = 0.1
 
-[node name="RecipeTooltip" type="PanelContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("1_7cm0g")
-
-[node name="RecipeFormulaUI" type="MarginContainer" parent="."]
-layout_mode = 2
+[node name="RecipeTooltip" type="MarginContainer"]
+offset_right = 208.0
+offset_bottom = 162.0
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
+script = ExtResource("1_7cm0g")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="RecipeFormulaUI"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Title" type="Label" parent="RecipeFormulaUI/VBoxContainer"]
+[node name="Title" type="Label" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "标题"
 label_settings = ExtResource("2_ohhmx")
 
-[node name="Desc" type="Label" parent="RecipeFormulaUI/VBoxContainer"]
+[node name="Desc" type="RichTextLabel" parent="VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(192, 64)
 layout_mode = 2
+bbcode_enabled = true
 text = "描述"
-label_settings = ExtResource("1_0aj44")
+fit_content = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="RecipeFormulaUI/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Ingrediants" type="GridContainer" parent="RecipeFormulaUI/VBoxContainer/HBoxContainer"]
+[node name="Ingrediants" type="GridContainer" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 columns = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="RecipeFormulaUI/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="Duration" type="Label" parent="RecipeFormulaUI/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Duration" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "2h"
 label_settings = ExtResource("2_725ok")
 
-[node name="TextureRect" type="TextureRect" parent="RecipeFormulaUI/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
 material = SubResource("ShaderMaterial_nxrwd")
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
@@ -68,7 +66,7 @@ texture = ExtResource("4_0kc0k")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="Results" type="GridContainer" parent="RecipeFormulaUI/VBoxContainer/HBoxContainer"]
+[node name="Results" type="GridContainer" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 columns = 3

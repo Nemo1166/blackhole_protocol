@@ -35,6 +35,20 @@ func get_outpost_data(location: Vector2i) -> OutpostDM.Outpost:
 			return outpost
 	return null
 
+#region navigation
+
+## 获取指定位置的邻居
+func get_neighbors(location: Vector2i) -> Array[Vector2i]:
+	return HexGridTool.oddr_neighbors(location)
+
+## 获取距离
+func get_distance(from: Vector2i, to: Vector2i) -> float:
+	return HexGridTool.oddr_distance(from, to)
+
+## 获取路径
+func find_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
+	return []
+
 #region Map Data
 
 func update_cell_housing(cell: Vector2i, housing: int) -> void:
@@ -85,3 +99,60 @@ func remove_outpost(id: int) -> void:
 func update_outposts(delta: float) -> void:
 	for outpost in outpost_data:
 		outpost.update(delta)
+
+#region Squad Data
+
+var squad_id := 0
+
+var squads: Array[SquadDM.Squad] = []
+
+## 创建队伍
+func create_squad(housing: int, location: Vector2i, type: SquadDM.SquadType) -> SquadDM.Squad:
+	var squad = SquadDM.Squad.new(squad_id, type, housing, location)
+	squads.append(squad)
+	squad_id += 1
+	return squad
+
+## 根据ID获取队伍数据
+func get_squad_data_by_id(id: int) -> SquadDM.Squad:
+	for squad in squads:
+		if squad.id == id:
+			return squad
+	return null
+
+## 根据位置获取队伍数据
+func get_squad_data_by_location(location: Vector2i) -> SquadDM.Squad:
+	for squad in squads:
+		if squad.location == location:
+			return squad
+	return null
+
+## 移动队伍
+func move_squad(sid: int, to: Vector2i) -> void:
+	var squad = get_squad_data_by_id(sid)
+	if squad != null:
+		squad.move_to(to)
+
+## 更新队伍
+func update_squads(_delta: float) -> void:
+	for squad in squads:
+		pass
+
+## 解散队伍
+func dismiss_squad(id: int) -> void:
+	for i in range(squads.size()):
+		if squads[i].id == id:
+			squads.erase(i)
+			break
+
+## 获取队伍列表
+func get_squads() -> Array[SquadDM.Squad]:
+	return squads
+
+## 获取队伍数量
+func get_squad_count(type: SquadDM.SquadType) -> int:
+	var count = 0
+	for squad in squads:
+		if squad.type == type:
+			count += 1
+	return count

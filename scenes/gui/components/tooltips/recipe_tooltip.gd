@@ -1,6 +1,6 @@
-extends PanelContainer
+extends Container
 
-@onready var desc: Label = %Desc
+@onready var desc = %Desc
 @onready var ingrediants_container: GridContainer = %Ingrediants
 @onready var duration: Label = %Duration
 @onready var results_container: GridContainer = %Results
@@ -14,7 +14,10 @@ func set_tooltip(recipe: Recipe):
 	var results = recipe.results
 	%Title.text = recipe.name
 	%Duration.text = '%dh' % recipe.time_in_hour
-	%Desc.text = recipe.description
+	if recipe.description == "":
+		%Desc.text = "[PH] 介绍"
+	else:
+		%Desc.text = recipe.description
 	for k in materials.keys():
 		var item = k
 		var amount = materials[k]

@@ -9,7 +9,9 @@ extends Control
 
 var unit: OutpostDM.ProductionUnit = null
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _ready() -> void:
+	$PopupPanel.hide()
+
 func _process(_delta: float) -> void:
 	if unit != null:
 		update_progress(unit.progress)

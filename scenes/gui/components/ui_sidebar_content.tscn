@@ -139,11 +139,32 @@ label_settings = ExtResource("4_67ul0")
 custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 
-[node name="BuildOutpostBtn" type="Button" parent="VBoxContainer/AreaInfo"]
-unique_name_in_owner = true
+[node name="SquadView" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 0
-text = "Build Outpost (WIP)"
+
+[node name="Metadata" type="HBoxContainer" parent="VBoxContainer/SquadView"]
+layout_mode = 2
+
+[node name="Icon" type="Label" parent="VBoxContainer/SquadView/Metadata"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_e3n4g")
+text = "people-group"
+
+[node name="Label" type="Label" parent="VBoxContainer/SquadView/Metadata"]
+layout_mode = 2
+text = "小队"
+label_settings = ExtResource("1_exy8f")
+
+[node name="NofSquads" type="Label" parent="VBoxContainer/SquadView/Metadata"]
+layout_mode = 2
+text = "(0)"
+label_settings = ExtResource("1_exy8f")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/SquadView"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/SquadView"]
+layout_mode = 2
 
 [node name="OutpostView" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -232,8 +253,9 @@ layout_mode = 2
 size_flags_horizontal = 8
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/OutpostView"]
-custom_minimum_size = Vector2(0, 8)
+custom_minimum_size = Vector2(32, 8)
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="FacilitiesContainer" type="VBoxContainer" parent="VBoxContainer/OutpostView"]
 layout_mode = 2
@@ -275,10 +297,9 @@ size_flags_horizontal = 4
 [node name="BuildFacility" type="Button" parent="VBoxContainer/OutpostView"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Build Facility (WIP)"
+text = "建造设施"
 script = SubResource("GDScript_obfxd")
 
-[connection signal="pressed" from="VBoxContainer/AreaInfo/BuildOutpostBtn" to="." method="_on_build_outpost_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/OutpostView/MetaData" to="VBoxContainer/OutpostView/MetaData" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/OutpostView/MetaData" to="VBoxContainer/OutpostView/MetaData" method="_on_mouse_exited"]
 [connection signal="mouse_exited" from="VBoxContainer/OutpostView/BuildFacility" to="VBoxContainer/OutpostView/BuildFacility" method="_on_mouse_exited"]
