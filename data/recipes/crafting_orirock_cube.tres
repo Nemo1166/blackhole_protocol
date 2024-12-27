@@ -7,9 +7,9 @@
 [resource]
 script = ExtResource("3_q7vcb")
 id = 12
-name = "提炼源岩"
+name = "合成固源岩"
 type = 1
-description = ""
+description = "源岩加工的第一步。"
 ingredients = {
 ExtResource("2_etgim"): 4
 }

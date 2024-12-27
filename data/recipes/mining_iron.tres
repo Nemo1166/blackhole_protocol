@@ -8,7 +8,7 @@ script = ExtResource("3_21pe6")
 id = 3
 name = "开采铁矿"
 type = 0
-description = ""
+description = "采矿时一定要注意避免吸入粉尘和有害气体，确保自身安全。"
 ingredients = {}
 results = {
 ExtResource("1_3kqe3"): 3

@@ -9,7 +9,7 @@ script = ExtResource("2_1e36c")
 id = 11
 name = "提炼源岩"
 type = 1
-description = ""
+description = "从石材中提炼源岩，效率较低。"
 ingredients = {
 ExtResource("1_eetfm"): 12
 }

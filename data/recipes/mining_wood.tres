@@ -8,7 +8,7 @@ script = ExtResource("3_6sv3r")
 id = 1
 name = "采集木材"
 type = 0
-description = ""
+description = "让你做伐木工，不是让你做[i]伐木工[/i]。"
 ingredients = {}
 results = {
 ExtResource("1_uvl4e"): 6
