@@ -25,6 +25,7 @@ var selected_cell: Vector2i
 func _ready() -> void:
 	# _debug_show_coord()
 	cell_range = $"../MapMgr".area
+	EventBus.subscribe("camera_focus_on", camera_focus_on)
 
 # func _debug_show_coord():
 # 	for i in range(20):
@@ -59,6 +60,7 @@ signal cell_selected(pos: Vector2)
 
 func _on_cell_selected(cell: Vector2i) -> void:
 	_is_selected = true
+	selected_cell = cell
 	print("cell selected: ", cell)
 	$Selected.clear()
 	selector.clear()
@@ -73,14 +75,17 @@ func clear_selected() -> void:
 	_is_selected = false
 	curr_housing = -1
 
+func camera_focus_on(data: Array):
+	var loc = data[0]
+	_on_cell_selected(loc)
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if not cell_range.has_point(mouse_pos_in_map):
 				return
 			_is_selected = true
-			selected_cell = mouse_pos_in_map
-			_on_cell_selected(selected_cell)
+			_on_cell_selected(mouse_pos_in_map)
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			cell_deselected.emit()
 
@@ -97,3 +102,10 @@ func get_cell_housing(cell: Vector2i) -> int:
 		return data.get_custom_data("housing")
 	else:
 		return 11
+
+func draw_outposts(list: Array[OutpostDM.Outpost]):
+	$Outposts.clear()
+	for o in list:
+		var loc = o.location
+		$Outposts.set_cell(loc, 1, Vector2i.ZERO, 1)
+		print("draw in %s" % (str(loc)))

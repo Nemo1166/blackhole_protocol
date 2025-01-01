@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bylttmujl7n8d"]
+
+[ext_resource type="Texture2D" uid="uid://davj8vebsij1w" path="res://assets/image/icon/隐秘战线_小队_2.png" id="1_7yycn"]
+
+[node name="MapUnit" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -3.8147e-06)
+scale = Vector2(0.507937, 0.496124)
+texture = ExtResource("1_7yycn")

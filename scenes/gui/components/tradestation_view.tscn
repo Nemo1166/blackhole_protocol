@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3 uid="uid://cb4ef6rbd3btq"]
+
+[ext_resource type="LabelSettings" uid="uid://c1h8htpl43tff" path="res://assets/fonts/style_subtitle.tres" id="1_d77eh"]
+[ext_resource type="LabelSettings" uid="uid://du8flicqbonao" path="res://assets/fonts/style_number.tres" id="2_gcfb5"]
+
+[node name="TradeStationView" type="VBoxContainer"]
+offset_right = 416.0
+offset_bottom = 576.0
+
+[node name="TitleContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+metadata/_edit_group_ = true
+
+[node name="FacilityName" type="Label" parent="TitleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "设施"
+label_settings = ExtResource("1_d77eh")
+
+[node name="Label" type="Label" parent="TitleContainer"]
+layout_mode = 2
+text = "位于 #"
+label_settings = ExtResource("2_gcfb5")
+
+[node name="OutpostID" type="Label" parent="TitleContainer"]
+layout_mode = 2
+text = "000"
+label_settings = ExtResource("2_gcfb5")
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="PortContainer" type="VBoxContainer" parent="."]
+layout_mode = 2

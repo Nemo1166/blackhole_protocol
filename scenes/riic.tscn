@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://1l3x7wolrojj"]
+[gd_scene load_steps=8 format=3 uid="uid://1l3x7wolrojj"]
 
 [ext_resource type="Script" path="res://scenes/riic.gd" id="1_a1njk"]
 [ext_resource type="LabelSettings" uid="uid://c1h8htpl43tff" path="res://assets/fonts/style_subtitle.tres" id="1_n3hck"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dgvb65v2fhvgy" path="res://scenes/entities/buildings/ctrl_centre.tscn" id="3_h5fi1"]
 [ext_resource type="PackedScene" uid="uid://3yunttm6n0gy" path="res://scenes/entities/mid_building.tscn" id="3_obp5v"]
 [ext_resource type="PackedScene" uid="uid://b8drvrmy5s72w" path="res://scenes/gui/components/sidepanel.tscn" id="4_frfd3"]
+[ext_resource type="Script" path="res://scripts/camera_ctrl.gd" id="5_do1sr"]
 
 [node name="RIIC" type="Node2D"]
 script = ExtResource("1_a1njk")
@@ -26,23 +27,8 @@ position = Vector2(576, 224)
 [node name="MidBuilding" parent="Layers/Board" instance=ExtResource("3_obp5v")]
 position = Vector2(272, 104)
 
-[node name="MidBuilding7" parent="Layers/Board" instance=ExtResource("3_obp5v")]
-position = Vector2(832, 48)
-
 [node name="MidBuilding2" parent="Layers/Board" instance=ExtResource("3_obp5v")]
-position = Vector2(552, 48)
-
-[node name="MidBuilding3" parent="Layers/Board" instance=ExtResource("3_obp5v")]
-position = Vector2(920, 272)
-
-[node name="MidBuilding4" parent="Layers/Board" instance=ExtResource("3_obp5v")]
-position = Vector2(832, 496)
-
-[node name="MidBuilding5" parent="Layers/Board" instance=ExtResource("3_obp5v")]
-position = Vector2(552, 496)
-
-[node name="MidBuilding6" parent="Layers/Board" instance=ExtResource("3_obp5v")]
-position = Vector2(272, 443)
+position = Vector2(224, 344)
 
 [node name="UpperLevel" type="Node2D" parent="Layers"]
 
@@ -55,8 +41,10 @@ limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 editor_draw_drag_margin = true
+script = ExtResource("5_do1sr")
 
 [node name="UI" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Title" type="Label" parent="UI"]
 visible = false

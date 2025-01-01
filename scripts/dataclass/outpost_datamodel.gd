@@ -120,6 +120,7 @@ class Outpost extends Resource:
 
 	@export var _facilities: Array[BaseFacility] = []
 	@export_storage var max_facility: int = 3
+	@export_storage var trade_station: TradeStation = TradeStation.new()
 
 	func _init(id: int, name: String, owner: int, location: Vector2i):
 		self.id = id
@@ -127,6 +128,11 @@ class Outpost extends Resource:
 		self.owner = owner
 		self.location = location
 		population = 10
+		inventory.item_changed.connect(update_ports)
+
+		trade_station.outpost = self
+		trade_station.add_conveyor()
+		trade_station.add_conveyor()
 
 	#region Manage Facilities
 
@@ -192,15 +198,33 @@ class Outpost extends Resource:
 			EventBus.publish("update_inventory", [self.id, inventory._inventory])
 		else:
 			print("Not enough item to deliver")
+	
+	func export_items(item: Item, amount: int) -> int:
+		var avail_amount = inventory.get_item_amount(item)
+		var actual_amount = min(avail_amount, amount)
+		inventory.remove_item(item, actual_amount)
+		return actual_amount
+	
+	func import_items(item: Item, amount: int):
+		inventory.add_item(item, amount)
+	
+	func update_ports(item: Item):
+		for port in trade_station.ports:
+			if port.get_item() == item:
+				port.storage = get_item_amount(item)
+				break
 		
 class Inventory extends Resource:
 	@export_storage var _inventory: Dictionary = {} # item: amount
+
+	signal item_changed(item: Item)
 
 	func add_item(item: Item, amount: int):
 		if not _inventory.has(item):
 			_inventory[item] = amount
 		else:
 			_inventory[item] += amount
+		item_changed.emit(item)
 	
 	func get_item_amount(item: Item) -> int:
 		if _inventory.has(item):
@@ -213,6 +237,7 @@ class Inventory extends Resource:
 			_inventory[item] -= amount
 			if _inventory[item] <= 0:
 				_inventory.erase(item)
+			item_changed.emit(item)
 		else:
 			print("Not enough item to remove")
 
@@ -312,7 +337,7 @@ class ProductionUnit extends Resource:
 									location, result.name, plan.results[result])
 			if avail_amount > 0:
 				internal_inventory.add_item(result, avail_amount)
-				print("Production generated: %s, amount: %d" % [result.name, avail_amount])
+				# print("Production generated: %s, amount: %d" % [result.name, avail_amount])
 			else:
 				# no available resource in map
 				print("No available resource %s in map" % result.name)
@@ -359,3 +384,75 @@ class ProductionUnit extends Resource:
 	func stop():
 		work_state = WorkState.STOPPED
 	
+#region delivery
+
+class TradeStation extends BaseFacility:
+	@export var ports: Array[Port] = []
+	@export var max_port: int = 3
+	@export var conveyors: Array[SquadDM.Conveyor] = []
+	@export var max_conveyor: int = 6
+
+	func _init():
+		name = "TradeStation"
+		add_port()
+		add_port()
+		add_port()
+	
+	func add_port():
+		if ports.size() < max_port:
+			var port = Port.new()
+			# port.id = ports.size()
+			ports.append(port)
+			return port
+		return null
+	
+	func remove_port(port: Port):
+		if ports.has(port):
+			ports.erase(port)
+
+	func add_conveyor():
+		var conveyor = SquadDM.Conveyor.new(outpost.location)
+		conveyors.append(conveyor)
+		return conveyor
+	
+
+enum TradeMode {
+	Request,
+	Supply,
+	Storage
+}
+
+class Port extends Resource:
+	# @export var id: int = 0
+	@export var _mode: TradeMode = TradeMode.Storage
+	@export var _item: Item = null
+	@export_storage var storage: int = 0:
+		set(value):
+			if value != storage:
+				storage = value
+				stat_changed.emit()
+	
+	@export var setting_amount: int = 0 # 需求：最大需求；供给：最小保留
+	@export_storage var reserved_amount: int = 0
+
+	signal stat_changed
+
+	func set_item(item: Item):
+		self._item = item
+		self._mode = TradeMode.Storage
+	
+	func get_item() -> Item:
+		return _item
+
+	func set_mode(mode: TradeMode):
+		self._mode = mode
+		setting_amount = 0
+	
+	func get_mode() -> TradeMode:
+		return _mode
+
+	func clear():
+		_item = null
+		_mode = TradeMode.Storage
+		storage = 0
+		setting_amount = 0

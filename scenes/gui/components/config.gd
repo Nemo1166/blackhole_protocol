@@ -52,9 +52,9 @@ func set_config() -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("bgm"), linear_to_db(vol_music.value))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("sfx"), linear_to_db(vol_sfx.value))
 	# vsync
-	DisplayServer.window_set_vsync_mode(1 if vsync.pressed else 0)
+	DisplayServer.window_set_vsync_mode(1 if vsync.button_pressed else 0)
 	# max fps
-	if not vsync.pressed:
+	if not vsync.button_pressed:
 		Engine.max_fps = MAX_FPS_LIST[max_fps.selected]
 	Global.save_user_config()
 	AudioMgr.update_volume()

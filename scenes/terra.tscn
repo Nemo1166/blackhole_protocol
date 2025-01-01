@@ -75,9 +75,11 @@ twilight_time = SubResource("Resource_dpsbx")
 night_time = SubResource("Resource_7hgro")
 dawn_time = SubResource("Resource_scgxc")
 
-[node name="MapMgr" type="Node" parent="."]
+[node name="MapMgr" type="Node" parent="." node_paths=PackedStringArray("blocks", "squad_canvas")]
 script = ExtResource("4_1kwgi")
-area = Rect2i(-10, -8, 20, 16)
+area = Rect2i(-30, -20, 60, 40)
+blocks = NodePath("../Map/Blocks")
+squad_canvas = NodePath("../Map/Conveyors")
 
 [node name="Map" type="Node2D" parent="."]
 script = ExtResource("5_qqojh")
@@ -102,8 +104,10 @@ tile_map_data = PackedByteArray("AAAAAAAAAwAAAAAAAAD+/wYABAAAAAEAAAD9/wUABAAAAAE
 tile_set = ExtResource("8_g2l1s")
 
 [node name="Outposts" type="TileMapLayer" parent="Map"]
-tile_map_data = PackedByteArray("AAAAAAAAAwAAAAAAAAA=")
+z_index = 1
+tile_map_data = PackedByteArray("AAAAAAEAAQAAAAAAAQAAAAAAAQAAAAAAAQD//wAAAQAAAAAAAQA=")
 tile_set = ExtResource("8_g2l1s")
+y_sort_origin = 10
 
 [node name="Selected" type="TileMapLayer" parent="Map"]
 tile_set = ExtResource("8_g2l1s")
@@ -112,6 +116,8 @@ tile_set = ExtResource("8_g2l1s")
 material = SubResource("ShaderMaterial_1hfcp")
 tile_map_data = PackedByteArray("AAAAAAEABgAHAAcAAAA=")
 tile_set = ExtResource("8_g2l1s")
+
+[node name="Conveyors" type="Node2D" parent="Map"]
 
 [node name="MapLight" type="DirectionalLight2D" parent="Map" node_paths=PackedStringArray("time_system")]
 blend_mode = 2
@@ -134,6 +140,12 @@ grow_vertical = 0
 text = "(0,0)"
 label_settings = SubResource("LabelSettings_fpuuj")
 
+[node name="Label" type="Label" parent="Map/CanvasLayer"]
+offset_left = 80.0
+offset_top = 120.0
+offset_right = 120.0
+offset_bottom = 139.0
+
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.8, 0.8)
 limit_left = -9600
@@ -150,7 +162,7 @@ time_mgr = NodePath("../TimeMgr")
 
 [node name="UI" parent="." instance=ExtResource("12_oou75")]
 
-[connection signal="day_state_changed" from="TimeMgr" to="TimeMgr" method="_on_day_state_changed"]
+[connection signal="date_changed" from="TimeMgr" to="MapMgr" method="_on_date_changed"]
 [connection signal="day_state_changed" from="TimeMgr" to="Map/MapLight" method="transition"]
 [connection signal="time_changed_delta" from="TimeMgr" to="." method="_on_time_changed_delta"]
 [connection signal="cell_deselected" from="Map" to="." method="_on_map_cell_deselected"]

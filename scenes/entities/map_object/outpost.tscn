@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cavr12rcqgu84"]
+
+[ext_resource type="FontFile" uid="uid://ddjm3jbnq4wxq" path="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf" id="1_amcqv"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = -96.0
+offset_top = -80.0
+offset_right = 88.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_amcqv")
+theme_override_font_sizes/font_size = 96
+text = " house-flag"
+vertical_alignment = 1

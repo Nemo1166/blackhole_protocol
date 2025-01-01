@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx73o6d77s412"]
+
+[ext_resource type="Texture2D" uid="uid://exro5dqbrvok" path="res://assets/image/icon/隐秘战线_小队_1.png" id="1_sd06g"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fud3f"]
+radius = 28.0179
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_sd06g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_fud3f")

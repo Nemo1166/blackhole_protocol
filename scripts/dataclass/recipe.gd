@@ -13,5 +13,6 @@ enum Type {
 	Crafting_L,
 	Crafting_H,
 	Crafting_P,
-	Other
+	Other,
+	NPC
 }

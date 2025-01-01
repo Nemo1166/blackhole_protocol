@@ -66,6 +66,14 @@ auto_rebuild=true
 
 theme/custom_font="res://assets/fonts/HarmonyOS_Sans_SC_Regular.woff2"
 
+[importer_defaults]
+
+com.timothyqiu.godot-csv-importer={
+"detect_numbers": true,
+"force_float": false,
+"headers": true
+}
+
 [input]
 
 pause={

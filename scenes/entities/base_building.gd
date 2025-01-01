@@ -27,10 +27,17 @@ func _ready() -> void:
 		self_status.hide()
 
 
+func _input(event: InputEvent) -> void:
+	#if event.is_action_pressed("ui_text_scroll_up"):
+		#print(title + " selected by mouse!")
+		#building_selected.emit(self)
+	pass
+
 func handle_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
-		print(title + " selected by mouse!")
-		building_selected.emit(self)
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			print(title + " selected by mouse!")
+			building_selected.emit(self)
 
 func set_progress(progress: float):
 	progress_bar.value = progress

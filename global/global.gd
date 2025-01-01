@@ -47,7 +47,7 @@ func save_user_config():
 #region common prefabs
 
 const ITEM_SLOT = preload("res://scenes/gui/components/item_slot.tscn")
-const ITEM_DESC_PANEL = preload("res://scenes/gui/components/item_desc_panel.tscn")
+const ITEM_DESC_PANEL = preload("res://scenes/gui/components/tooltips/item_desc_panel.tscn")
 const DIALOG_PANEL = preload("res://scenes/gui/components/dialog_panel.tscn")
 const MESSAGE_BOX = preload("res://scenes/gui/components/message_box.tscn")
 
@@ -132,3 +132,31 @@ func filter_recipes(type: Recipe.Type) -> Array[Recipe]:
 		if recipe.type == type:
 			result.append(recipe)
 	return result
+
+const ITEMS := preload("res://assets/image/item/items.png")
+
+func get_item_texture(item: Item) -> Texture:
+	const ITEM_SIZE = 180
+	var atlas = AtlasTexture.new()
+	atlas.atlas = ITEMS
+	atlas.region = Rect2(Vector2(item.atlas_x, item.atlas_y) * ITEM_SIZE, Vector2(ITEM_SIZE, ITEM_SIZE))
+	return atlas
+
+
+var housing_data: Dictionary = {}
+
+func load_housing_data():
+	var csv = load("res://data/csv/territories.csv").records
+	for record in csv:
+		housing_data[record["id"]] = {
+			"name": record["name"],
+			"texture": load(record["texture"])
+		}
+
+func get_housing_data(id: int) -> Dictionary:
+	if housing_data.has(id):
+		return housing_data[id]
+	return {
+		"name": "Unknown",
+		"texture": null
+	}

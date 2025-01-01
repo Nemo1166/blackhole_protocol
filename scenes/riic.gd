@@ -23,7 +23,14 @@ func _ready() -> void:
 	update_signal_connection()
 	for layer in %Layers.get_children():
 		layer.child_order_changed.connect(update_signal_connection)
-
+	
+func test():
+	const PROD_STATION = preload("res://scenes/entities/buildings/prod_station.tscn")
+	for i in range(1000):
+		var prod: ProdStation = PROD_STATION.instantiate()
+		prod.initiate(loc_id)
+		$Layers/Board.add_child(prod)
+		prod.position = Vector2(224, 344)
 
 func reg_depot():
 	Global.game.res_mgr.register_depot(warehouse)

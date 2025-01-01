@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" load_steps=9 format=3 uid="uid://cb0ntb3ojridd"]
 
 [ext_resource type="Texture2D" uid="uid://dm02ohdk7uchf" path="res://assets/image/tiles/territory_border_hexagons.svg" id="1_wqmkl"]
-[ext_resource type="Texture2D" uid="uid://cpbdl4eq778cq" path="res://assets/image/tiles/rook.png" id="2_sss6a"]
+[ext_resource type="PackedScene" uid="uid://cavr12rcqgu84" path="res://scenes/entities/map_object/outpost.tscn" id="2_mji4i"]
 [ext_resource type="Texture2D" uid="uid://dfhp2ryjl0b6f" path="res://assets/image/tiles/continent_hexagons.svg" id="3_2fdfc"]
 [ext_resource type="Texture2D" uid="uid://ck2j0omb6a2yj" path="res://assets/image/tiles/move_hexagons.svg" id="4_ww7ta"]
 
@@ -396,10 +396,9 @@ texture_region_size = Vector2i(212, 242)
 7:7/0/terrain = 0
 7:15/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6tfkf"]
-texture = ExtResource("2_sss6a")
-texture_region_size = Vector2i(184, 216)
-0:0/0 = 0
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_t8tan"]
+resource_name = "sites"
+scenes/1/scene = ExtResource("2_mji4i")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fpo5s"]
 texture = ExtResource("3_2fdfc")
@@ -891,6 +890,6 @@ custom_data_layer_0/type = 2
 custom_data_layer_1/name = ""
 custom_data_layer_1/type = 2
 sources/0 = SubResource("TileSetAtlasSource_ncqeo")
-sources/3 = SubResource("TileSetAtlasSource_6tfkf")
 sources/4 = SubResource("TileSetAtlasSource_fpo5s")
 sources/6 = SubResource("TileSetAtlasSource_aba54")
+sources/1 = SubResource("TileSetScenesCollectionSource_t8tan")

@@ -27,17 +27,21 @@ func minute_increase(delta: float) -> void:
 	time_changed_delta.emit(delta_minute)
 
 	minute += delta_minute
+	@warning_ignore("integer_division")
 	hour += minute / 60
 	minute %= 60
 	time_changed.emit()
 
 	if hour >= 24:
+		@warning_ignore("integer_division")
 		day += hour / 24 
 		hour %= 24
 		if day > N_DAY:
+			@warning_ignore("integer_division")
 			month += day / N_DAY
 			day %= N_DAY
 			if month > N_MONTH:
+				@warning_ignore("integer_division")
 				year += month / N_MONTH
 				month %= N_MONTH
 		date_changed.emit()
@@ -68,12 +72,15 @@ func get_finish_time(hours: int) -> DateTime:
 	finish_time.hour = hour + hours
 	finish_time.minute = minute
 	if finish_time.hour >= 24:
+		@warning_ignore("integer_division")
 		finish_time.day += finish_time.hour / 24
 		finish_time.hour %= 24
 		if finish_time.day > N_DAY:
+			@warning_ignore("integer_division")
 			finish_time.month += finish_time.day / N_DAY
 			finish_time.day %= N_DAY
 			if finish_time.month > N_MONTH:
+				@warning_ignore("integer_division")
 				finish_time.year += finish_time.month / N_MONTH
 				finish_time.month %= N_MONTH
 	return finish_time

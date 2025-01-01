@@ -9,6 +9,7 @@
 script/source = "extends MarginContainer
 
 
+@warning_ignore(\"unused_signal\")
 signal close_dialog
 "
 

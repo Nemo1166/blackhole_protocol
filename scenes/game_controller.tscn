@@ -33,3 +33,4 @@ offset_bottom = 40.0
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="FpsStat" parent="." instance=ExtResource("3_wywkl")]
+visible = false
