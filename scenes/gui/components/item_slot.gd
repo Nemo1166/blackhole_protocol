@@ -15,8 +15,10 @@ func _ready() -> void:
 		if amount > 0:
 			amount_container.show()
 			if amount > 999999:
+				@warning_ignore("integer_division")
 				amount_label.text = "%dM" % (amount / 1000000)
 			elif amount > 999:
+				@warning_ignore("integer_division")
 				amount_label.text = "%dK" % (amount / 1000)
 			else:
 				amount_label.text = str(amount)
@@ -26,6 +28,8 @@ func set_item(item: Item, amount: int = 1):
 	self.amount = amount
 
 func _make_custom_tooltip(_for_text: String) -> Object:
+	if item == null:
+		return null
 	var panel: ItemDescPanel = Global.ITEM_DESC_PANEL.instantiate()
 	panel.set_tooltip(item)
 	return panel

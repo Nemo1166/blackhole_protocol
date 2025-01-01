@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://b30o6cocrvu3s"]
+
+[ext_resource type="Script" path="res://scenes/gui/components/dialog/outpost_item.gd" id="1_dcyh8"]
+[ext_resource type="LabelSettings" uid="uid://dnlkqnicgpcxx" path="res://assets/fonts/style_fa6.tres" id="1_vrg16"]
+[ext_resource type="LabelSettings" uid="uid://5j47d8xfvkoj" path="res://assets/fonts/style_number_small.tres" id="2_b7ugc"]
+[ext_resource type="Texture2D" uid="uid://b1hogiy6fjvwl" path="res://assets/image/territories/Logo_罗德岛.png" id="3_3roa0"]
+
+[node name="OutpostItem" type="MarginContainer"]
+offset_right = 384.0
+offset_bottom = 36.0
+script = ExtResource("1_dcyh8")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.12549)
+
+[node name="OutpostMeta" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+
+[node name="Name" type="HBoxContainer" parent="OutpostMeta"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Icon" type="Label" parent="OutpostMeta/Name"]
+layout_mode = 2
+text = "campground"
+label_settings = ExtResource("1_vrg16")
+
+[node name="Title" type="Label" parent="OutpostMeta/Name"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "营地"
+
+[node name="ID" type="Label" parent="OutpostMeta"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+text = "#00"
+label_settings = ExtResource("2_b7ugc")
+
+[node name="Owner" type="HBoxContainer" parent="OutpostMeta"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="OwnerTexture" type="TextureRect" parent="OutpostMeta/Owner"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("3_3roa0")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="OwnerName" type="Label" parent="OutpostMeta/Owner"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "所属方"
+
+[node name="Location" type="Label" parent="OutpostMeta"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+text = "(0,0)"
+label_settings = ExtResource("2_b7ugc")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

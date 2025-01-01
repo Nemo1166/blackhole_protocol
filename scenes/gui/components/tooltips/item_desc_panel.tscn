@@ -1,15 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://1tf5nkfk7wpf"]
+[gd_scene load_steps=4 format=3 uid="uid://1tf5nkfk7wpf"]
 
 [ext_resource type="LabelSettings" uid="uid://cdha5gcswv4rj" path="res://assets/fonts/style_smalltitle.tres" id="1_b7ben"]
-[ext_resource type="Script" path="res://scenes/gui/components/item_desc_panel.gd" id="1_be8rc"]
+[ext_resource type="Script" path="res://scenes/gui/components/tooltips/item_desc_panel.gd" id="1_be8rc"]
 [ext_resource type="Texture2D" uid="uid://cvq7irdk6s6pq" path="res://assets/image/item/道具_源石碎片.png" id="2_sxfym"]
-[ext_resource type="FontFile" uid="uid://bwvj2n1gcgryf" path="res://assets/fonts/HarmonyOS_Sans_SC_Regular.woff2" id="3_l7t5n"]
-[ext_resource type="LabelSettings" uid="uid://cfll3mt2npsjq" path="res://assets/fonts/style_normal_small.tres" id="3_qdf4x"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_1eukp"]
-font = ExtResource("3_l7t5n")
-font_size = 14
-font_color = Color(0.5, 0.5, 0.5, 1)
 
 [node name="PanelContainer" type="PanelContainer"]
 self_modulate = Color(1, 1, 1, 0)
@@ -48,23 +41,24 @@ text = "Title
 "
 label_settings = ExtResource("1_b7ben")
 
-[node name="Desc" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Desc" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(256, 20)
+custom_minimum_size = Vector2(256, 40)
 layout_mode = 2
 size_flags_vertical = 0
+bbcode_enabled = true
 text = "lorem ipsum dolor adadrester"
-label_settings = ExtResource("3_qdf4x")
-autowrap_mode = 2
+fit_content = true
 
-[node name="Desc2" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Desc2" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(256, 20)
+custom_minimum_size = Vector2(256, 80)
 layout_mode = 2
 size_flags_vertical = 0
+bbcode_enabled = true
 text = "lorem ipsum dolor adadrester lorem ipsum dolor adadrester lorem ipsum dolor adadrester lorem ipsum dolor adadrester "
-label_settings = SubResource("LabelSettings_1eukp")
-autowrap_mode = 3
+fit_content = true
+scroll_active = false
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true

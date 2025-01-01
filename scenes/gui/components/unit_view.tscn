@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cv018sh01t4fk"]
+[gd_scene load_steps=7 format=3 uid="uid://cv018sh01t4fk"]
 
 [ext_resource type="Script" path="res://scenes/gui/components/unit_view.gd" id="1_72fat"]
 [ext_resource type="PackedScene" uid="uid://b6aqirfbqqeud" path="res://scenes/gui/components/item_slot.tscn" id="1_kgi0t"]
 [ext_resource type="FontFile" uid="uid://ddjm3jbnq4wxq" path="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf" id="2_uw41d"]
+[ext_resource type="LabelSettings" uid="uid://5j47d8xfvkoj" path="res://assets/fonts/style_number_small.tres" id="3_31xy7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_p7kfk"]
 font_color = Color(1, 0.501961, 0, 1)
@@ -70,11 +71,23 @@ layout_mode = 2
 [node name="ItemSlot" parent="UnitStat/Ingredients" instance=ExtResource("1_kgi0t")]
 layout_mode = 2
 
-[node name="Progress" type="ProgressBar" parent="UnitStat"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UnitStat"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Duration" type="Label" parent="UnitStat/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+label_settings = ExtResource("3_31xy7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Progress" type="ProgressBar" parent="UnitStat/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
+size_flags_vertical = 3
 
 [node name="Results" type="HBoxContainer" parent="UnitStat"]
 unique_name_in_owner = true
@@ -93,7 +106,6 @@ text = "gear"
 
 [node name="PopupPanel" type="PopupPanel" parent="."]
 size = Vector2i(173, 100)
-visible = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PopupPanel"]
 offset_left = 4.0

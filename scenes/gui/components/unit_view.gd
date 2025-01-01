@@ -40,6 +40,8 @@ func update_recipe_view():
 		update_progress(0)
 		return
 	print(unit.plan.name)
+	%Duration.text = "%.1fh" % (unit.plan.time_in_hour / unit.efficiency)
+	# ingredients
 	if unit.plan.type == Recipe.Type.Mining:
 		var miner = create_miner()
 		ingredients.add_child(miner)
@@ -48,7 +50,8 @@ func update_recipe_view():
 			var slot: ItemSlot = Global.ITEM_SLOT.instantiate()
 			slot.set_item(ingredient, unit.plan.ingredients[ingredient])
 			ingredients.add_child(slot)
-
+	
+	#results
 	for result in unit.plan.results.keys():
 		var slot: ItemSlot = Global.ITEM_SLOT.instantiate()
 		slot.set_item(result, unit.plan.results[result])

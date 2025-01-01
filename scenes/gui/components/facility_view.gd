@@ -7,32 +7,29 @@ extends Control
 var outpost: OutpostDM.Outpost
 var this_facility: OutpostDM.BaseFacility
 
-func _enter_tree() -> void:
-	EventBus.subscribe("update_inventory", update_inventory)
+#func _enter_tree() -> void:
+	#EventBus.subscribe("update_inventory", update_inventory)
+#
+#func _exit_tree() -> void:
+	#EventBus.unsubscribe("update_inventory", update_inventory)
 
-func _exit_tree() -> void:
-	EventBus.unsubscribe("update_inventory", update_inventory)
-
-func update_inventory(args: Array):
-	if args[0] == outpost.id:
-		update_warehouse_view(args[1])
+#func update_inventory(args: Array):
+	#if args[0] == outpost.id:
+		#update_warehouse_view(args[1])
 
 func set_facility_info(facility: OutpostDM.BaseFacility):
 	outpost = facility.outpost
 	this_facility = facility
 	outpost_id.text = str(outpost.id)
 	update_facility_view(facility)
-	update_warehouse_view(outpost.inventory._inventory)
-	init_units_view(facility.units)
-
-func update_warehouse_view(inventory: Dictionary):
-	%WarehouseViewer.update_view(inventory)
+	#Global.clear_children(unit_view_container)
+	if is_instance_of(facility, OutpostDM.Facilities.BaseWorkshop):
+		init_units_view(facility.units)
 
 func update_facility_view(facility: OutpostDM.BaseFacility):
 	facility_name.text = "%s Lv.%d" % [facility.display_name, facility.level]
 
 func init_units_view(units: Array[OutpostDM.ProductionUnit]):
-	Global.clear_children(unit_view_container)
 	const UNIT_VIEW = preload("res://scenes/gui/components/unit_view.tscn")
 	for unit in units:
 		var view = UNIT_VIEW.instantiate()

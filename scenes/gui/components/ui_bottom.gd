@@ -5,17 +5,7 @@ extends CanvasLayer
 
 @onready var sidepanel_content: MarginContainer = %Content
 
-var outpost_id: int
-
-var data: Dictionary
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var csv = load("res://data/csv/territories.csv").records
-	for record in csv:
-		data[record["id"]] = {
-			"name": record["name"],
-			"texture": load(record["texture"])
-		}
 	side_panel.set_position($SP_collapsed.position)
 	side_panel.set_size($SP_collapsed.size)
 	%CloseSPButton.hide()
@@ -24,12 +14,9 @@ func _enter_tree() -> void:
 	EventBus.subscribe("show_facility", show_facility_info)
 
 func show_housing(index: int = -1) -> void:
-	if index == -1:
-		housing_texture.texture = null
-		housing.text = ""
-	else:
-		housing_texture.texture = data[index]["texture"]
-		housing.text = data[index]["name"]
+	var data = Global.get_housing_data(index)
+	housing_texture.texture = data["texture"]
+	housing.text = data["name"]
 
 signal side_panel_closed
 
@@ -62,8 +49,7 @@ func _on_close_sp_button_pressed() -> void:
 #region panel
 
 func show_facility_info(args: Array):
-	var outpost = args[0]
-	var facility = args[1]
+	var facility = args[0]
 	Global.close_dialog("设施信息")
 	
 	var dialog_panel: DialogPanel = Global.DIALOG_PANEL.instantiate()
@@ -86,7 +72,7 @@ func _on_build_outpost() -> void:
 	dialog_panel.set_panel_by_ref($BuildOutpost)
 
 
-func _on_build_facility() -> void:
+func _on_build_facility(outpost_id: int) -> void:
 	if Global.has_dialog("建造设施"):
 		return
 	var dialog_panel: DialogPanel = Global.DIALOG_PANEL.instantiate()
@@ -97,4 +83,15 @@ func _on_build_facility() -> void:
 	dialog_panel.set_content(selector)
 	selector.pass_oid(outpost_id)
 	selector.update_desc()
+
+func show_outpost_list(list: Array[OutpostDM.Outpost]):
+	Global.close_dialog("营地一览")
+	var dialog = Global.DIALOG_PANEL.instantiate()
+	add_child(dialog)
+	dialog.set_title("营地一览")
+	dialog.set_panel_by_ref($Dialog)
+	const OUTPOST_LIST = preload("res://scenes/gui/components/dialog/outpost_list.tscn")
+	var view = OUTPOST_LIST.instantiate()
+	view.set_view(list)
+	dialog.set_content(view)
 	

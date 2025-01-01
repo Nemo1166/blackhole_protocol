@@ -2,9 +2,9 @@ class_name ItemDescPanel extends Control
 
 
 var desc_title: Label
-var desc: Label
+var desc
 var texture_rect: TextureRect
-var desc_2: Label
+var desc_2
 
 func set_tooltip(item: Item) -> void:
 	desc_title = %DescTitle
@@ -14,5 +14,5 @@ func set_tooltip(item: Item) -> void:
 
 	desc_title.text = item.display_name
 	desc.text = item.desc_basic
-	desc_2.text = item.desc_ext
+	desc_2.text = "[i]%s[/i]" % item.desc_ext
 	texture_rect.texture = item.icon

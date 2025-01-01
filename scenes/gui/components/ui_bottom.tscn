@@ -62,16 +62,12 @@ tooltip_text = "关闭窗口"
 theme_override_fonts/font = ExtResource("4_uvaf0")
 text = " xmark "
 
-[node name="ScrollContainer" type="ScrollContainer" parent="SidePanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="Content" parent="SidePanel/MarginContainer/VBoxContainer/ScrollContainer" instance=ExtResource("5_3ffqp")]
+[node name="Content" parent="SidePanel/MarginContainer/VBoxContainer" instance=ExtResource("5_3ffqp")]
 unique_name_in_owner = true
 layout_mode = 2
 
 [node name="SP_opened" type="ReferenceRect" parent="."]
+visible = false
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -114,14 +110,26 @@ mouse_filter = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 32.0
+offset_left = 416.0
 offset_top = 80.0
 offset_right = -416.0
-offset_bottom = -40.0
+offset_bottom = -104.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Dialog" type="ReferenceRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 64.0
+offset_top = 96.0
+offset_right = -416.0
+offset_bottom = -72.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
 [connection signal="pressed" from="SidePanel/MarginContainer/VBoxContainer/Title/CloseSPButton" to="." method="_on_close_sp_button_pressed"]
-[connection signal="build_facility" from="SidePanel/MarginContainer/VBoxContainer/ScrollContainer/Content" to="." method="_on_build_facility"]
-[connection signal="build_outpost" from="SidePanel/MarginContainer/VBoxContainer/ScrollContainer/Content" to="." method="_on_build_outpost"]
+[connection signal="build_facility" from="SidePanel/MarginContainer/VBoxContainer/Content" to="." method="_on_build_facility"]
+[connection signal="build_outpost" from="SidePanel/MarginContainer/VBoxContainer/Content" to="." method="_on_build_outpost"]

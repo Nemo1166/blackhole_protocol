@@ -1,0 +1,6 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dnlkqnicgpcxx"]
+
+[ext_resource type="FontFile" uid="uid://ddjm3jbnq4wxq" path="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf" id="1_0ean1"]
+
+[resource]
+font = ExtResource("1_0ean1")

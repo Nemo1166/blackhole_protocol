@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dj24qcvbdf0jt"]
+[gd_scene load_steps=17 format=3 uid="uid://dj24qcvbdf0jt"]
 
 [ext_resource type="LabelSettings" uid="uid://cdha5gcswv4rj" path="res://assets/fonts/style_smalltitle.tres" id="1_exy8f"]
 [ext_resource type="Script" path="res://scenes/gui/components/ui_sidebar_content.gd" id="1_ql57r"]
@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://ddjm3jbnq4wxq" path="res://assets/fonts/Font Awesome 6 Free-Solid-900.otf" id="4_e3n4g"]
 [ext_resource type="PackedScene" uid="uid://dml41cp7fs4r3" path="res://scenes/gui/components/currency_ui.tscn" id="4_yvajh"]
 [ext_resource type="FontFile" uid="uid://byjdovawflxyj" path="res://assets/fonts/BENDER.OTF" id="5_of6gl"]
+[ext_resource type="LabelSettings" uid="uid://dnlkqnicgpcxx" path="res://assets/fonts/style_fa6.tres" id="8_q0rbv"]
 
 [sub_resource type="GDScript" id="GDScript_y76gm"]
 script/source = "extends HBoxContainer
@@ -58,7 +59,7 @@ func update_facilities(facilities: Array):
 
 
 func show_facility(facility: OutpostDM.BaseFacility):
-	EventBus.publish(\"show_facility\", [facility.outpost, facility])
+	EventBus.publish(\"show_facility\", [facility])
 "
 
 [sub_resource type="GDScript" id="GDScript_obfxd"]
@@ -73,6 +74,60 @@ func _on_mouse_exited() -> void:
 
 func reset_button():
 	text = \"Build Facility\"
+"
+
+[sub_resource type="GDScript" id="GDScript_n1n66"]
+script/source = "extends GridContainer
+
+var outpost_id: int = -1
+
+func _enter_tree() -> void:
+	EventBus.subscribe(\"update_inventory\", update_inventory)
+
+#func _exit_tree() -> void:
+	#EventBus.unsubscribe(\"update_inventory\", update_inventory)
+
+func update_inventory(args: Array):
+	if args[0] == outpost_id:
+		update_view(args[1])
+
+func update_view(inventory: Dictionary):
+	clear()
+	for item in inventory.keys():
+		var amount = inventory[item]
+		var item_slot = Global.ITEM_SLOT.instantiate()
+		item_slot.set_item(item, amount)
+		add_child(item_slot)
+
+func clear():
+	for c in get_children():
+		c.queue_free()
+"
+
+[sub_resource type="GDScript" id="GDScript_p0sc7"]
+script/source = "extends VBoxContainer
+
+var outpost: OutpostDM.Outpost = null
+
+func link_outpost(o: OutpostDM.Outpost):
+	outpost = o
+	clear()
+	update_view()
+
+func update_view():
+	if outpost == null:
+		return
+	
+	const PORT_VIEW = preload(\"res://scenes/gui/components/port_view.tscn\")
+	
+	var station: OutpostDM.TradeStation = outpost.trade_station
+	for port in station.ports:
+		var view = PORT_VIEW.instantiate()
+		add_child(view)
+		view.link_port(port)
+
+func clear():
+	Global.clear_children(self)
 "
 
 [node name="Content" type="MarginContainer"]
@@ -139,47 +194,23 @@ label_settings = ExtResource("4_67ul0")
 custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 
-[node name="SquadView" type="VBoxContainer" parent="VBoxContainer"]
+[node name="OutpostContainer" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="Metadata" type="HBoxContainer" parent="VBoxContainer/SquadView"]
-layout_mode = 2
-
-[node name="Icon" type="Label" parent="VBoxContainer/SquadView/Metadata"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("4_e3n4g")
-text = "people-group"
-
-[node name="Label" type="Label" parent="VBoxContainer/SquadView/Metadata"]
-layout_mode = 2
-text = "小队"
-label_settings = ExtResource("1_exy8f")
-
-[node name="NofSquads" type="Label" parent="VBoxContainer/SquadView/Metadata"]
-layout_mode = 2
-text = "(0)"
-label_settings = ExtResource("1_exy8f")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/SquadView"]
-layout_mode = 2
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/SquadView"]
-layout_mode = 2
-
-[node name="OutpostView" type="VBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="MetaData" type="HBoxContainer" parent="VBoxContainer/OutpostView"]
+[node name="OutpostMeta" type="HBoxContainer" parent="VBoxContainer/OutpostContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 script = SubResource("GDScript_y76gm")
 
-[node name="Label" type="Label" parent="VBoxContainer/OutpostView/MetaData"]
+[node name="Label" type="Label" parent="VBoxContainer/OutpostContainer/OutpostMeta"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_e3n4g")
 text = "house-flag"
 vertical_alignment = 1
 
-[node name="OpName" type="Label" parent="VBoxContainer/OutpostView/MetaData"]
+[node name="OpName" type="Label" parent="VBoxContainer/OutpostContainer/OutpostMeta"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -187,7 +218,7 @@ text = "Name"
 label_settings = ExtResource("1_exy8f")
 vertical_alignment = 1
 
-[node name="OpNameRename" type="Button" parent="VBoxContainer/OutpostView/MetaData"]
+[node name="OpNameRename" type="Button" parent="VBoxContainer/OutpostContainer/OutpostMeta"]
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 1
@@ -196,41 +227,66 @@ disabled = true
 text = "pen *WIP"
 flat = true
 
-[node name="OpID" type="Label" parent="VBoxContainer/OutpostView/MetaData"]
+[node name="OpID" type="Label" parent="VBoxContainer/OutpostContainer/OutpostMeta"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "#999"
 label_settings = SubResource("LabelSettings_nru0f")
 vertical_alignment = 2
 
-[node name="Traits" type="HBoxContainer" parent="VBoxContainer/OutpostView"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/OutpostContainer"]
 layout_mode = 2
-alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/OutpostView/Traits"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/OutpostContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="TabContent" type="MarginContainer" parent="VBoxContainer/OutpostContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="OutpostView" type="VBoxContainer" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Traits" type="HBoxContainer" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView"]
+layout_mode = 2
+
+[node name="CurrencyUI" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/Traits" instance=ExtResource("4_yvajh")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/Traits"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 metadata/_edit_group_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/OutpostView/Traits/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/Traits/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/OutpostView/Traits/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/Traits/PanelContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Label" type="Label" parent="VBoxContainer/OutpostView/Traits/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/Traits/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "2"
 label_settings = SubResource("LabelSettings_5e4pg")
 
-[node name="Populations" type="Label" parent="VBoxContainer/OutpostView/Traits/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Populations" type="Label" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/Traits/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
@@ -238,45 +294,34 @@ size_flags_vertical = 0
 text = "^1"
 label_settings = SubResource("LabelSettings_f0l7f")
 
-[node name="Inventory" type="HBoxContainer" parent="VBoxContainer/OutpostView"]
+[node name="Inventory" type="HBoxContainer" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="VBoxContainer/OutpostView/Inventory"]
-layout_mode = 2
-size_flags_horizontal = 2
-text = "查看库存 (WIP)"
-
-[node name="CurrencyUI" parent="VBoxContainer/OutpostView/Inventory" instance=ExtResource("4_yvajh")]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-size_flags_horizontal = 8
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/OutpostView"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView"]
 custom_minimum_size = Vector2(32, 8)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="FacilitiesContainer" type="VBoxContainer" parent="VBoxContainer/OutpostView"]
+[node name="FacilitiesContainer" type="VBoxContainer" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView"]
 layout_mode = 2
 
-[node name="Heading" type="HBoxContainer" parent="VBoxContainer/OutpostView/FacilitiesContainer"]
+[node name="Heading" type="HBoxContainer" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/FacilitiesContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/OutpostView/FacilitiesContainer/Heading"]
+[node name="Label" type="Label" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/FacilitiesContainer/Heading"]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "设施"
 label_settings = ExtResource("1_exy8f")
 
-[node name="FacCounterText" type="Label" parent="VBoxContainer/OutpostView/FacilitiesContainer/Heading"]
+[node name="FacCounterText" type="Label" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/FacilitiesContainer/Heading"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "数量/上限: "
 label_settings = ExtResource("4_67ul0")
 
-[node name="FacCounter" type="Label" parent="VBoxContainer/OutpostView/FacilitiesContainer/Heading"]
+[node name="FacCounter" type="Label" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/FacilitiesContainer/Heading"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
@@ -284,23 +329,77 @@ size_flags_vertical = 8
 text = "0/1"
 label_settings = ExtResource("4_67ul0")
 
-[node name="Facilities" type="VBoxContainer" parent="VBoxContainer/OutpostView/FacilitiesContainer"]
+[node name="Facilities" type="VBoxContainer" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/FacilitiesContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 script = SubResource("GDScript_mrjf6")
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/OutpostView"]
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView"]
 custom_minimum_size = Vector2(32, 8)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="BuildFacility" type="Button" parent="VBoxContainer/OutpostView"]
+[node name="BuildFacility" type="Button" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "建造设施"
 script = SubResource("GDScript_obfxd")
 
-[connection signal="mouse_entered" from="VBoxContainer/OutpostView/MetaData" to="VBoxContainer/OutpostView/MetaData" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="VBoxContainer/OutpostView/MetaData" to="VBoxContainer/OutpostView/MetaData" method="_on_mouse_exited"]
-[connection signal="mouse_exited" from="VBoxContainer/OutpostView/BuildFacility" to="VBoxContainer/OutpostView/BuildFacility" method="_on_mouse_exited"]
-[connection signal="pressed" from="VBoxContainer/OutpostView/BuildFacility" to="." method="_on_build_facility_pressed"]
+[node name="WarehouseViewer" type="GridContainer" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 4
+script = SubResource("GDScript_n1n66")
+
+[node name="TradeStation" type="VBoxContainer" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PortViewer" type="VBoxContainer" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/TradeStation"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+script = SubResource("GDScript_p0sc7")
+
+[node name="PortView" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/TradeStation/PortViewer" instance_placeholder="res://scenes/gui/components/port_view.tscn"]
+layout_mode = 2
+
+[node name="PortView2" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/TradeStation/PortViewer" instance_placeholder="res://scenes/gui/components/port_view.tscn"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/TradeStation"]
+layout_mode = 2
+text = "info-circle 每日 0 点结算。"
+label_settings = ExtResource("8_q0rbv")
+horizontal_alignment = 1
+
+[node name="TabPlaceHolder" type="Label" parent="VBoxContainer/OutpostContainer/ScrollContainer/TabContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "WIP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TabBar" type="TabBar" parent="VBoxContainer/OutpostContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_e3n4g")
+current_tab = 0
+tab_alignment = 1
+tabs_rearrange_group = 0
+tab_count = 4
+tab_0/title = "campground 据点"
+tab_1/title = "warehouse 库存"
+tab_2/title = "truck 物流"
+tab_3/title = "user-group 干员"
+
+[connection signal="mouse_entered" from="VBoxContainer/OutpostContainer/OutpostMeta" to="VBoxContainer/OutpostContainer/OutpostMeta" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/OutpostContainer/OutpostMeta" to="VBoxContainer/OutpostContainer/OutpostMeta" method="_on_mouse_exited"]
+[connection signal="mouse_exited" from="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/BuildFacility" to="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/BuildFacility" method="_on_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/OutpostContainer/ScrollContainer/TabContent/OutpostView/BuildFacility" to="." method="_on_build_facility_pressed"]
+[connection signal="tab_changed" from="VBoxContainer/OutpostContainer/TabBar" to="." method="tab_change_to"]
